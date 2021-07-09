@@ -1,0 +1,81 @@
+<!--
+  - My Orders Screen
+  - @author    ThemesBuckets <themesbuckets@gmail.com>
+  - @copyright Copyright (c) 2020
+  - @license   AppsPlaces
+-->
+
+<!-- Headder -->
+<ion-header no-border>
+  <ion-toolbar color="color1">
+
+    <!-- Side menu option -->
+    <ion-buttons slot="start">
+      <ion-menu-toggle menu="pages">
+        <ion-button color="white">
+          <ion-icon name="md-list" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+
+    <!-- Page Title -->
+    <ion-title>Orders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Contents -->
+<ion-content id="orders" [scrollX]="true" [scrollEvents]="true" fullscreen>
+
+  <!-- Orders Options -->
+  <!-- Options are - Delivered, Processing, Cancelled  -->
+  <div  scrollX="true"  class="ion-padding ion-text-center" style="width:100vw;margin: 30 px">
+    <!-- <ion-chip *ngFor="let item of options; let i = index" [ngClass]="{ionChip: item.isSelected}"
+      (click)="changeOption(item, i)">
+      <ion-label>{{item.title}}</ion-label>
+    </ion-chip> -->
+    <div>
+      <ion-row nowrap class="headerChip">
+        <div *ngFor="let item of statuses; let i = index" [ngClass]="{ionChip: item.isSelected}">
+        <ion-chip  (click)="changeOption(item, i)">
+              <ion-label >{{item.description}}</ion-label>
+        </ion-chip>
+        </div>
+      </ion-row>
+    </div>
+  </div>
+
+  <!-- List of orders -->
+  <ion-card *ngFor="let item of orders">
+    <ion-card-header>
+      <ion-row>
+
+        <!-- Order Id -->
+        <ion-col>
+          <ion-card-title>Order #{{item.id}}</ion-card-title>
+        </ion-col>
+
+        <!-- Order Date -->
+        <ion-col class="col-right">
+          <ion-text>{{item.date * 1000 | date:'MM/dd/yyyy'}}</ion-text>
+        </ion-col>
+      </ion-row>
+
+      <!-- Order Tracking Number -->
+      <ion-row>
+        <ion-col>Tracking Number: {{item.trackingNumber}}</ion-col>
+      </ion-row>
+
+      <!-- Order Quantity & Price -->
+      <ion-row>
+        <ion-col>Quantity: {{item.quantity}}</ion-col>
+        <ion-col>Total Price: ${{item.totalPrice}}</ion-col>
+      </ion-row>
+
+      <ion-button color="color1" size="small" [routerLink]="['/order-details',item.id]" routeDirection="Root">Details</ion-button>
+    </ion-card-header>
+  </ion-card>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

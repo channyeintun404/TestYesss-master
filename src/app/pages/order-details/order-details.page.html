@@ -1,0 +1,228 @@
+<ion-header no-border>
+  <ion-toolbar color="color1">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false" menuToggle="start" ></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Order #{{orderid}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<div *ngIf="isLoaded">
+  <ion-menu side="end" menuId="menuAdmin" type="overlay" persistent="true" contentId="mainContent"> 
+    <ion-content>
+      <ion-card>
+        <ion-item>
+          <ion-label>Customer Information</ion-label>
+        </ion-item>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="1">
+                <ion-icon name="person"></ion-icon>
+              </ion-col>
+              <ion-col size="11">
+                <ion-text>{{order.b_firstname}} {{order.b_lastname}}
+                  <br/>email: {{order.email}}
+                  <br/>ip-address: {{order.ip_address}}<br/>Phone:{{order.phone}}
+                </ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+          <ion-card>
+            <ion-item>
+              <ion-label>Billing Address</ion-label>
+            </ion-item>
+            <ion-card-content>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="1">
+                    <ion-icon name="pricetags"></ion-icon>
+                  </ion-col>
+                  <ion-col size="11">
+                    <ion-text>{{order.b_firstname}} {{order.b_lastname}}
+                      <br/>{{order.b_address}}<br/>{{order.b_city}}, {{order.b_state_descr}} {{order.b_zipcode}}
+                    </ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+          <ion-card>
+            <ion-item>
+              <ion-label>Shipping Address</ion-label>
+            </ion-item>
+            <ion-card-content>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="1">
+                    <ion-icon name="bus"></ion-icon>
+                  </ion-col>
+                  <ion-col size="11">
+                    <ion-text>{{order.s_firstname}} {{order.s_lastname}}
+                      <br/>{{order.s_address}}<br/>{{order.s_city}}, {{order.s_state_descr}} {{order.s_zipcode}}
+                    </ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+    </ion-content>
+  </ion-menu>
+  </div>
+<ion-content>
+    <ion-toolbar>
+      <ion-buttons class="text-center">
+        <ion-button [routerLink]="['/order-details',previd]" #prev>
+          <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+        </ion-button>
+        <ion-button [routerLink]="['/order-details',nextid]" #next>
+          <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
+        </ion-button>
+         <!-- <ion-button   ion-button block (click)="openSetting()">
+          <ion-icon slot="icon-only" name="settings"></ion-icon>
+        </ion-button> -->
+        <ion-select interface="popover" placeholder="⚙️" #settingList (ionChange)='changeSetting($event.target.value)'>
+            <ion-select-option value="1">Print invoice</ion-select-option>
+            <ion-select-option value="2">Print invoice (pdf)</ion-select-option>
+            <ion-select-option value="3">Tweak and send invoice</ion-select-option>
+            <ion-select-option value="4">Print packing slip</ion-select-option>
+            <ion-select-option value="5">Print packing slip (pdf)</ion-select-option>
+            <ion-select-option value="6" >Edit Order</ion-select-option>
+            <ion-select-option value="7">Copy</ion-select-option>
+      </ion-select>
+        <ion-button color="primary"  (click)="saveChanges()">Save Changes</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+    <div *ngIf="isLoaded">
+      <ion-buttons class="cusInfoBtn"  slot="end">
+        <ion-menu-toggle menu="end">
+            <ion-button>
+              <ion-icon slot="icon-only" ios="ios-person" md="md-person"></ion-icon>
+            </ion-button>
+        </ion-menu-toggle>
+    </ion-buttons>
+      <ion-card *ngFor="let product of products">     
+        <ion-card-content>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              Product
+            </ion-col>
+            <ion-col>
+              <ion-img [src]="getImage(product.image_pairs)"></ion-img>
+              <ion-text>
+                <a href="#">{{product.product}}</a>
+              </ion-text>
+              <ion-text>
+                <p>{{product.product_code}}</p>
+              </ion-text>
+              <ion-text *ngIf="order.points_info !== undefined">
+                <p>Points in Price : {{order.points_info.price | currency:"MMK":"symbol"}}</p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              Price
+            </ion-col>
+            <ion-col>
+              {{product.price | currency:"MMK":"symbol"}}
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              Quantity
+            </ion-col>
+            <ion-col>
+              {{product.amount}}
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Total</ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              SubTotal
+            </ion-col>
+            <ion-col>
+                {{order.subtotal | currency:"MMK":"symbol"}}
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              Shipping Cost
+            </ion-col>
+            <ion-col>
+                {{order.shipping_cost|currency:"MMK":"symbol"}}
+            </ion-col>
+          </ion-row>
+          <!-- <ion-row class="ion-align-items-start">
+            <ion-col>
+              Points
+            </ion-col>
+            <ion-col *ngIf="order.points_info !== undefined">
+              {{order.points_info.reward}} point<ng-container *ngIf="order.points_info.reward > 1">s</ng-container>
+            </ion-col>
+          </ion-row> -->
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              <ion-text class="dark">
+                <h1>Total: </h1>
+              </ion-text>
+            </ion-col>
+            <ion-col>
+                <ion-text color="success">
+                 {{order.total | currency:"MMK":"symbol"}}
+                </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Customer notes</ion-label>
+                <ion-textarea [(ngModel)]="order.notes"></ion-textarea>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Staff only notes</ion-label>
+                <ion-textarea [(ngModel)]="order.details"></ion-textarea>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- <ion-card>
+        <ion-img [src]="'https://picsum.photos/100/30'"></ion-img>
+      </ion-card> -->
+ 
+      <ion-card>
+        <ion-row class="ion-align-items-start">
+              <ion-col>
+                <ion-item>
+                  <ion-label>Status</ion-label>
+                  <ion-select [(ngModel)]="currentStatus" placeholder="Select One" value="{{order.status}}">
+                    <ion-select-option *ngFor="let status of statuses" value="{{status.status}}">{{status.description}}</ion-select-option>
+                  </ion-select>
+                </ion-item>              
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              <ion-item>
+                <ion-label>Manager</ion-label>
+                  <ion-input></ion-input><ion-button color="primary"> <ion-icon name="add"></ion-icon></ion-button>
+              </ion-item>              
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </div>
+</ion-content>

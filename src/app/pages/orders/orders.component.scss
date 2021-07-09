@@ -1,0 +1,27 @@
+#orders {
+    .ionChip {
+        --background: var(--ion-color-color1);
+        --color: var(--ion-color-white);
+    }
+
+    ion-card-title {
+        font-size: medium;
+    }
+
+    .col-right {
+        text-align: right;
+    }
+}
+
+div[scrollx=true],div[scrolly=true] {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  div[scrollx=true] {
+    overflow-x: auto;
+  }
+  
+  div[scrolly=true] {
+    overflow-y: auto;
+  }

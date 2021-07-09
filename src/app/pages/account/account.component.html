@@ -1,0 +1,134 @@
+<!--
+  - Account Screen
+  - @author    ThemesBuckets <themesbuckets@gmail.com>
+  - @copyright Copyright (c) 2020
+  - @license   AppsPlaces
+-->
+
+<!-- Header -->
+<ion-header no-border>
+  <ion-toolbar color="color1">
+
+    <!-- Side Menu -->
+    <ion-buttons slot="start">
+      <ion-menu-toggle menu="pages">
+        <ion-button color="white">
+          <ion-icon name="md-list" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+
+    <!-- Page title -->
+    <ion-title>Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Contents -->
+<ion-content id="account" class="ion-padding">
+
+  <!-- User/Profile Infos -->
+  <ion-item lines="none">
+    <!-- Avatar/Image of User -->
+    <ion-avatar slot="end">
+      <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+    </ion-avatar>
+
+    <!-- Name of User -->
+    <ion-label>
+      <h2>ACME</h2>
+      <p>Silver Seller</p>
+    </ion-label>
+  </ion-item>
+
+  <!-- Some Menu Options -->
+  <ion-card>
+    <ion-grid>
+      <ion-row class="ion-text-center">
+        <ion-col>
+          <ion-icon name="gift" style="zoom:1.5;"></ion-icon><br />
+          <ion-text>Campaigns</ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-icon name="checkbox-outline" style="zoom:1.5;"></ion-icon><br />
+          Orders
+        </ion-col>
+        <ion-col>
+          <ion-icon name="basket" style="zoom:1.5;"></ion-icon><br />
+          Products
+        </ion-col>
+        <ion-col>
+          <ion-icon name="mail-open" style="zoom:1.5;"></ion-icon><br />
+          Messages
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <!-- Some Orders Option -->
+  <ion-card>
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Orders</ion-label>
+      </ion-item-divider>
+
+      <ion-item lines="none">
+        <ion-label>Unpaid</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>To be shipped</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Shipped</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Cancelled</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>In dispute</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+      </ion-item>
+    </ion-item-group>
+  </ion-card>
+
+  <ion-card>
+    <ion-item-group>
+      <ion-item lines="none">
+        <ion-label>Analytics</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Manage Shippings</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Manage Coupon code</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Questions & Answers</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+      </ion-item>
+    </ion-item-group>
+  </ion-card>
+
+  <ion-card>
+    <ion-item-group>
+      <ion-item lines="none">
+        <ion-label>Settings</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>App Suggestion</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Help Center</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+      </ion-item>
+    </ion-item-group>
+  </ion-card>
+</ion-content>

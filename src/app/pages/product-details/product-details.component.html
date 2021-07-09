@@ -1,0 +1,107 @@
+<!--
+  - Product Details Screen
+  - @author    ThemesBuckets <themesbuckets@gmail.com>
+  - @copyright Copyright (c) 2020
+  - @license   AppsPlaces
+-->
+
+<!-- Header -->
+<ion-header no-border>
+  <ion-toolbar color="color1">
+
+    <!-- Back to previous page -->
+    <ion-buttons slot="start">
+      <ion-back-button color="white" default-href="" (click)="dismiss()" text="" icon="arrow-round-back">
+      </ion-back-button>
+    </ion-buttons>
+
+    <!-- Title -->
+    <ion-title></ion-title>
+
+    <!-- Cart Page Button -->
+    <!-- <ion-buttons slot="end">
+      <ion-button color="white" (click)="gotoCartPage()">
+        <ion-icon name="cart"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+
+<!-- Main Contents of Page -->
+<ion-content id="product-details" fullscreen>
+
+  <!-- Slider of Product Images -->
+  <ion-slides pager="true" [options]="slideOpts">
+    <ion-slide *ngFor="let item of images">
+      <img [src]="item" />
+
+      <!-- Wish Button or Product Like/Dislike Button Option -->
+      <!-- <ion-fab vertical="top" horizontal="end">
+        <ion-fab-button>
+          <ion-icon color="color1" name="heart-empty" *ngIf="!isWishlist"></ion-icon>
+          <ion-icon color="color1" name="heart" *ngIf="isWishlist"></ion-icon>
+        </ion-fab-button>
+      </ion-fab> -->
+    </ion-slide>
+  </ion-slides>
+
+  <!-- Product Price -->
+  <ion-row class="ion-padding">
+    <ion-text color="color1" class="price">${{discountPrice}} USD &nbsp;</ion-text>
+    <span class="previous-price"> ${{price}}</span>
+  </ion-row>
+
+  <!-- Product Name -->
+  <ion-row class="ion-padding-start product-name">
+    <ion-text>{{name}}</ion-text>
+  </ion-row>
+
+  <!-- Product Description -->
+  <ion-row class="ion-padding">
+    <ion-text color="medium" [innerHTML]="description"></ion-text>
+  </ion-row>
+
+  <!-- Selct Color -->
+  <ion-row class="ion-padding-start select-heading">
+    <ion-text>Available Colors</ion-text>
+  </ion-row>
+
+  <!-- Product Colors -->
+  <ion-radio-group>
+    <ion-row class="ion-padding-start">
+      <ion-col size="3" *ngFor="let item of color">
+        <ion-item class="border-style" lines="none" [style.border-color]="item">
+          <ion-radio color="color1" mode="ios" [value]="item"></ion-radio>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-radio-group>
+
+  <!-- Select Size -->
+  <ion-row class="ion-padding-start select-heading">
+    <ion-text>Available Sizes</ion-text>
+  </ion-row>
+
+  <!-- Product Sizes -->
+  <ion-radio-group>
+    <ion-row class="ion-padding-start">
+      <ion-col size="3" *ngFor="let item of size">
+        <ion-item lines="none">
+          <ion-label class="size-label">{{item}}</ion-label>
+          <ion-radio color="color1" mode="ios" [value]="item"></ion-radio>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-radio-group>
+</ion-content>
+
+
+<!-- Footer -->
+<ion-footer no-border>
+  <ion-toolbar class="ion-padding" transparent>
+    <!-- Add To Cart Button -->
+    <ion-button class="add-to-cart" color="color1" expand="block">EDIT PRODUCT
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

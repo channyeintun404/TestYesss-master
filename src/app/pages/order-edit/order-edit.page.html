@@ -1,0 +1,275 @@
+<div *ngIf="isLoaded">
+  <ion-header no-border>
+    <ion-toolbar color="color1">
+      <ion-buttons slot="start">
+        <ion-menu-button autoHide="false" menuToggle="start" ></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Order #{{order.order_id}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</div>
+<div *ngIf="isLoaded">
+    <ion-menu side="end" menuId="menuAdmin" type="overlay" persistent="true" contentId="mainContent"> 
+      <ion-content>
+        <ion-card>
+          <ion-item>
+            <ion-label>Customer Information</ion-label>
+          </ion-item>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="1">
+                  <ion-icon name="person"></ion-icon>
+                </ion-col>
+                <ion-col size="11">
+                  <ion-text>{{order.b_firstname}} {{order.b_lastname}}
+                    <br/>email: {{order.email}}
+                    <br/>ip-address: {{order.ip_address}}<br/>Phone:{{order.phone}}
+                  </ion-text>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+            <ion-card>
+              <ion-item>
+                <ion-label>Billing Address</ion-label>
+              </ion-item>
+              <ion-card-content>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="1">
+                      <ion-icon name="pricetags"></ion-icon>
+                    </ion-col>
+                    <ion-col size="11">
+                      <ion-text>{{order.b_firstname}} {{order.b_lastname}}
+                        <br/>{{order.b_address}}<br/>{{order.b_city}}, {{order.b_state_descr}} {{order.b_zipcode}}
+                      </ion-text>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-card-content>
+            </ion-card>
+            <ion-card>
+              <ion-item>
+                <ion-label>Shipping Address</ion-label>
+              </ion-item>
+              <ion-card-content>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="1">
+                      <ion-icon name="bus"></ion-icon>
+                    </ion-col>
+                    <ion-col size="11">
+                      <ion-text>{{order.s_firstname}} {{order.s_lastname}}
+                        <br/>{{order.s_address}}<br/>{{order.s_city}}, {{order.s_state_descr}} {{order.s_zipcode}}
+                      </ion-text>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-card-content>
+            </ion-card>
+      </ion-content>
+    </ion-menu>
+</div>
+  <ion-content>
+      <ion-toolbar class="ion-text-center">
+        <ion-buttons class="ion-text-center">
+          <ion-button color="primary"  (click)="cancel()">Back</ion-button>
+          <ion-select interface="popover" placeholder="⚙️" #settingList (ionChange)='changeSetting($event.target.value)'>
+              <ion-select-option value="1">Save and process payment</ion-select-option>
+        </ion-select>
+          <ion-button color="primary"  (click)="saveChanges()">Save</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <div *ngIf="isLoaded">
+        <ion-buttons class="cusInfoBtn"  slot="end">
+          <ion-menu-toggle menu="end">
+              <ion-button>
+                <ion-icon slot="icon-only" ios="ios-person" md="md-person"></ion-icon>
+              </ion-button>
+          </ion-menu-toggle>
+      </ion-buttons>
+        <ion-auto-complete [template]="withFlags" (itemSelected)="handleProductsListChanged($event)" [dataProvider]="autoCompleteDataService"></ion-auto-complete>
+        <ng-template #withFlags let-attrs="attrs">
+          <!-- <ion-img [src]="getImage(product.image_pairs)"></ion-img> -->
+          <ion-text>
+            <a href="#">{{attrs.data.name}}</a>
+          </ion-text>
+        </ng-template>
+      <ion-card *ngFor="let product of products">     
+        <ion-card-content>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              Product
+            </ion-col>
+            <ion-col>
+              <!-- <ion-img [src]="getImage(product.image_pairs)"></ion-img> -->
+              <ion-text>
+                <a href="#">{{product.product}}</a>
+              </ion-text>
+              <ion-text>
+                <p>{{product.product_code}}</p>
+              </ion-text>
+              <ion-text *ngIf="order.points_info !== undefined">
+                <p>Points in Price : {{order.points_info.price | currency:"MMK":"symbol"}}</p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+             Price
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-input [ngModel]='product.price| number' (ngModelChange)="product.price = $event.replace(',', '')"></ion-input><p>MMK</p>
+              </ion-item>
+            </ion-col>
+            <!-- <ion-col>
+            </ion-col> -->
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              Quantity
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-input [(ngModel)]="product.amount"></ion-input>
+              </ion-item>
+            </ion-col>
+            <!-- <ion-col>
+              {{product.amount}}
+            </ion-col> -->
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              <ion-button (click)="removeProduct(product.product_id)" color="danger">Remove</ion-button>
+            </ion-col>
+            <!-- <ion-col>
+              <ion-item>
+                <ion-input [ngModel]='product.price| number' (ngModelChange)="product.price = $event.replace(',', '')"></ion-input><p>MMK</p>
+              </ion-item>
+            </ion-col> -->
+            <!-- <ion-col>
+            </ion-col> -->
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+       
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Total</ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              SubTotal
+            </ion-col>
+            <ion-col>
+                {{order.subtotal | currency:"MMK":"symbol"}}
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              Order Discount<ion-checkbox [(ngModel)]="checkDiscount" color="primary"></ion-checkbox>
+            </ion-col>
+            <ion-col *ngIf="!checkDiscount">
+                {{order.discount | currency:"MMK":"symbol"}}
+            </ion-col>
+            <ion-col *ngIf="checkDiscount">
+              <ion-item>
+                <ion-input [ngModel]='order.discount| number' (ngModelChange)="order.discount = $event.replace(',', '')"></ion-input><p>MMK</p>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              Manually set tax rates<ion-checkbox [(ngModel)]="checkManualTaxRates" color="primary"></ion-checkbox>
+            </ion-col>
+            <ion-col>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              {{order.shipping[0].shipping}} <ion-checkbox color="primary" [(ngModel)]="checkShippingRate"></ion-checkbox>
+            </ion-col>
+            <ion-col *ngIf="!checkShippingRate">
+              {{order.shipping[0].rate | currency:"MMK":"symbol"}}
+          </ion-col>
+          <ion-col *ngIf="checkShippingRate">
+            <ion-item>
+              <ion-input [ngModel]='order.shipping[0].rate| number' (ngModelChange)="order.shipping[0].rate = $event.replace(',', '')"></ion-input><p>MMK</p>
+            </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              Payment surcharge
+            </ion-col>
+            <ion-col>
+                {{order.payment_surcharge | currency:"MMK":"symbol"}}
+            </ion-col>
+          </ion-row>
+                <ion-row class="ion-align-items-start" *ngIf="!checkManualTaxRates" >
+                  <ion-col>
+                    <ion-title>Total cost</ion-title>
+                  </ion-col>
+                  <ion-col>
+                      {{order.total | currency:"MMK":"symbol"}}
+                  </ion-col>
+              </ion-row>
+              <ion-row class="ion-align-items-start" *ngIf="checkManualTaxRates">
+                <ion-col>
+                  <ion-title><ion-button color="primary"><ion-icon name="refresh"></ion-icon>Recaculate Totals </ion-button></ion-title>
+                </ion-col>
+            </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Customer notes</ion-label>
+                <ion-textarea [(ngModel)]="order.notes"></ion-textarea>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Staff only notes</ion-label>
+                <ion-textarea  [(ngModel)]="order.details"></ion-textarea>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              <ion-item>
+                <ion-label>Status</ion-label>
+                <ion-select [(ngModel)]="currentStatus" placeholder="Select One" value="{{order.status}}">
+                  <ion-select-option *ngFor="let status of statuses" value="{{status.status}}">{{status.description}}</ion-select-option>
+                </ion-select>
+              </ion-item>              
+          </ion-col>
+        </ion-row>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Notification</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-item>
+              <ion-label>Notify Customer</ion-label>
+              <ion-checkbox slot="end" [(ngModel)]="this.order.notify_user"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+              <ion-label>Notify Order Department</ion-label>
+              <ion-checkbox slot="end" [(ngModel)]="this.order.notify_department"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+              <ion-label>Notify Vendor</ion-label>
+              <ion-checkbox slot="end" [(ngModel)]="this.order.notify_vendor"></ion-checkbox>
+            </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-content>
