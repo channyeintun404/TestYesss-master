@@ -17,7 +17,8 @@ const routes: Routes = [
   {
     path: 'order-edit',
     loadChildren: () => import('./pages/order-edit/order-edit.module').then( m => m.OrderEditPageModule)
-  },
+  }
+
   // {
   //   path: 'products/:priceRange/:cid',
   //   loadChildren: () => import('./pages/products/products.module').then( m => m.ProductsModule)

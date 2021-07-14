@@ -12,12 +12,12 @@
     <!-- Back to previous page option button -->
     <ion-buttons slot="start">
       <ion-back-button color="white" default-href="" (click)="dismiss()" text="" icon="arrow-round-back">
-      </ion-back-button>
-      
+      </ion-back-button>      
     </ion-buttons>
+    
 
     <!-- Page title -->
-    <ion-title>Add Product</ion-title>
+    <ion-title>Edit Product</ion-title>
    
   </ion-toolbar>
 </ion-header>
@@ -46,16 +46,16 @@
     <form class="ion-padding">
       <!-- Full Name -->
       <ion-item>
-        <ion-input type="text" placeholder="Product Name" name="pname" [(ngModel)]="productName" ></ion-input>
+        <ion-input  type="text" placeholder="Product Name" name="pname" [(ngModel)]="name"  ></ion-input>
       </ion-item>
       <!-- Address 1 -->
       <ion-item class="ion-padding-top">
-        <ion-input type="text" placeholder="Product Code" name="pcode" [(ngModel)]="productCode"></ion-input>
+        <ion-input type="text" placeholder="Product Code" name="pcode" [(ngModel)]="product_code"></ion-input>
       </ion-item>
 
       <!-- Address 2 -->
       <ion-item class="ion-padding-top">
-        <ion-input type="text" placeholder="Price" name="price" [(ngModel)]="productPrice"></ion-input>
+        <ion-input type="text" placeholder="Price" name="price" [(ngModel)]="price"> </ion-input>
       </ion-item>
 
       <ion-row>
@@ -75,20 +75,17 @@
 
       <!-- Zip Code -->
       <ion-item class="ion-padding-top">
-        <ion-textarea rows={6} placeholder="Description" name="des" [(ngModel)]="productDescription"></ion-textarea>
+          <ion-textarea rows={6} placeholder="Description" name="des" [(ngModel)]="description"></ion-textarea>
       </ion-item>
 
       <!-- product category -->
 
-      <ion-item>
+      <!-- <ion-item>
         <ion-label>Category</ion-label>
         <ion-select [(ngModel)]="categoriesByLevel1_id" [ngModelOptions]="{standalone: true}" (cancel)="onCancel()" (ionChange)="level1clickOption(categoriesByLevel1_id)"data-live-search="true">
           <ion-select-option *ngFor="let categories of categories" [value]="categories.id">{{categories.name}}</ion-select-option>
         </ion-select>
       </ion-item>
-      <!-- <div *ngFor="let categoriesByLevel of categoriesByLevel3" >
-        <div *ngIf="categoriesByLevel.parent_id==category_id" ></div>
-      </div> -->
 
       <div *ngIf="categoriesByLevel1_id">
         <div *ngIf="isHaveLevel2Child">
@@ -114,37 +111,18 @@
           </ion-select>
         </ion-item>
       </div>
-      </div>
-
-      <!-- <ion-item class="ion-padding-top">
-        <ion-label>Choose Category</ion-label>
-        <ion-select [(ngModel)]="category_ids" [ngModelOptions]="{standalone: true}">
-          <ion-select-option [value]="260">Men</ion-select-option>
-          <ion-select-option [value]="261">Women</ion-select-option>
-          <ion-select-option [value]="262">Kids</ion-select-option>
-          <ion-select-option [value]="263">Living & Gifts</ion-select-option>          
-          <ion-select-option [value]="264">Holiday & Hobby</ion-select-option>
-          <ion-select-option [value]="399">Office, Jobs & Services</ion-select-option>
-          <ion-select-option [value]="408">Home Application</ion-select-option>
-          <ion-select-option [value]="410">Moblie Phones, Computer & Laptops</ion-select-option>
-          <ion-select-option [value]="409">Electronics</ion-select-option>
-          <ion-select-option [value]="450">Medicine, Health & Nutrition Supplyment</ion-select-option>
-          <ion-select-option [value]="440">Group Buy</ion-select-option>
-          <ion-select-option [value]="271">Marketplace</ion-select-option>
-          <ion-select-option [value]="255">Textile</ion-select-option>
-        </ion-select>
-      </ion-item> -->
-
+      </div>  -->
       <!-- Status -->
       <ion-item class="ion-padding-top">
         <ion-label>Choose Status</ion-label>
-        <ion-select [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
-          <ion-select-option [value]="A">Active</ion-select-option>
-          <ion-select-option [value]="D">Disable</ion-select-option>
-          <ion-select-option [value]="H">Hidden</ion-select-option>
+        <ion-select [(ngModel)]="status" [ngModelOptions]="{standalone: true}" value="status">
+          <ion-select-option value="A">Active</ion-select-option>
+          <ion-select-option value="D">Disable</ion-select-option>
+          <ion-select-option value="H">Hidden</ion-select-option>
           
         </ion-select>
-      </ion-item>
+      </ion-item>      
+
 
     </form>
   </div>
@@ -155,7 +133,7 @@
     <ion-list>
       <ion-item-sliding *ngFor="let f of files">
         <ion-item (click)="openFile(f)">
-          <ion-icon name="image" slot="start" *ngIf="f.name.endsWith('jpg')"></ion-icon>s         
+          <ion-icon name="image" slot="start" *ngIf="f.name.endsWith('jpg')"></ion-icon>        
    
           <ion-label class="ion-text-wrap">
             {{ f.name }}
@@ -237,7 +215,7 @@
 
     <!-- Go To Products Page Button Option  -->
     <!-- This Option will be visible on Step 3 -->
-    <ion-button *ngIf="steps[2].isSelected" color="color1" expand="block" (click)="gotoProductsPage()">Go Back To Products
+    <ion-button *ngIf="steps[2].isSelected" color="color1" expand="block" (click)="saveChanges()">Save Changes
     </ion-button>
   </ion-toolbar>
 </ion-footer>

@@ -14,9 +14,14 @@
       <ion-back-button color="white" default-href="" (click)="dismiss()" text="" icon="arrow-round-back">
       </ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="white" (click)="resetPage()">
+          <ion-icon name="refresh"></ion-icon>
+      </ion-button>
+      </ion-buttons>
 
     <!-- Title -->
-    <ion-title></ion-title>
+    <ion-title>Product Details</ion-title>
 
     <!-- Cart Page Button -->
     <!-- <ion-buttons slot="end">
@@ -29,8 +34,9 @@
 
 
 <!-- Main Contents of Page -->
-<ion-content id="product-details" fullscreen>
 
+<ion-content id="product-details" fullscreen>
+  
   <!-- Slider of Product Images -->
   <ion-slides pager="true" [options]="slideOpts">
     <ion-slide *ngFor="let item of images">
@@ -45,13 +51,13 @@
       </ion-fab> -->
     </ion-slide>
   </ion-slides>
-
+  
   <!-- Product Price -->
   <ion-row class="ion-padding">
     <ion-text color="color1" class="price">${{discountPrice}} USD &nbsp;</ion-text>
     <span class="previous-price"> ${{price}}</span>
   </ion-row>
-
+  <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event)"></ion-refresher>
   <!-- Product Name -->
   <ion-row class="ion-padding-start product-name">
     <ion-text>{{name}}</ion-text>
@@ -97,11 +103,12 @@
 </ion-content>
 
 
+
 <!-- Footer -->
 <ion-footer no-border>
   <ion-toolbar class="ion-padding" transparent>
     <!-- Add To Cart Button -->
-    <ion-button class="add-to-cart" color="color1" expand="block">EDIT PRODUCT
+    <ion-button class="add-to-cart" color="color1" expand="block" (click)="goToProductEditPage()">EDIT PRODUCT
     </ion-button>
   </ion-toolbar>
 </ion-footer>

@@ -38,6 +38,7 @@ export class ProductsService extends AppService {
   }
 
   getProductById(id) {
+    console.log("id is ="+id)
     return new Promise((resolve)=>{
       this.get(id).subscribe(productDetail=> {
         resolve(productDetail);

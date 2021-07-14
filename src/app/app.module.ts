@@ -21,18 +21,28 @@ import { currentOrderReducer, currentProductsReducer } from './pages/order-detai
 import { AutoCompleteModule } from 'ionic4-auto-complete';
 import {productListReducer} from './pages/products/products.reducer';
 import { orderListReducer } from './pages/orders/orders.reducer';
+import { ProductEditComponent } from './pages/product-edit/product-edit.component';
 
-import { Camera } from '@ionic-native/Camera/ngx';
+// import { Camera } from '@ionic-native/Camera/ngx';
+// import { File } from '@ionic-native/File/ngx';
+// import { WebView } from '@ionic-native/ionic-webview/ngx';
+// import { FilePath } from '@ionic-native/file-path/ngx';
+
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { File } from '@ionic-native/File/ngx';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
-import { FilePath } from '@ionic-native/file-path/ngx';
+import { MediaCapture } from '@ionic-native/media-capture/ngx';
+import { Media } from '@ionic-native/media/ngx';
+import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 @NgModule({
   declarations: [AppComponent,
     ProductDetailsComponent,
+    ProductEditComponent,
     CartComponent,
     CheckoutComponent],
   entryComponents: [ProductDetailsComponent,
+    ProductEditComponent,
     CartComponent,
     CheckoutComponent],
   imports: [AutoCompleteModule,BrowserModule,StoreModule.forRoot({ currentOrder: currentOrderReducer,
@@ -48,10 +58,12 @@ import { FilePath } from '@ionic-native/file-path/ngx';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     
-    Camera,
+    ImagePicker,
+    MediaCapture,
     File,
-    WebView,
-    FilePath
+    Media,
+    StreamingMedia,
+    PhotoViewer
   ],
   bootstrap: [AppComponent]
 })

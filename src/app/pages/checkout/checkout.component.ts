@@ -15,18 +15,22 @@ import { Product } from 'src/app/models/product.model';
 import { Category } from '../../models/category.model';
 import { CategoryService } from '../../services/category.service';
 import { ActivatedRoute } from '@angular/router';
-import { ProductsComponent } from '../products/products.component';
-
-import { File, FileEntry } from '@ionic-native/File/ngx';
 import { HttpClient } from '@angular/common/http';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
-import { Storage } from '@ionic/storage';
-import { FilePath } from '@ionic-native/file-path/ngx';
-import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/ngx';
 import { ActionSheetController, ToastController, Platform, LoadingController } from '@ionic/angular';
 import { finalize } from 'rxjs/operators';
 
-const STORAGE_KEY = 'my_images';
+import { ImagePicker ,ImagePickerOptions } from '@ionic-native/image-picker/ngx';
+import {
+  MediaCapture,
+  MediaFile,
+  CaptureError
+} from '@ionic-native/media-capture/ngx';
+import { File, FileEntry } from '@ionic-native/File/ngx';
+import { Media, MediaObject } from '@ionic-native/media/ngx';
+import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+
+const MEDIA_FOLDER_NAME = 'my_media';
 
 @Injectable({
   providedIn : 'root'
@@ -41,7 +45,8 @@ const STORAGE_KEY = 'my_images';
    steps: any = [];
    cards: any = [];
 
-   images = [];
+   files = [];
+   images:any[];
 
    products : Product[];
    categories: Category[];
@@ -68,18 +73,38 @@ const STORAGE_KEY = 'my_images';
     private categoryService: CategoryService,
     private route: ActivatedRoute,
      private router: Router,
-     private productService : ProductsService,
-     private camera: Camera, private file: File, private http: HttpClient, private webview: WebView,
-    private actionSheetController: ActionSheetController, private toastController: ToastController,
-    private storage: Storage, private platform: Platform, private loadingController: LoadingController,
-    private ref: ChangeDetectorRef, private filePath: FilePath) { }
+     private productService : ProductsService, private http: HttpClient,
+    private imagePicker: ImagePicker,
+    private mediaCapture: MediaCapture,
+    private file: File,
+    private media: Media,
+    private streamingMedia: StreamingMedia,
+    private photoViewer: PhotoViewer,
+    private actionSheetController: ActionSheetController,
+    private platfrom: Platform) { }
  
    ngOnInit() {
     this.getCategories();
     this.getLevel2Categories();
 
-    this.platform.ready().then(() => {
-      this.loadStoredImages();
+    this.imagePicker.hasReadPermission().then((val)=>{
+      if(val == false){
+        this.imagePicker.requestReadPermission();
+      }
+    },(err)=>{
+      this.imagePicker.requestReadPermission();
+    })
+
+    this.platfrom.ready().then(() => {
+      let path = this.file.dataDirectory;
+      this.file.checkDir(path, MEDIA_FOLDER_NAME).then(
+        () => {
+          this.loadFiles();
+        },
+        err => {
+          this.file.createDir(path, MEDIA_FOLDER_NAME, false);
+        }
+      );
     });
 
 
@@ -221,192 +246,130 @@ level3ClickOption(categoriesByLevel3_id){
       }   
 
       //image
-      loadStoredImages() {
-        this.storage.get(STORAGE_KEY).then(images => {
-          if (images) {
-            let arr = JSON.parse(images);
-            this.images = [];
-            for (let img of arr) {
-              let filePath = this.file.dataDirectory + img;
-              let resPath = this.pathForImage(filePath);
-              this.images.push({ name: img, path: resPath, filePath: filePath });
-            }
-          }
-        });
+      loadFiles() {
+        this.file.listDir(this.file.dataDirectory, MEDIA_FOLDER_NAME).then(
+          res => {
+            this.files = res;
+          },
+          err => console.log('error loading files: ', err)
+        );
       }
+    
+      async selectMedia() {
+        const actionSheet = await this.actionSheetController.create({
+          header: 'What would you like to add?',
+          buttons: [
+            {
+              text: 'Capture Image',
+              handler: () => {
+                this.captureImage();
+              }
+            },            
+            {
+              text: 'Load multiple',
+              handler: () => {
+                this.pickImages();
+              }
+            },
+            {
+              text: 'Cancel',
+              role: 'cancel'
+            }
+          ]
+        });
+        await actionSheet.present();
+      }
+     
+      pickImages() {
+        //this code are fine for ios but not android
+        // this.imagePicker.getPictures({}).then(
+        //   results => {
+        //     for (var i = 0; i < results.length; i++) {
+        //       this.copyFileToLocalDir(results[i]);
+        //     }
+        //   }
+        // );
+
+        let options: ImagePickerOptions={
+          maximumImagesCount:10,
+          outputType:1
+          
+        }
+  
+        this.imagePicker.getPictures(options).then((res)=>{
+          for(var i =0; i<res.length;i++){
+            this.copyFileToLocalDir(res[i]);
+            let base64OfImage= "data:image/png;base64"+res[i]
+            this.images.push(base64OfImage)
+          }
+        },(err)=>{
+          alert(JSON.stringify(err))
+        })
+     
+    
+      }
+     
+      captureImage() {
+        this.mediaCapture.captureImage().then(
+          (data: MediaFile[]) => {
+            if (data.length > 0) {
+              this.copyFileToLocalDir(data[0].fullPath);
+            }
+          },
+          (err: CaptureError) => console.error(err)
+        );
+      }     
 
 
-      pathForImage(img) {
-        if (img === null) {
-          return '';
-        } else {
-          let converted = this.webview.convertFileSrc(img);
-          return converted;
+      copyFileToLocalDir(fullPath) {
+        let myPath = fullPath;
+        // Make sure we copy from the right location
+        if (fullPath.indexOf('file://') < 0) {
+          myPath = 'file://' + fullPath;
+        }
+     
+        const ext = myPath.split('.').pop();
+        const d = Date.now();
+        const newName = `${d}.${ext}`;
+     
+        const name = myPath.substr(myPath.lastIndexOf('/') + 1);
+        const copyFrom = myPath.substr(0, myPath.lastIndexOf('/') + 1);
+        const copyTo = this.file.dataDirectory + MEDIA_FOLDER_NAME;
+     
+        this.file.copyFile(copyFrom, name, copyTo, newName).then(
+          success => {
+            this.loadFiles();
+          },
+          error => {
+            console.log('error: ', error);
+          }
+        );
+      }
+     
+      openFile(f: FileEntry) {
+        if (f.name.indexOf('.wav') > -1) {
+          // We need to remove file:/// from the path for the audio plugin to work
+          const path =  f.nativeURL.replace(/^file:\/\//, '');
+          const audioFile: MediaObject = this.media.create(path);
+          audioFile.play();
+        } else if (f.name.indexOf('.MOV') > -1 || f.name.indexOf('.mp4') > -1) {
+          // E.g: Use the Streaming Media plugin to play a video
+          this.streamingMedia.playVideo(f.nativeURL);
+        } else if (f.name.indexOf('.jpg') > -1) {
+          // E.g: Use the Photoviewer to present an Image
+          this.photoViewer.show(f.nativeURL, 'MY awesome image');
         }
       }
      
-      async presentToast(text) {
-        const toast = await this.toastController.create({
-            message: text,
-            position: 'bottom',
-            duration: 3000
-        });
-        toast.present();
+      deleteFile(f: FileEntry) {
+        const path = f.nativeURL.substr(0, f.nativeURL.lastIndexOf('/') + 1);
+        this.file.removeFile(path, f.name).then(() => {
+          this.loadFiles();
+        }, err => console.log('error remove: ', err));
       }
 
 
-      async selectImage() {
-        const actionSheet = await this.actionSheetController.create({
-            header: "Select Image source",
-            buttons: [{
-                    text: 'Load from Library',
-                    handler: () => {
-                        this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
-                    }
-                },
-                {
-                    text: 'Use Camera',
-                    handler: () => {
-                        this.takePicture(this.camera.PictureSourceType.CAMERA);
-                    }
-                },
-                {
-                    text: 'Cancel',
-                    role: 'cancel'
-                }
-            ]
-        });
-        await actionSheet.present();
-    }
-     
-    takePicture(sourceType: PictureSourceType) {
-        var options: CameraOptions = {
-            quality: 100,
-            sourceType: sourceType,
-            saveToPhotoAlbum: false,
-            correctOrientation: true
-        };
-     
-        this.camera.getPicture(options).then(imagePath => {
-            if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
-                this.filePath.resolveNativePath(imagePath)
-                    .then(filePath => {
-                        let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-                        let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-                        this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-                    });
-            } else {
-                var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-                var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-                this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-            }
-        });
-     
-    }
-
-
-    createFileName() {
-      var d = new Date(),
-          n = d.getTime(),
-          newFileName = n + ".jpg";
-      return newFileName;
-  }
-   
-  copyFileToLocalDir(namePath, currentName, newFileName) {
-      this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
-          this.updateStoredImages(newFileName);
-      }, error => {
-          this.presentToast('Error while storing file.');
-      });
-  }
-   
-  updateStoredImages(name) {
-      this.storage.get(STORAGE_KEY).then(images => {
-          let arr = JSON.parse(images);
-          if (!arr) {
-              let newImages = [name];
-              this.storage.set(STORAGE_KEY, JSON.stringify(newImages));
-          } else {
-              arr.push(name);
-              this.storage.set(STORAGE_KEY, JSON.stringify(arr));
-          }
-   
-          let filePath = this.file.dataDirectory + name;
-          let resPath = this.pathForImage(filePath);
-   
-          let newEntry = {
-              name: name,
-              path: resPath,
-              filePath: filePath
-          };
-   
-          this.images = [newEntry, ...this.images];
-          this.ref.detectChanges(); // trigger change detection cycle
-      });
-  }
-
-
-  deleteImage(imgEntry, position) {
-    this.images.splice(position, 1);
- 
-    this.storage.get(STORAGE_KEY).then(images => {
-        let arr = JSON.parse(images);
-        let filtered = arr.filter(name => name != imgEntry.name);
-        this.storage.set(STORAGE_KEY, JSON.stringify(filtered));
- 
-        var correctPath = imgEntry.filePath.substr(0, imgEntry.filePath.lastIndexOf('/') + 1);
- 
-        this.file.removeFile(correctPath, imgEntry.name).then(res => {
-            this.presentToast('File removed.');
-        });
-    });
-}
-
-
-startUpload(imgEntry) {
-  this.file.resolveLocalFilesystemUrl(imgEntry.filePath)
-      .then(entry => {
-          ( < FileEntry > entry).file(file => this.readFile(file))
-      })
-      .catch(err => {
-          this.presentToast('Error while reading file.');
-      });
-}
-
-readFile(file: any) {
-  const reader = new FileReader();
-  reader.onload = () => {
-      const formData = new FormData();
-      const imgBlob = new Blob([reader.result], {
-          type: file.type
-      });
-      formData.append('file', imgBlob, file.name);
-      this.uploadImageData(formData);
-  };
-  reader.readAsArrayBuffer(file);
-}
-
-async uploadImageData(formData: FormData) {
-  const loading = await this.loadingController.create({
-      message: 'Uploading image...',
-  });
-  await loading.present();
-
-  this.http.post("http://localhost:8888/upload.php", formData)
-      .pipe(
-          finalize(() => {
-              loading.dismiss();
-          })
-      )
-      .subscribe(res => {
-          if (res['success']) {
-              this.presentToast('File upload complete.')
-          } else {
-              this.presentToast('File upload failed.')
-          }
-      });
-}
-
+    
    // Back to previous screen
    dismiss() {
      this.modalController.dismiss({

@@ -10,6 +10,8 @@ import { Product } from '../../models/product.model';
 import { StorageService } from '../../services/storage.service';
 import { CartComponent } from '../cart/cart.component';
 import { ModalController } from '@ionic/angular';
+import { ProductEditComponent } from '../product-edit/product-edit.component';
+import { ProductsService } from '../../services/products.service';
 
 @Component({
   selector: 'app-product-details',
@@ -19,14 +21,14 @@ import { ModalController } from '@ionic/angular';
 export class ProductDetailsComponent implements OnInit {
 
   @Input() id: number;
-  @Input() name: String;
-  @Input() description: String;
-  @Input() price: number;
-  @Input() discountPrice: number;
-  @Input() images: Array<String>;
-  @Input() size: Array<String>;
-  @Input() color: Array<String>;
-  @Input() isWishlist: boolean;
+  name: String;
+  description: String;
+  price: number;
+  discountPrice: number;
+  images: Array<String>;
+  size: Array<String>;
+  color: Array<String>;
+  isWishlist: boolean;
 
   products: Product;
 
@@ -43,10 +45,14 @@ export class ProductDetailsComponent implements OnInit {
   };
 
   constructor(public modalController: ModalController,
-    public storageService: StorageService) {
+    public storageService: StorageService,
+    private productsService : ProductsService) {
   }
 
-  ngOnInit() {
+  ngOnInit() {    
+    this.getProductById()
+    this.addToCart();
+    console.log(this.name)
   }
 
   // Add to Cart Function
@@ -77,6 +83,37 @@ export class ProductDetailsComponent implements OnInit {
     return await modal.present();
   }
 
+  async goToProductEditPage(){
+    const modal = await this.modalController.create({
+      component: ProductEditComponent,
+      componentProps: this.products
+    });
+    return await modal.present();
+  }
+
+  getProductById(){
+    console.log("id is ="+this.id)
+  
+    this.productsService.getProductById(this.id).then( res=>{
+      console.log(res);
+      this.name = res['product']
+      this.price = res['price']  
+    })
+  }
+ //resetData
+ resetPage(){
+  this.getProductById()
+}
+
+  refreshPage(event){
+    this.getProductById()
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
+
+  
   // Back to previous page function
   dismiss() {
     this.modalController.dismiss({
