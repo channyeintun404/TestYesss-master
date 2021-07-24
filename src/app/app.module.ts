@@ -35,6 +35,9 @@ import { Media } from '@ionic-native/media/ngx';
 import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
+import {CloudinaryModule} from '@cloudinary/angular';
+
+
 @NgModule({
   declarations: [AppComponent,
     ProductDetailsComponent,
@@ -49,9 +52,11 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
      currentProducts: currentProductsReducer,
      productList: productListReducer,
      orderList: orderListReducer,
+     
   }), IonicModule.forRoot(), AppRoutingModule, HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
+    CloudinaryModule,
      IonicStorageModule.forRoot()],
   providers: [
     StatusBar,

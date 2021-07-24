@@ -86,9 +86,6 @@
           <ion-select-option *ngFor="let categories of categories" [value]="categories.id">{{categories.name}}</ion-select-option>
         </ion-select>
       </ion-item>
-      <!-- <div *ngFor="let categoriesByLevel of categoriesByLevel3" >
-        <div *ngIf="categoriesByLevel.parent_id==category_id" ></div>
-      </div> -->
 
       <div *ngIf="categoriesByLevel1_id">
         <div *ngIf="isHaveLevel2Child">
@@ -115,25 +112,6 @@
         </ion-item>
       </div>
       </div>
-
-      <!-- <ion-item class="ion-padding-top">
-        <ion-label>Choose Category</ion-label>
-        <ion-select [(ngModel)]="category_ids" [ngModelOptions]="{standalone: true}">
-          <ion-select-option [value]="260">Men</ion-select-option>
-          <ion-select-option [value]="261">Women</ion-select-option>
-          <ion-select-option [value]="262">Kids</ion-select-option>
-          <ion-select-option [value]="263">Living & Gifts</ion-select-option>          
-          <ion-select-option [value]="264">Holiday & Hobby</ion-select-option>
-          <ion-select-option [value]="399">Office, Jobs & Services</ion-select-option>
-          <ion-select-option [value]="408">Home Application</ion-select-option>
-          <ion-select-option [value]="410">Moblie Phones, Computer & Laptops</ion-select-option>
-          <ion-select-option [value]="409">Electronics</ion-select-option>
-          <ion-select-option [value]="450">Medicine, Health & Nutrition Supplyment</ion-select-option>
-          <ion-select-option [value]="440">Group Buy</ion-select-option>
-          <ion-select-option [value]="271">Marketplace</ion-select-option>
-          <ion-select-option [value]="255">Textile</ion-select-option>
-        </ion-select>
-      </ion-item> -->
 
       <!-- Status -->
       <ion-item class="ion-padding-top">
@@ -180,29 +158,68 @@
       </ion-row>
     </ion-grid>
 
-    <ion-footer>
-      <ion-toolbar color="primary">
-        <ion-button fill="clear" expand="full" (click)="selectMedia()">
-          <ion-icon slot="start" name="document"></ion-icon>
-          Select Media
-        </ion-button>
-      </ion-toolbar>
-    </ion-footer>
-
-    <!-- Payment Card Options -->
-    <!-- <ion-radio-group>
-      <ion-row>
-        <ion-col *ngFor="let item of cards">
-          <ion-item lines="none">
-            <ion-radio color="color1" mode="ios" [value]="item"></ion-radio>
-            <img [src]="item">
-          </ion-item>
+    <input type="file" (change)= "onFileSelected($event)" multiple >
+    <button type="button" (click)="onUpload()">Upload</button>
+    <ion-grid>
+      <ion-row *ngIf="isOption">
+        <ion-col size="2">
+          Pos 
+        </ion-col >
+        <ion-col size="3">
+          Name
+        </ion-col>
+        <ion-col size="2">
+          Status
+        </ion-col>
+        <ion-col size="2">     
+                           
+        </ion-col>
+        <ion-col size="3">
+          
         </ion-col>
       </ion-row>
-    </ion-radio-group> -->
-
-    <!-- Card Information Form -->
+       <div *ngFor="let option of options">
+      <ion-row *ngFor="let variant of option.variant_name">
+        <ion-input type="text" hidden="true" [(ngModel)]="option.option_id"></ion-input>
+        <ion-col size="2">
+          <ion-input type="text"  [(ngModel)]="option.position"></ion-input>
+        </ion-col >
+        <ion-col size="3">
+          <ion-input type="text"  [(ngModel)]="variant"></ion-input>
+        </ion-col>
+        <ion-col size="2">
+          <ion-input type="text"  [(ngModel)]="option.status"></ion-input>
+        </ion-col>
+        <ion-col size="2">     
+                           
+        </ion-col>
+        <ion-col size="3">
+          <ion-icon  ios="ios-add-circle" md="md-add-circle" (click)="openAddRow()" style="margin-right: 10px;"></ion-icon> 
+          <ion-icon name="construct"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </div>
     
+      <ion-row *ngIf="addOption" >
+        <ion-col size="2">
+          <ion-input type="text" placeholder="postion" [(ngModel)]="optionPostion"> </ion-input>
+        </ion-col >
+        <ion-col size="3">
+          <ion-input type="text" placeholder="optionName" [(ngModel)]="optionName"></ion-input>
+        </ion-col>
+        <ion-col size="2">
+          <ion-input type="text" placeholder="optionStatus" [(ngModel)]="optionStatus"></ion-input>
+        </ion-col>
+        <ion-col size="2">     
+                           
+        </ion-col>
+        <ion-col size="3">
+          <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" (click)="updateOption()" style="margin-top: 10px; font-size: 18px; margin-right: 10px;"></ion-icon>
+          <ion-icon ios="ios-close-circle" md="md-close-circle" style="margin-top: 10px; font-size: 18px;" (click)="closeAddRow()"></ion-icon>
+        </ion-col>
+      </ion-row>
+  </ion-grid>
+  <ion-button color="tertiary" (click)="createProduct()">Add Options</ion-button>
   </div>
 
   <!-- Payment Complete Section -->

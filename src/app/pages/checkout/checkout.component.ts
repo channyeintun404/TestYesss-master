@@ -30,6 +30,12 @@ import { Media, MediaObject } from '@ionic-native/media/ngx';
 import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
+import axios from 'axios';
+import { image } from '@cloudinary/base/qualifiers/source';
+
+import { Option } from 'src/app/models/option.model';
+import { OptionsService } from 'src/app/services/options.service';
+
 const MEDIA_FOLDER_NAME = 'my_media';
 
 @Injectable({
@@ -42,11 +48,27 @@ const MEDIA_FOLDER_NAME = 'my_media';
    styleUrls: ['./checkout.component.scss'],
  })
  export class CheckoutComponent implements OnInit {
+
+  selectedFile: any;
    steps: any = [];
    cards: any = [];
 
    files = [];
    images:any[];
+   imagesURl : any
+   urls : any [];
+
+   //option
+   newProductId: any;
+   options : Option[];
+   addOption: boolean;
+   isOption: boolean;
+   optionId: any;
+   optionPostion :  string="";
+   optionName : string="";
+   optionStatus: string="";
+   variantnameArray: any[];
+
 
    products : Product[];
    categories: Category[];
@@ -68,12 +90,16 @@ const MEDIA_FOLDER_NAME = 'my_media';
    status: string="";
    base_price: string="";
    list_price: string="";
+   product_size : string="";
+   product_color : string="";
    
    constructor(public modalController: ModalController,
     private categoryService: CategoryService,
     private route: ActivatedRoute,
-     private router: Router,
-     private productService : ProductsService, private http: HttpClient,
+    private router: Router,
+    private productService : ProductsService,
+    private optionsService : OptionsService,
+    private http: HttpClient,
     private imagePicker: ImagePicker,
     private mediaCapture: MediaCapture,
     private file: File,
@@ -95,17 +121,17 @@ const MEDIA_FOLDER_NAME = 'my_media';
       this.imagePicker.requestReadPermission();
     })
 
-    this.platfrom.ready().then(() => {
-      let path = this.file.dataDirectory;
-      this.file.checkDir(path, MEDIA_FOLDER_NAME).then(
-        () => {
-          this.loadFiles();
-        },
-        err => {
-          this.file.createDir(path, MEDIA_FOLDER_NAME, false);
-        }
-      );
-    });
+    // this.platfrom.ready().then(() => {
+    //   let path = this.file.dataDirectory;
+    //   this.file.checkDir(path, MEDIA_FOLDER_NAME).then(
+    //     () => {
+    //       this.loadFiles();
+    //     },
+    //     err => {
+    //       this.file.createDir(path, MEDIA_FOLDER_NAME, false);
+    //     }
+    //   );
+    // });
 
 
      // Checkout steps   
@@ -218,7 +244,8 @@ level3ClickOption(categoriesByLevel3_id){
  
    // Go to product page
    gotoProductsPage() {
-     this.createProduct();
+     this.createProduct();     
+    // console.log("***"+this.imagesURl)
      console.log(this.category_ids)
      this.dismiss();
      this.router.navigate(['/tabs/products']);
@@ -226,6 +253,7 @@ level3ClickOption(categoriesByLevel3_id){
  
    //Create Product
    createProduct(){
+     console.log("image url is "+ this.imagesURl)
     this.productService.createProduct(
       {        
         "product": this.productName,
@@ -235,6 +263,20 @@ level3ClickOption(categoriesByLevel3_id){
         "base_price":parseInt(this.base_price),
         "list_price":parseInt(this.list_price),
         "status": this.status,
+        "main_pair": {
+          "image_id": "0",
+          "position": "0",
+          "detailed": {
+              "object_type": "product",
+              "type": "M",
+              "image_path": this.imagesURl,
+              "alt": "",
+              "image_x": "711",
+              "image_y": "950",
+              "http_image_path": this.imagesURl,
+              "https_image_path": this.imagesURl
+          }
+      },
         "company_id": 13,        
         "main_category": 275,
         "discountPrice": 50000,
@@ -242,8 +284,81 @@ level3ClickOption(categoriesByLevel3_id){
         "min_qty":1,//for no image upload
         "quantity": 1,
         "isWishlist": true
-       })
+       }).then((resp: any) => {
+       
+        this.newProductId= resp
+        // console.log("new id "+this.newProductId);
+        this.createProductOptions();
+      })
+      this.isOption=true
       }   
+
+      createProductOptions(){
+        this.optionsService.createProductOptions({
+          "product_id": this.newProductId,
+          "option_name": "Color",
+          "option_type": "S",
+          "variants": {
+            "12": {
+              "variant_id": "12",
+              "option_id": "3",
+              "position": "10",
+              "modifier": "0.000",
+              "modifier_type": "A",
+              "weight_modifier": "0.000",
+              "weight_modifier_type": "A",
+              "point_modifier": "0.000",
+              "point_modifier_type": "A",
+              "variant_name": "White",
+              "image_pair": []
+            } 
+          }
+
+        }).then((resp: any) => {       
+        console.log("add option id"+resp['option_id'])
+        this.optionId = resp['option_id']
+        this.getOptionsById(resp['option_id'])
+        })
+      }
+
+      getOptionsById(option_id){
+        this.optionsService.getOptionsById(option_id).then((res: any) => {
+          this.options=[];
+          
+          this.variantnameArray=[]
+          for (const variant of Object.values(res['variants'])) {
+              // imagesArr.push(img['detailed']['image_path']);
+              // console.log("variant are "+variant['variant_name'])
+              this.variantnameArray.push(variant['variant_name'])
+              console.log("variant are "+this.variantnameArray)
+            }  
+
+          // console.log("this getopiton res"+JSON.stringify(resp));
+          this.options.push({
+              option_id : parseInt( res['option_id']),
+              option_name:  res['option_name'],
+              product_id:parseInt( res['product_id']),
+              position: parseInt( res['position']),
+              status:res['status'],
+              variant_name:this.variantnameArray
+          })
+          console.log("this get opiton is "+JSON.stringify(this.options))
+          console.log("variants name are "+JSON.stringify(this.variantnameArray))
+        })
+      }    
+
+
+      //add and update option
+      updateOption(){
+        this.variantnameArray.push(this.optionName)
+        console.log(this.variantnameArray)
+        this.optionsService.updateOptions(this.optionId,{
+          "variants": {             
+            "1":{
+                "variant_name" : this.optionName
+             }}
+        })
+      }
 
       //image
       loadFiles() {
@@ -368,8 +483,64 @@ level3ClickOption(categoriesByLevel3_id){
         }, err => console.log('error remove: ', err));
       }
 
+      onFileSelected(event){
+        // console.log(event)
+        this.selectedFile = <File> event.target.files[0];
 
+        // for(let file of this.selectedFile){
+        //   this.urls=file
+        // }
+      //   if(this.selectedFile){
+      //     for(let file of this.selectedFile){
+      //       let reader = new FileReader();
+      //       reader.onload = (e: any) => {
+      //         this.urls.push(e.target.result);
+      //     }
+      //   }
+      // }
+        console.log(this.selectedFile)
+      }
+
+
+      //upload images
+      onUpload(){
+        const fd = new FormData();
+        fd.append('file',this.selectedFile)
+        fd.append("upload_preset", "my-preset"); 
+
+        axios({
+          url:'https://api.cloudinary.com/v1_1/u1textile/image/upload',
+          method: 'POST',
+          headers:{
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },data:fd
+        }).then((res: any) => {
+            console.log(res)
+            this.imagesURl= res.data.url        
+          }).catch(function(err){
+                console.error(err)
+              });           
+      }    
+  
+      ChooseProductColor(product_color){
+        // console.log("product size "+product_color)
+        this.getProductOptions()
+      }
+      
+      getProductOptions(){
+        this.productService.getProductsOptions('262').then((resp: any) => {
+          console.log(resp);
+        })
+      }
     
+      //open and closez
+      openAddRow(){        
+        this.addOption=true;         
+      }
+      closeAddRow(){
+        this.addOption=false;
+      }
+
    // Back to previous screen
    dismiss() {
      this.modalController.dismiss({

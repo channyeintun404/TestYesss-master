@@ -20,14 +20,21 @@ export class ProductsService extends AppService {
     console.log(data);
     return new Promise((resolve)=>{
       this.create(data).subscribe(res=>{
-        console.log(res);
+        // console.log("add res "+JSON.stringify(res));
+        resolve(res["product_id"]);
       })
     })
   }
 
-  //  createProduct(data:any):Observable <any>{
-  //   return  this.http.post<any>('http://www.yesss.com.mm/api.php?_d=products', data);  
-  // }
+  createProductOptions(data:any){
+    console.log(data);
+    return new Promise((resolve)=>{
+      this.createOptions(data).subscribe(res=>{
+        // console.log("add res "+JSON.stringify(res));
+        resolve(res);
+      })
+    })
+  }
 
   updateProduct(id: number,data:any){
     return new Promise((resolve)=>{
@@ -44,6 +51,16 @@ export class ProductsService extends AppService {
         resolve(productDetail);
       });
     })
+  }
+
+
+  getProductsOptions(pid) {
+    return new Promise((resolve) => {
+      this.getOptionByQueryString('options&product_id=' + pid).subscribe(res => {
+        console.log(res);
+        resolve(res);
+       });
+    });
   }
 
   getProducts(cid) {

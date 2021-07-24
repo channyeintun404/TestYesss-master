@@ -48,6 +48,14 @@ export class AppService {
     return this.http.get(this.apiURL, this.httpOptions);
   }
 
+  public getOptionByQueryString(queryString: string) {
+    return this.http.get("http://www.yesss.com.mm/api.php?_d=" + queryString, this.httpOptions);
+  }
+
+  public createOptions(data: any): Observable<any> {
+    return this.http.post("http://www.yesss.com.mm/api.php?_d=options", data, this.httpOptions);
+  }
+
   public getByQueryString(queryString: string) {
     return this.http.get(this.apiURL + '&' + queryString, this.httpOptions);
   }
