@@ -158,8 +158,20 @@
       </ion-row>
     </ion-grid>
 
-    <input type="file" (change)= "onFileSelected($event)" multiple >
-    <button type="button" (click)="onUpload()">Upload</button>
+
+    <ion-grid>
+      <ion-row *ngFor="let image of imagesArray;let last = last;">
+        <ion-col size="9">
+          <input type="file" (change)= "onFileSelected($event)" accept="image/*">
+        </ion-col >       
+        <ion-col size="3" *ngIf="last">
+          <ion-icon name="cloud-upload" (click)="onUpload()" style="margin-right: 13px;"></ion-icon>
+          <!-- <button type="button" (click)="onUpload()">Upload</button> -->
+          <ion-icon *ngIf="addImage"   ios="ios-add-circle" md="md-add-circle" (click)="openAddImageRow()" ></ion-icon> 
+        </ion-col>
+     </ion-row>
+    </ion-grid>
+    
     <ion-grid>
       <ion-row *ngIf="isOption">
         <ion-col size="2">
@@ -179,23 +191,24 @@
         </ion-col>
       </ion-row>
        <div *ngFor="let option of options">
-      <ion-row *ngFor="let variant of option.variant_name">
+      <ion-row *ngFor="let variants of variant">
         <ion-input type="text" hidden="true" [(ngModel)]="option.option_id"></ion-input>
+        <ion-input type="text" hidden="true" [(ngModel)]="variants.id"></ion-input>
         <ion-col size="2">
-          <ion-input type="text"  [(ngModel)]="option.position"></ion-input>
+          <ion-input type="text"  [(ngModel)]="variants.position"></ion-input>
         </ion-col >
         <ion-col size="3">
-          <ion-input type="text"  [(ngModel)]="variant"></ion-input>
+          <ion-input type="text"  [(ngModel)]="variants.variant_name"></ion-input>
         </ion-col>
         <ion-col size="2">
-          <ion-input type="text"  [(ngModel)]="option.status"></ion-input>
+          <ion-input type="text"  [(ngModel)]="variants.status"></ion-input>
         </ion-col>
         <ion-col size="2">     
                            
         </ion-col>
         <ion-col size="3">
           <ion-icon  ios="ios-add-circle" md="md-add-circle" (click)="openAddRow()" style="margin-right: 10px; margin-top: 10px;" ></ion-icon> 
-          <ion-icon name="construct" style="margin-top: 10px;"></ion-icon>
+          <ion-icon name="construct" style="margin-top: 10px;" (click)="updateOption()"></ion-icon>
         </ion-col>
       </ion-row>
     </div>
@@ -218,8 +231,7 @@
           <ion-icon ios="ios-close-circle" md="md-close-circle" style="margin-top: 10px; font-size: 18px;" (click)="closeAddRow()"></ion-icon>
         </ion-col>
       </ion-row>
-  </ion-grid>
-  <ion-button color="tertiary" (click)="createProduct()">Add Options</ion-button>
+  </ion-grid>  
   </div>
 
   <!-- Payment Complete Section -->

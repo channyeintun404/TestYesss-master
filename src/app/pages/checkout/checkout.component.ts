@@ -35,6 +35,7 @@ import { image } from '@cloudinary/base/qualifiers/source';
 
 import { Option } from 'src/app/models/option.model';
 import { OptionsService } from 'src/app/services/options.service';
+import { Variant } from 'src/app/models/variants.model';
 
 const MEDIA_FOLDER_NAME = 'my_media';
 
@@ -53,10 +54,15 @@ const MEDIA_FOLDER_NAME = 'my_media';
    steps: any = [];
    cards: any = [];
 
+
+   //image
    files = [];
    images:any[];
    imagesURl : any
    urls : any [];
+   addImage : boolean;
+   addImageRow:boolean;
+   imagesArray:any[]=[];
 
    //option
    newProductId: any;
@@ -67,7 +73,11 @@ const MEDIA_FOLDER_NAME = 'my_media';
    optionPostion :  string="";
    optionName : string="";
    optionStatus: string="";
+   variantIdArray: any[];
    variantnameArray: any[];
+   variantPositionArray: any[];
+   variantStatusArray: any [];
+   variant : Variant[];
 
 
    products : Product[];
@@ -162,6 +172,7 @@ const MEDIA_FOLDER_NAME = 'my_media';
      if (this.steps[0].isSelected) {
        this.steps[0].isSelected = false;
        this.steps[1].isSelected = true;
+       this.createProduct();
      }
      // If current section is Billing then next section confirm will be visible 
      else if (this.steps[1].isSelected) {
@@ -232,6 +243,7 @@ level3ClickOption(categoriesByLevel3_id){
       console.log(resp);
       this.categories = resp;
     });
+    this.imagesArray.push("1.jpg");
   }
 
   getLevel2Categories() {
@@ -290,7 +302,7 @@ level3ClickOption(categoriesByLevel3_id){
         // console.log("new id "+this.newProductId);
         this.createProductOptions();
       })
-      this.isOption=true
+      this.isOption=true      
       }   
 
       createProductOptions(){
@@ -325,11 +337,19 @@ level3ClickOption(categoriesByLevel3_id){
         this.optionsService.getOptionsById(option_id).then((res: any) => {
           this.options=[];
           
+          this.variant=[]
+          this.variantIdArray=[]
           this.variantnameArray=[]
+          this.variantPositionArray=[]
+          this.variantStatusArray=[]
           for (const variant of Object.values(res['variants'])) {
               // imagesArr.push(img['detailed']['image_path']);
               // console.log("variant are "+variant['variant_name'])
+
               this.variantnameArray.push(variant['variant_name'])
+              this.variantPositionArray.push(variant['position'])
+              this.variantStatusArray.push(variant['status'])
+              this.variantIdArray.push(variant['variant_id'])
               console.log("variant are "+this.variantnameArray)
             }  
 
@@ -338,26 +358,63 @@ level3ClickOption(categoriesByLevel3_id){
               option_id : parseInt( res['option_id']),
               option_name:  res['option_name'],
               product_id:parseInt( res['product_id']),
-              position: parseInt( res['position']),
-              status:res['status'],
+              variant_id:this.variantIdArray,
+              position: this.variantPositionArray,
+              status:this.variantStatusArray,
               variant_name:this.variantnameArray
           })
-          console.log("this get opiton is "+JSON.stringify(this.options))
-          console.log("variants name are "+JSON.stringify(this.variantnameArray))
+
+          for(var i =0; i<this.variantnameArray.length; i++){
+            this.variant.push({
+              "id":this.variantIdArray[i],
+              "variant_name":this.variantnameArray[i],
+              "position":this.variantPositionArray[i],
+              "status": this.variantStatusArray[i]
+            })  
+          }  
+          // console.log("this get opiton is "+JSON.stringify(this.options))
+          // console.log("variants name are "+JSON.stringify(this.variantnameArray))
         })
       }    
 
 
       //add and update option
       updateOption(){
+        if(this.optionName!=""){
         this.variantnameArray.push(this.optionName)
-        console.log(this.variantnameArray)
+        this.variantPositionArray.push(this.optionPostion)
+        this.variantStatusArray.push(this.optionStatus)
+      }
+        // console.log(this.variantnameArray)
+        this.variant=[];
+        for(var i =0; i<this.variantnameArray.length; i++){
+          this.variant.push({
+            "id":i,
+            "variant_name":this.variantnameArray[i],
+            "position":this.variantPositionArray[i],
+            "status": this.variantStatusArray[i]
+          })
+        }
+        console.log("******"+JSON.stringify(this.variant))
+        const convertArrayToObject = (array, key) => {
+          const initialValue = {};
+          return array.reduce((obj, item) => {
+            return {
+              ...obj,
+              [item[key]]: item,
+            };
+          }, initialValue);
+        };
+        console.log(convertArrayToObject( this.variant,'id'))
+
+        // console.log( Object.assign({},Object.assign({},this.variantnameArray)))
         this.optionsService.updateOptions(this.optionId,{
-          "variants": {             
-            "1":{
-                "variant_name" : this.optionName
-             }}
+          "variants": this.variant
         })
+        this.addOption=false
+        this.optionName=""
+        this.optionPostion=""
+        this.optionStatus=""
       }
 
       //image
@@ -519,7 +576,8 @@ level3ClickOption(categoriesByLevel3_id){
             this.imagesURl= res.data.url        
           }).catch(function(err){
                 console.error(err)
-              });           
+              });   
+      this.addImage=true         
       }    
   
       ChooseProductColor(product_color){
@@ -531,6 +589,12 @@ level3ClickOption(categoriesByLevel3_id){
         this.productService.getProductsOptions('262').then((resp: any) => {
           console.log(resp);
         })
+      }
+
+      openAddImageRow(){
+        // this.addImageRow=true;
+        this.imagesArray.push("1.jpg")
+        this.addImage=false
       }
     
       //open and closez
@@ -549,4 +613,3 @@ level3ClickOption(categoriesByLevel3_id){
    }
  
  }
- 
