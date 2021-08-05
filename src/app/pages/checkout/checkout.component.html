@@ -160,7 +160,7 @@
 
 
     <ion-grid>
-      <ion-row *ngFor="let image of imagesArray;let last = last;">
+      <ion-row *ngFor="let image of imagesArrayforView;let last = last;">
         <ion-col size="9">
           <input type="file" (change)= "onFileSelected($event)" accept="image/*">
         </ion-col >       
@@ -227,7 +227,7 @@
                            
         </ion-col>
         <ion-col size="3">
-          <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" (click)="updateOption()" style="margin-top: 10px; font-size: 18px; margin-right: 10px;"></ion-icon>
+          <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" (click)="createOption()" style="margin-top: 10px; font-size: 18px; margin-right: 10px;"></ion-icon>
           <ion-icon ios="ios-close-circle" md="md-close-circle" style="margin-top: 10px; font-size: 18px;" (click)="closeAddRow()"></ion-icon>
         </ion-col>
       </ion-row>

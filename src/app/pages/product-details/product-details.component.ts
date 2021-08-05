@@ -12,6 +12,7 @@ import { CartComponent } from '../cart/cart.component';
 import { ModalController } from '@ionic/angular';
 import { ProductEditComponent } from '../product-edit/product-edit.component';
 import { ProductsService } from '../../services/products.service';
+import { OptionsService } from 'src/app/services/options.service';
 
 @Component({
   selector: 'app-product-details',
@@ -32,6 +33,10 @@ export class ProductDetailsComponent implements OnInit {
 
   products: Product;
 
+
+  //option  
+  variantnameArray: any[]=[];
+
   // Slider Options
   slideOpts = {
     initialSlide: 0,
@@ -46,11 +51,13 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(public modalController: ModalController,
     public storageService: StorageService,
+    private optionsService : OptionsService,
     private productsService : ProductsService) {
   }
 
   ngOnInit() {    
-    this.getProductById()
+    this.getProductById();
+    this.getProductOptions();
     this.addToCart();
     console.log(this.name)
   }
@@ -96,6 +103,7 @@ export class ProductDetailsComponent implements OnInit {
   
     this.productsService.getProductById(this.id).then( res=>{
       console.log(res);
+      // console.log("options id "+JSON.stringify(res['option_id']))
       this.name = res['product']
       this.price = res['price']  
     })
@@ -112,6 +120,22 @@ export class ProductDetailsComponent implements OnInit {
       event.target.complete();
     }, 2000);
   }
+
+//getproductOption
+  getProductOptions(){
+    
+    this.optionsService.getProductsOptions(this.id).then((resp: any) => {
+
+      for (const variants of Object.values(resp)) {
+        console.log("***",Object.values(variants['variants']))
+         for (const variant of Object.values(variants['variants'])) {
+           this.variantnameArray.push(variant['variant_name']);
+           } 
+      }
+      console.log("variant name are" +this.variantnameArray)
+    })
+  }
+
 
   
   // Back to previous page function

@@ -58,11 +58,14 @@ const MEDIA_FOLDER_NAME = 'my_media';
    //image
    files = [];
    images:any[];
-   imagesURl : any
+
+   //uploadimage
+   mainImagesURl : any
    urls : any [];
    addImage : boolean;
    addImageRow:boolean;
-   imagesArray:any[]=[];
+   imagesUrlArray:any[]=[];
+   imagesArrayforView: any[]=[];
 
    //option
    newProductId: any;
@@ -102,6 +105,7 @@ const MEDIA_FOLDER_NAME = 'my_media';
    list_price: string="";
    product_size : string="";
    product_color : string="";
+  imagepairdetailed: any[]=[];
    
    constructor(public modalController: ModalController,
     private categoryService: CategoryService,
@@ -179,6 +183,7 @@ const MEDIA_FOLDER_NAME = 'my_media';
        this.steps[0].isSelected = false;
        this.steps[1].isSelected = false;
        this.steps[2].isSelected = true;
+       this.saveChangesProduct();
      }
    }
 
@@ -243,7 +248,6 @@ level3ClickOption(categoriesByLevel3_id){
       console.log(resp);
       this.categories = resp;
     });
-    this.imagesArray.push("1.jpg");
   }
 
   getLevel2Categories() {
@@ -256,8 +260,6 @@ level3ClickOption(categoriesByLevel3_id){
  
    // Go to product page
    gotoProductsPage() {
-     this.createProduct();     
-    // console.log("***"+this.imagesURl)
      console.log(this.category_ids)
      this.dismiss();
      this.router.navigate(['/tabs/products']);
@@ -265,7 +267,7 @@ level3ClickOption(categoriesByLevel3_id){
  
    //Create Product
    createProduct(){
-     console.log("image url is "+ this.imagesURl)
+    //  console.log("image url is "+ this.mainImagesURl)
     this.productService.createProduct(
       {        
         "product": this.productName,
@@ -275,25 +277,11 @@ level3ClickOption(categoriesByLevel3_id){
         "base_price":parseInt(this.base_price),
         "list_price":parseInt(this.list_price),
         "status": this.status,
-        "main_pair": {
-          "image_id": "0",
-          "position": "0",
-          "detailed": {
-              "object_type": "product",
-              "type": "M",
-              "image_path": this.imagesURl,
-              "alt": "",
-              "image_x": "711",
-              "image_y": "950",
-              "http_image_path": this.imagesURl,
-              "https_image_path": this.imagesURl
-          }
-      },
         "company_id": 13,        
         "main_category": 275,
         "discountPrice": 50000,
         "details_layout": "default",
-        "min_qty":1,//for no image upload
+        "min_qty":0,
         "quantity": 1,
         "isWishlist": true
        }).then((resp: any) => {
@@ -302,8 +290,70 @@ level3ClickOption(categoriesByLevel3_id){
         // console.log("new id "+this.newProductId);
         this.createProductOptions();
       })
+      this.imagesArrayforView.push('1.jpg')
       this.isOption=true      
       }   
+
+      saveChangesProduct(){
+        for(var i =0; i<this.imagesUrlArray.length; i++){
+          if(i==0){
+            this.mainImagesURl=this.imagesUrlArray[0];
+          
+          }
+          const imageurlarray=[]
+          imageurlarray.push({
+            "image_path":this.imagesUrlArray[i],
+            "http_image_path":this.imagesUrlArray[i],
+            "https_image_path":this.imagesUrlArray[i]
+          })
+
+          // const result = imageurlarray.reduce((obj, cur) => ({...obj, [cur.sid]: cur}), {})
+          // console.log("result"+JSON.stringify(result))
+          this.imagepairdetailed.push({
+            "id":i,
+            "detailed":{
+              "image_path":this.imagesUrlArray[i],
+              "http_image_path":this.imagesUrlArray[i],
+              "https_image_path":this.imagesUrlArray[i]            
+            }           
+            
+          })
+        }
+        console.log("******"+JSON.stringify(this.imagepairdetailed))
+        const convertArrayToObject = (array, key) => {
+          const initialValue = {};
+          return array.reduce((obj, item) => {
+            return {
+              ...obj,
+              [item[key]]: item,
+            };
+          }, initialValue);
+        };
+        console.log(convertArrayToObject( this.imagepairdetailed,'id'))
+        console.log("obj of image_pair "+JSON.stringify(this.imagepairdetailed))
+        // console.log("update image url"+this.mainImagesURl)
+        this.productService.updateProduct(this.newProductId,
+        {        
+
+          "main_pair": {
+            "image_id": "0",
+            "position": "0",
+            "detailed": {
+                "object_type": "product",
+                "type": "M",
+                "image_path": this.mainImagesURl,
+                "alt": "",
+                "image_x": "711",
+                "image_y": "950",
+                "http_image_path": this.mainImagesURl,
+                "https_image_path": this.mainImagesURl
+            }
+          },
+          "image_pairs":this.imagepairdetailed
+         })       
+        
+        }
+        
 
       createProductOptions(){
         this.optionsService.createProductOptions({
@@ -377,9 +427,56 @@ level3ClickOption(categoriesByLevel3_id){
         })
       }    
 
+      //update option
+updateOption(){
+  if(this.optionName!=""){
+  this.variantnameArray.push(this.optionName)
+  this.variantPositionArray.push(this.optionPostion)
+  this.variantStatusArray.push(this.optionStatus)
+}
+  console.log(this.variant)
+  // this.variant=[];
+  const namearray=[];
+  const positionarray=[];
+  const statusarray=[];
+  for(var i =0; i<this.variant.length; i++){
+    namearray.push(this.variant[i].variant_name);
+    positionarray.push(this.variant[i].position);
+    statusarray.push(this.variant[i].status);
+  }
+  console.log(namearray)
+
+  const variantsarray=[]
+  for(var i =0; i<this.variant.length; i++){
+    variantsarray.push({
+      "id":i,
+      "variant_name":namearray[i],
+      "position":positionarray[i],
+      "status": statusarray[i]
+    })
+  }
+  console.log(variantsarray)
+  // console.log("******"+JSON.stringify(this.variant))
+  const convertArrayToObject = (array, key) => {
+    const initialValue = {};
+    return array.reduce((obj, item) => {
+      return {
+        ...obj,
+        [item[key]]: item,
+      };
+    }, initialValue);
+  };
+  console.log(convertArrayToObject( variantsarray,'id'))
+
+  // console.log( Object.assign({},Object.assign({},this.variantnameArray)))
+  this.optionsService.updateOptions(this.optionId,{
+    "variants": variantsarray
+  })
+
+}
 
       //add and update option
-      updateOption(){
+      createOption(){
         if(this.optionName!=""){
         this.variantnameArray.push(this.optionName)
         this.variantPositionArray.push(this.optionPostion)
@@ -558,7 +655,6 @@ level3ClickOption(categoriesByLevel3_id){
         console.log(this.selectedFile)
       }
 
-
       //upload images
       onUpload(){
         const fd = new FormData();
@@ -573,27 +669,18 @@ level3ClickOption(categoriesByLevel3_id){
           },data:fd
         }).then((res: any) => {
             console.log(res)
-            this.imagesURl= res.data.url        
+            // this.mainImagesURl= res.data.url
+            this.imagesUrlArray.push(res.data.url)        
           }).catch(function(err){
                 console.error(err)
               });   
       this.addImage=true         
       }    
-  
-      ChooseProductColor(product_color){
-        // console.log("product size "+product_color)
-        this.getProductOptions()
-      }
-      
-      getProductOptions(){
-        this.productService.getProductsOptions('262').then((resp: any) => {
-          console.log(resp);
-        })
-      }
+
 
       openAddImageRow(){
         // this.addImageRow=true;
-        this.imagesArray.push("1.jpg")
+        this.imagesArrayforView.push('1.jpg');
         this.addImage=false
       }
     

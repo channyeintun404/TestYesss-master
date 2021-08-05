@@ -74,7 +74,7 @@
   </ion-row>
 
   <!-- Product Colors -->
-  <ion-radio-group>
+  <!-- <ion-radio-group>
     <ion-row class="ion-padding-start">
       <ion-col size="3" *ngFor="let item of color">
         <ion-item class="border-style" lines="none" [style.border-color]="item">
@@ -82,7 +82,16 @@
         </ion-item>
       </ion-col>
     </ion-row>
-  </ion-radio-group>
+  </ion-radio-group> -->
+
+  <ion-grid>
+    <ion-row >
+      <ion-col size="2" *ngFor="let variantName of variantnameArray">
+        <ion-input type="text"  [(ngModel)]="variantName"></ion-input>
+      </ion-col >     
+    </ion-row>
+  </ion-grid>
+  
 
   <!-- Select Size -->
   <ion-row class="ion-padding-start select-heading">
