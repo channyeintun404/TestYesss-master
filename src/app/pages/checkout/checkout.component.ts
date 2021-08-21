@@ -53,6 +53,7 @@ const MEDIA_FOLDER_NAME = 'my_media';
   selectedFile: any;
    steps: any = [];
    cards: any = [];
+   checks: any = [];
 
 
    //image
@@ -70,18 +71,32 @@ const MEDIA_FOLDER_NAME = 'my_media';
    //option
    newProductId: any;
    options : Option[];
-   addOption: boolean;
+   addOptionSize: boolean;
+   addOptionColor: boolean;
    isOption: boolean;
-   optionId: any;
-   optionPostion :  string="";
-   optionName : string="";
-   optionStatus: string="";
-   variantIdArray: any[];
-   variantnameArray: any[];
-   variantPositionArray: any[];
-   variantStatusArray: any [];
-   variant : Variant[];
-
+  //  optionSizeId: any;
+   optionSizePostion :  string="";
+   optionSizeName : string="";
+   optionSizeStatus: string="";
+   optionColorPostion :  string="";
+   optionColorName : string="";
+   optionColorStatus: string="";
+   variantSizeIdArray: any[];
+   variantSizeNameArray: any[];
+   variantSizePositionArray: any[];
+   variantSizeStatusArray: any [];
+   variantColorIdArray: any[];
+   variantColorNameArray: any[];
+   variantColorPositionArray: any[];
+   variantColorStatusArray: any [];
+  //  variant : Variant[];
+    optionSizeId : any;
+   optionColorId : any;
+   variants_size : any[];
+   variants_color : any [];
+  //  variants : any[];
+   variantSizeArray : any[];
+   variantColorArray : any[];
 
    products : Product[];
    categories: Category[];
@@ -92,7 +107,7 @@ const MEDIA_FOLDER_NAME = 'my_media';
    Level3Child: any = [];
 
    //get data from form
-   productName: string="";
+   productName: string=""; 
    productPrice: string="";
    productCode: string="";
    productDescription: string="";
@@ -106,6 +121,7 @@ const MEDIA_FOLDER_NAME = 'my_media';
    product_size : string="";
    product_color : string="";
   imagepairdetailed: any[]=[];
+  refresh: boolean=false;
    
    constructor(public modalController: ModalController,
     private categoryService: CategoryService,
@@ -163,6 +179,20 @@ const MEDIA_FOLDER_NAME = 'my_media';
          isSelected: false
        }
      ]
+     this.checks = [
+      {
+        step: "Detail",
+        isSelected: true
+      },
+      {
+        step: "Images",
+        isSelected: false
+      },
+      {
+        step: "Confirm",
+        isSelected: false
+      }
+    ]
  
      // Payment cards images
      this.cards = ["assets/images/cards/visa.png",
@@ -176,14 +206,21 @@ const MEDIA_FOLDER_NAME = 'my_media';
      if (this.steps[0].isSelected) {
        this.steps[0].isSelected = false;
        this.steps[1].isSelected = true;
+       this.checks[0].isSelected = true;
+       this.checks[1].isSelected = true;
        this.createProduct();
+       this.refresh=true;
      }
      // If current section is Billing then next section confirm will be visible 
      else if (this.steps[1].isSelected) {
        this.steps[0].isSelected = false;
        this.steps[1].isSelected = false;
        this.steps[2].isSelected = true;
+       this.checks[0].isSelected = true;
+       this.checks[1].isSelected = true;
+       this.checks[2].isSelected = true;
        this.saveChangesProduct();
+       this.refresh=false;
      }
    }
 
@@ -288,7 +325,8 @@ level3ClickOption(categoriesByLevel3_id){
        
         this.newProductId= resp
         // console.log("new id "+this.newProductId);
-        this.createProductOptions();
+        this.createProductSizeOptions();
+        this.createProductColorOptions();
       })
       this.imagesArrayforView.push('1.jpg')
       this.isOption=true      
@@ -307,6 +345,8 @@ level3ClickOption(categoriesByLevel3_id){
             "https_image_path":this.imagesUrlArray[i]
           })
 
+          console.log("image array",imageurlarray)
+
           // const result = imageurlarray.reduce((obj, cur) => ({...obj, [cur.sid]: cur}), {})
           // console.log("result"+JSON.stringify(result))
           this.imagepairdetailed.push({
@@ -319,6 +359,8 @@ level3ClickOption(categoriesByLevel3_id){
             
           })
         }
+
+      
         console.log("******"+JSON.stringify(this.imagepairdetailed))
         const convertArrayToObject = (array, key) => {
           const initialValue = {};
@@ -355,7 +397,35 @@ level3ClickOption(categoriesByLevel3_id){
         }
         
 
-      createProductOptions(){
+      createProductSizeOptions(){
+        this.optionsService.createProductOptions({
+          "product_id": this.newProductId,
+          "option_name": "Size",
+          "option_type": "S",
+          "variants": {
+            "12": {
+              "variant_id": "12",
+              "option_id": "3",
+              "position": "10",
+              "modifier": "0.000",
+              "modifier_type": "A",
+              "weight_modifier": "0.000",
+              "weight_modifier_type": "A",
+              "point_modifier": "0.000",
+              "point_modifier_type": "A",
+              "variant_name": "XX",
+              "image_pair": []
+            } }
+
+
+        }).then((resp: any) => {       
+        console.log("add option id"+resp['option_id'])
+        this.optionSizeId = resp['option_id']
+        this.getOptionsSizeById(this.optionSizeId)
+        // this.createProductOptions1();
+        })
+      }
+      createProductColorOptions(){
         this.optionsService.createProductOptions({
           "product_id": this.newProductId,
           "option_name": "Color",
@@ -371,36 +441,37 @@ level3ClickOption(categoriesByLevel3_id){
               "weight_modifier_type": "A",
               "point_modifier": "0.000",
               "point_modifier_type": "A",
-              "variant_name": "White",
+              "variant_name": "white",
               "image_pair": []
-            } 
-          }
+            }}
+
 
         }).then((resp: any) => {       
         console.log("add option id"+resp['option_id'])
-        this.optionId = resp['option_id']
-        this.getOptionsById(resp['option_id'])
+        this.optionColorId = resp['option_id']
+        this.getOptionsColorById(this.optionColorId)
         })
       }
 
-      getOptionsById(option_id){
-        this.optionsService.getOptionsById(option_id).then((res: any) => {
+      getOptionsSizeById(optionSizeId){
+        this.optionsService.getOptionsById(optionSizeId).then((res: any) => {
+          
           this.options=[];
           
-          this.variant=[]
-          this.variantIdArray=[]
-          this.variantnameArray=[]
-          this.variantPositionArray=[]
-          this.variantStatusArray=[]
+          this.variants_size=[]
+          this.variantSizeIdArray=[]
+          this.variantSizeNameArray=[]
+          this.variantSizePositionArray=[]
+          this.variantSizeStatusArray=[]
           for (const variant of Object.values(res['variants'])) {
               // imagesArr.push(img['detailed']['image_path']);
               // console.log("variant are "+variant['variant_name'])
 
-              this.variantnameArray.push(variant['variant_name'])
-              this.variantPositionArray.push(variant['position'])
-              this.variantStatusArray.push(variant['status'])
-              this.variantIdArray.push(variant['variant_id'])
-              console.log("variant are "+this.variantnameArray)
+              this.variantSizeNameArray.push(variant['variant_name'])
+              this.variantSizePositionArray.push(variant['position'])
+              this.variantSizeStatusArray.push(variant['status'])
+              this.variantSizeIdArray.push(variant['variant_id'])
+              console.log("variant are "+this.variantSizeNameArray)
             }  
 
           // console.log("this getopiton res"+JSON.stringify(resp));
@@ -408,46 +479,91 @@ level3ClickOption(categoriesByLevel3_id){
               option_id : parseInt( res['option_id']),
               option_name:  res['option_name'],
               product_id:parseInt( res['product_id']),
-              variant_id:this.variantIdArray,
-              position: this.variantPositionArray,
-              status:this.variantStatusArray,
-              variant_name:this.variantnameArray
+              variant_id:this.variantSizeIdArray,
+              position: this.variantSizePositionArray,
+              status:this.variantSizeStatusArray,
+              variant_name:this.variantSizeNameArray
           })
 
-          for(var i =0; i<this.variantnameArray.length; i++){
-            this.variant.push({
-              "id":this.variantIdArray[i],
-              "variant_name":this.variantnameArray[i],
-              "position":this.variantPositionArray[i],
-              "status": this.variantStatusArray[i]
+          for(var i =0; i<this.variantSizeNameArray.length; i++){
+            this.variants_size.push({
+              "id":this.variantSizeIdArray[i],
+              "variant_name":this.variantSizeNameArray[i],
+              "position":this.variantSizePositionArray[i],
+              "status": this.variantSizeStatusArray[i]
             })  
           }  
           // console.log("this get opiton is "+JSON.stringify(this.options))
           // console.log("variants name are "+JSON.stringify(this.variantnameArray))
         })
-      }    
+      }  
+      
+      getOptionsColorById(optionColorId){
+        this.optionsService.getOptionsById(optionColorId).then((res: any) => {
+          
+          this.options=[];
+          
+          this.variants_color=[]
+          this.variantColorIdArray=[]
+          this.variantColorNameArray=[]
+          this.variantColorPositionArray=[]
+          this.variantColorStatusArray=[]
+          for (const variants of Object.values(res['variants'])) {
+              // imagesArr.push(img['detailed']['image_path']);
+              // console.log("variant are "+variant['variant_name'])
+
+              this.variantColorNameArray.push(variants['variant_name'])
+              this.variantColorPositionArray.push(variants['position'])
+              this.variantColorStatusArray.push(variants['status'])
+              this.variantColorIdArray.push(variants['variant_id'])
+              console.log("variant are "+this.variantColorNameArray)
+            }  
+
+          // console.log("this getopiton res"+JSON.stringify(resp));
+          // this.options.push({
+          //     option_id : parseInt( res['option_id']),
+          //     option_name:  res['option_name'],
+          //     product_id:parseInt( res['product_id']),
+          //     variant_id:this.variantColorIdArray,
+          //     position: this.variantColorPositionArray,
+          //     status:this.variantColorStatusArray,
+          //     variant_name:this.variantColorNameArray
+          // })
+
+          for(var i =0; i<this.variantColorNameArray.length; i++){
+            this.variants_color.push({
+              "id":this.variantColorIdArray[i],
+              "variant_name":this.variantColorNameArray[i],
+              "position":this.variantColorPositionArray[i],
+              "status": this.variantColorStatusArray[i]
+            })  
+          }  
+          // console.log("this get opiton is "+JSON.stringify(this.options))
+          // console.log("variants name are "+JSON.stringify(this.variantnameArray))
+        })
+      }  
 
       //update option
-updateOption(){
-  if(this.optionName!=""){
-  this.variantnameArray.push(this.optionName)
-  this.variantPositionArray.push(this.optionPostion)
-  this.variantStatusArray.push(this.optionStatus)
+updateSizeOption(){
+  if(this.optionSizeName!=""){
+  this.variantSizeNameArray.push(this.optionSizeName)
+  this.variantSizePositionArray.push(this.optionSizePostion)
+  this.variantSizeStatusArray.push(this.optionSizeStatus)
 }
-  console.log(this.variant)
+  console.log(this.variants_size)
   // this.variant=[];
   const namearray=[];
   const positionarray=[];
   const statusarray=[];
-  for(var i =0; i<this.variant.length; i++){
-    namearray.push(this.variant[i].variant_name);
-    positionarray.push(this.variant[i].position);
-    statusarray.push(this.variant[i].status);
+  for(var i =0; i<this.variants_size.length; i++){
+    namearray.push(this.variants_size[i].variant_name);
+    positionarray.push(this.variants_size[i].position);
+    statusarray.push(this.variants_size[i].status);
   }
   console.log(namearray)
 
   const variantsarray=[]
-  for(var i =0; i<this.variant.length; i++){
+  for(var i =0; i<this.variants_size.length; i++){
     variantsarray.push({
       "id":i,
       "variant_name":namearray[i],
@@ -469,30 +585,86 @@ updateOption(){
   console.log(convertArrayToObject( variantsarray,'id'))
 
   // console.log( Object.assign({},Object.assign({},this.variantnameArray)))
-  this.optionsService.updateOptions(this.optionId,{
+  this.optionsService.updateOptions(this.optionSizeId,{
     "variants": variantsarray
   })
 
 }
 
-      //add and update option
-      createOption(){
-        if(this.optionName!=""){
-        this.variantnameArray.push(this.optionName)
-        this.variantPositionArray.push(this.optionPostion)
-        this.variantStatusArray.push(this.optionStatus)
+updateColorOption(){
+  if(this.optionColorName!=""){
+  this.variantColorNameArray.push(this.optionColorName)
+  this.variantColorPositionArray.push(this.optionColorPostion)
+  this.variantColorStatusArray.push(this.optionColorStatus)
+}
+  console.log(this.variants_color)
+  // this.variant=[];
+  const namearray=[];
+  const positionarray=[];
+  const statusarray=[];
+  for(var i =0; i<this.variants_color.length; i++){
+    namearray.push(this.variants_color[i].variant_name);
+    positionarray.push(this.variants_color[i].position);
+    statusarray.push(this.variants_color[i].status);
+  }
+  console.log(namearray)
+
+  const variantsarray=[]
+  for(var i =0; i<this.variants_color.length; i++){
+    variantsarray.push({
+      "id":i,
+      "variant_name":namearray[i],
+      "position":positionarray[i],
+      "status": statusarray[i]
+    })
+  }
+  console.log(variantsarray)
+  // console.log("******"+JSON.stringify(this.variant))
+  const convertArrayToObject = (array, key) => {
+    const initialValue = {};
+    return array.reduce((obj, item) => {
+      return {
+        ...obj,
+        [item[key]]: item,
+      };
+    }, initialValue);
+  };
+  console.log(convertArrayToObject( variantsarray,'id'))
+
+  // console.log( Object.assign({},Object.assign({},this.variantnameArray)))
+  this.optionsService.updateOptions(this.optionColorId,{
+    "variants": variantsarray
+  })
+}
+
+
+      //add and update option for size
+      createSizeOption(){
+        if(this.optionSizeName!=""){
+        this.variantSizeNameArray.push(this.optionSizeName)
+        this.variantSizePositionArray.push(this.optionSizePostion)
+        this.variantSizeStatusArray.push(this.optionSizeStatus)
+      }
+
+      const namearray=[];
+      const positionarray=[];
+      const statusarray=[];
+      for(var i =0; i<this.variants_size.length; i++){
+        namearray.push(this.variants_size[i].variant_name);
+        positionarray.push(this.variants_size[i].position);
+        statusarray.push(this.variants_size[i].status);
       }
         // console.log(this.variantnameArray)
-        this.variant=[];
-        for(var i =0; i<this.variantnameArray.length; i++){
-          this.variant.push({
+        this.variantSizeArray=[];
+        for(var i =0; i<this.variantSizeNameArray.length; i++){
+          this.variantSizeArray.push({
             "id":i,
-            "variant_name":this.variantnameArray[i],
-            "position":this.variantPositionArray[i],
-            "status": this.variantStatusArray[i]
+            "variant_name":this.variantSizeNameArray[i],
+            "position":this.variantSizePositionArray[i],
+            "status": this.variantSizeStatusArray[i]
           })
         }
-        console.log("******"+JSON.stringify(this.variant))
+        console.log("******"+JSON.stringify(this.variantSizeArray))
         const convertArrayToObject = (array, key) => {
           const initialValue = {};
           return array.reduce((obj, item) => {
@@ -502,17 +674,69 @@ updateOption(){
             };
           }, initialValue);
         };
-        console.log(convertArrayToObject( this.variant,'id'))
+        console.log(convertArrayToObject( this.variantSizeArray,'id'))
 
         // console.log( Object.assign({},Object.assign({},this.variantnameArray)))
-        this.optionsService.updateOptions(this.optionId,{
-          "variants": this.variant
+        this.optionsService.updateOptions(this.optionSizeId,{
+          "variants": this.variantSizeArray
         })
-        this.addOption=false
-        this.optionName=""
-        this.optionPostion=""
-        this.optionStatus=""
+        this.addOptionSize=false
+        this.optionSizeName=""
+        this.optionSizePostion=""
+        this.optionSizeStatus=""
+        this.getOptionsSizeById(this.optionSizeId);
+        this.getOptionsColorById(this.optionColorId);
       }
+
+      createColorOption(){
+        if(this.optionColorName!=""){
+        this.variantColorNameArray.push(this.optionColorName)
+        this.variantColorPositionArray.push(this.optionColorPostion)
+        this.variantColorStatusArray.push(this.optionColorStatus)
+      }
+
+      const namearray=[];
+      const positionarray=[];
+      const statusarray=[];
+      for(var i =0; i<this.variants_color.length; i++){
+        namearray.push(this.variants_color[i].variant_name);
+        positionarray.push(this.variants_color[i].position);
+        statusarray.push(this.variants_color[i].status);
+      }
+        // console.log(this.variantnameArray)
+        this.variantColorArray=[];
+        for(var i =0; i<this.variantColorNameArray.length; i++){
+          this.variantColorArray.push({
+            "id":i,
+            "variant_name":this.variantColorNameArray[i],
+            "position":this.variantColorPositionArray[i],
+            "status": this.variantColorStatusArray[i]
+          })
+        }
+        console.log("******"+JSON.stringify(this.variantSizeArray))
+        const convertArrayToObject = (array, key) => {
+          const initialValue = {};
+          return array.reduce((obj, item) => {
+            return {
+              ...obj,
+              [item[key]]: item,
+            };
+          }, initialValue);
+        };
+        console.log(convertArrayToObject( this.variantColorArray,'id'))
+
+        // console.log( Object.assign({},Object.assign({},this.variantnameArray)))
+        this.optionsService.updateOptions(this.optionColorId,{
+          "variants": this.variantColorArray
+        })
+        this.addOptionColor=false
+        this.optionColorName=""
+        this.optionColorPostion=""
+        this.optionColorStatus=""
+         this.getOptionsColorById(this.optionColorId);
+         this.getOptionsSizeById(this.optionSizeId);
+      }
+
 
       //image
       loadFiles() {
@@ -638,20 +862,9 @@ updateOption(){
       }
 
       onFileSelected(event){
-        // console.log(event)
-        this.selectedFile = <File> event.target.files[0];
 
-        // for(let file of this.selectedFile){
-        //   this.urls=file
-        // }
-      //   if(this.selectedFile){
-      //     for(let file of this.selectedFile){
-      //       let reader = new FileReader();
-      //       reader.onload = (e: any) => {
-      //         this.urls.push(e.target.result);
-      //     }
-      //   }
-      // }
+        this.selectedFile = <File> event.target.files[0];
+        
         console.log(this.selectedFile)
       }
 
@@ -685,11 +898,24 @@ updateOption(){
       }
     
       //open and closez
-      openAddRow(){        
-        this.addOption=true;         
+      openAddSizeRow(){        
+        this.addOptionSize=true;         
       }
-      closeAddRow(){
-        this.addOption=false;
+      closeAddSizeRowe(){
+        this.addOptionSize=false;
+      }
+      openAddColorRow(){
+        this.addOptionColor=true;
+      }
+      closeAddColorRow(){
+        this.addOptionColor=false;
+      }
+
+      //refresh of option size and color
+      resetPage(){
+
+        this.getOptionsSizeById(this.optionSizeId);
+        this.getOptionsColorById(this.optionColorId);
       }
 
    // Back to previous screen

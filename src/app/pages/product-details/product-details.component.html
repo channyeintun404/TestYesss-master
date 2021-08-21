@@ -68,50 +68,73 @@
     <ion-text color="medium" [innerHTML]="description"></ion-text>
   </ion-row>
 
-  <!-- Selct Color -->
-  <ion-row class="ion-padding-start select-heading">
-    <ion-text>Available Colors</ion-text>
-  </ion-row>
-
-  <!-- Product Colors -->
-  <!-- <ion-radio-group>
-    <ion-row class="ion-padding-start">
-      <ion-col size="3" *ngFor="let item of color">
-        <ion-item class="border-style" lines="none" [style.border-color]="item">
-          <ion-radio color="color1" mode="ios" [value]="item"></ion-radio>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-radio-group> -->
-
-  <ion-grid>
-    <ion-row >
-      <ion-col size="2" *ngFor="let variantName of variantnameArray">
-        <ion-input type="text"  [(ngModel)]="variantName"></ion-input>
-      </ion-col >     
-    </ion-row>
-  </ion-grid>
-  
-
-  <!-- Select Size -->
-  <ion-row class="ion-padding-start select-heading">
+   <!-- Selct Sizes -->
+  <ion-row class="select-heading">
     <ion-text>Available Sizes</ion-text>
   </ion-row>
+  <ion-row>
+    <ion-col size="4">
+      Pos 
+    </ion-col >
+    <ion-col size="4">
+      Size
+    </ion-col>
+    <ion-col size="4">
+      Status
+    </ion-col>
+  </ion-row>
+  <ion-row *ngFor="let variant_size of variants_size">
+    <ion-input type="text" hidden="true" [(ngModel)]="variant_size.id"></ion-input>
+    <ion-col size="4">
+      <ion-label color="primary">{{variant_size.position}}</ion-label>
+    </ion-col >
+    <ion-col size="4">
+      <ion-label color="primary">{{variant_size.variant_name}}</ion-label>
+    </ion-col>
+    <ion-col size="4">
+      <ion-label color="primary">{{variant_size.status}}</ion-label>
+    </ion-col>
+    </ion-row>
 
-  <!-- Product Sizes -->
-  <ion-radio-group>
-    <ion-row class="ion-padding-start">
-      <ion-col size="3" *ngFor="let item of size">
-        <ion-item lines="none">
-          <ion-label class="size-label">{{item}}</ion-label>
-          <ion-radio color="color1" mode="ios" [value]="item"></ion-radio>
-        </ion-item>
+  <!-- Select Color -->
+  <ion-row class="select-heading">
+    <ion-text>Available color</ion-text>
+  </ion-row>
+  <ion-row>
+    <ion-col size="4">
+      Pos 
+    </ion-col >
+    <ion-col size="4">
+      Color
+    </ion-col>
+    <ion-col size="4">
+      Status
+    </ion-col>
+  </ion-row>
+    <ion-row *ngFor="let variant_color of variants_color">
+      <ion-input type="text" hidden="true" [(ngModel)]="variant_color.id"></ion-input>
+      <ion-col size="4">
+        <ion-label color="primary">{{variant_color.position}}</ion-label>
+      </ion-col >
+      <ion-col size="4">
+        <ion-label color="primary">{{variant_color.variant_name}}</ion-label>
+      </ion-col>
+      <ion-col size="4">
+        <ion-label color="primary">{{variant_color.status}}</ion-label>
       </ion-col>
     </ion-row>
-  </ion-radio-group>
+<!-- Product Sizes -->
+<!-- <ion-radio-group>
+  <ion-row class="ion-padding-start">
+    <ion-col size="3" *ngFor="let item of size">
+      <ion-item lines="none">
+        <ion-label class="size-label">{{item}}</ion-label>
+        <ion-radio color="color1" mode="ios" [value]="item"></ion-radio>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-radio-group> -->
 </ion-content>
-
-
 
 <!-- Footer -->
 <ion-footer no-border>
