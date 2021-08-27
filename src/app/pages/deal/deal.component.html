@@ -32,9 +32,59 @@
 
 
 <!-- Contents -->
-<ion-content id="deal">
+  <ion-content id="deal">
+      <!-- Store Management -->
+       <ion-row >
+         <ion-col>
+          <ion-text class="select-heading">STORE MANAGEMENT</ion-text>
+         </ion-col> 
+       </ion-row>
+       <ion-row>
+         <ion-col size="4">
+          <ion-icon name="add-circle-outline" (click)="openCheckoutPage()"  color="secondary" size="large" class="deal-icon"></ion-icon>
+         </ion-col>
+         <ion-col size="4">
+          <ion-icon name="list-box" (click)="openOrdersPage()"  color="secondary" size="large" class="deal-icon"></ion-icon>
+         </ion-col>
+         <ion-col size="4">
+          <ion-icon name="basket" (click)="openProductsPage()"  color="secondary" size="large" class="deal-icon"></ion-icon>
+         </ion-col>
+       </ion-row>
+       <ion-row>
+         <ion-col size="4">
+          <ion-text class="deal-txt" style="margin-left: 30px;">Add Products</ion-text>
+         </ion-col>
+         <ion-col size="4">
+          <ion-text class="deal-txt" style="margin-left: 45px;">Orders</ion-text>
+         </ion-col>
+         <ion-col size="4">
+          <ion-text class="deal-txt" style="margin-left: 45px;">Products</ion-text>
+         </ion-col>
+       </ion-row>
+       <ion-row>
+        <ion-col size="4">
+          <ion-content [scrollEvents]="true" >
+            <ion-icon name="gift" (click)="ScrollToBottom()"  color="secondary" size="large" class="deal-icon" routerDirection="forward"></ion-icon>
+          </ion-content>
+        </ion-col>
+        <ion-col size="4">
+         <ion-icon name="md-grid" (click)="openCategoryPage()"  color="secondary" size="large" class="deal-icon"></ion-icon>
+        </ion-col>
+        <ion-col size="4">
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4">
+         <ion-text class="deal-txt" style="margin-left: 30px;">Campaigns</ion-text>
+        </ion-col>
+        <ion-col size="4">
+         <ion-text class="deal-txt" style="margin-left: 40px;">Categories</ion-text>
+        </ion-col>
+        <ion-col size="4">
+        </ion-col>
+      </ion-row>
+    <!-- </ion-button>  -->
   <ion-card *ngFor="let item of deals">
-
     <!-- Any deal content image -->
     <img [src]="item.image" />
 

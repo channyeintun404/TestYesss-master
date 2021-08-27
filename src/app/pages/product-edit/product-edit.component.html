@@ -166,7 +166,7 @@
     <!-- Available Size -->
     <ion-grid>
       <h5>For Size</h5>
-      <ion-row>
+      <ion-row class="header-row">
         <ion-col size="2">
           Pos 
         </ion-col >
@@ -183,7 +183,7 @@
           
         </ion-col>
       </ion-row>
-      <ion-row *ngFor="let variant_size of variants_size">
+      <ion-row *ngFor="let variant_size of variants_size" class="option-row">
         <!-- <ion-input type="text" hidden="true" [(ngModel)]="option.option_id"></ion-input> -->
         <ion-input type="text" hidden="true" [(ngModel)]="variant_size.id"></ion-input>
         <ion-col size="2">
@@ -211,7 +211,7 @@
         </ion-col>
       </ion-row>
     <!-- </div> -->
-      <ion-row *ngIf="addOptionSize" >
+      <ion-row *ngIf="addOptionSize" class="option-row">
         <ion-col size="2">
           <ion-input type="text" placeholder="postion" [(ngModel)]="optionSizePostion"> </ion-input>
         </ion-col >
@@ -237,7 +237,7 @@
       </ion-row>
       <!-- Available Color -->
     <h5>For Color</h5>
-    <ion-row>
+    <ion-row class="header-row">
       <ion-col size="2">
         Pos 
       </ion-col >
@@ -255,7 +255,7 @@
       </ion-col>
     </ion-row>
     <!-- <div *ngFor="let option of options"> -->
-      <ion-row *ngFor="let variant_color of variants_color">
+      <ion-row *ngFor="let variant_color of variants_color" class="option-row">
         <!-- <ion-input type="text" hidden="true" [(ngModel)]="option.option_id"></ion-input> -->
         <ion-input type="text" hidden="true" [(ngModel)]="variant_color.id"></ion-input>
         <ion-col size="2">
@@ -283,7 +283,7 @@
         </ion-col>
       </ion-row>
     <!-- </div> -->
-    <ion-row *ngIf="addOptionColor" >
+    <ion-row *ngIf="addOptionColor" class="option-row">
       <ion-col size="2">
         <ion-input type="text" placeholder="postion" [(ngModel)]="optionColorPostion"> </ion-input>
       </ion-col >
