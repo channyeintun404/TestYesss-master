@@ -17,7 +17,13 @@ const routes: Routes = [
   {
     path: 'order-edit',
     loadChildren: () => import('./pages/order-edit/order-edit.module').then( m => m.OrderEditPageModule)
-  }
+  },
+  // {
+  //   path: '',
+  //   loadChildren: () => import('./pages/orders-tab/orders-tab.module').then( m => m.OrdersTabPageModule)
+  // },
+  { path: 'orders-tab', loadChildren: () => import('./pages/orders-tab/orders-tab.module').then(m => m.OrdersTabPageModule) },
+
 
   // {
   //   path: 'products/:priceRange/:cid',

@@ -202,9 +202,9 @@
           <input type="file" (change)= "onFileSelected($event)" accept="image/*">
         </ion-col >       
         <ion-col size="3" *ngIf="last">
-          <ion-icon name="cloud-upload" (click)="onUpload()" style="margin-right: 13px;"></ion-icon>
+          <ion-icon name="cloud-upload" (click)="onUpload()" style="margin-right: 13px;" color="danger"></ion-icon>
           <!-- <button type="button" (click)="onUpload()">Upload</button> -->
-          <ion-icon *ngIf="addImage"   ios="ios-add-circle" md="md-add-circle" (click)="openAddImageRow()" ></ion-icon> 
+          <ion-icon *ngIf="addImage"   ios="ios-add-circle" md="md-add-circle" (click)="openAddImageRow()" color="secondary"></ion-icon> 
         </ion-col>
      </ion-row>
     </ion-grid>
@@ -213,7 +213,7 @@
     
     <ion-grid>
       <h5>For Size</h5>
-      <ion-row>
+      <ion-row class="header-row">
         <ion-col size="2">
           Pos 
         </ion-col >
@@ -231,7 +231,7 @@
         </ion-col>
       </ion-row>
        <!-- <div *ngFor="let option of options"> -->
-      <ion-row *ngFor="let variant_size of variants_size">
+      <ion-row *ngFor="let variant_size of variants_size" class="option-row">
         <!-- <ion-input type="text" hidden="true" [(ngModel)]="option.option_id"></ion-input> -->
         <ion-input type="text" hidden="true" [(ngModel)]="variant_size.id"></ion-input>
         <ion-col size="2">
@@ -253,9 +253,9 @@
                            
         </ion-col>
         <ion-col size="3">
-          <ion-icon  ios="ios-add-circle" md="md-add-circle" (click)="openAddSizeRow()" style="margin-right: 10px; margin-top: 10px;" ></ion-icon> 
-          <ion-icon name="construct" style="margin-top: 10px;" (click)="updateSizeOption()"></ion-icon>
-          <ion-icon  ios="ios-trash" md="md-trash" style="margin-left: 10px;" (click)="updateSizeOption(variant_size.position)" ></ion-icon> 
+          <ion-icon  ios="ios-add-circle" md="md-add-circle" (click)="openAddSizeRow()" style="margin-right: 10px; margin-top: 10px;" color="secondary"></ion-icon> 
+          <ion-icon name="construct" style="margin-top: 10px;" (click)="updateSizeOption()" color="primary"></ion-icon>
+          <ion-icon  ios="ios-trash" md="md-trash" style="margin-left: 10px; color: red;" (click)="updateSizeOption(variant_size.position)" ></ion-icon> 
         </ion-col>
       </ion-row>
     <!-- </div> -->
@@ -279,12 +279,12 @@
                            
         </ion-col>
         <ion-col size="3">
-          <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" (click)="createSizeOption()" style="margin-top: 10px; font-size: 18px; margin-right: 10px;"></ion-icon>
-          <ion-icon ios="ios-close-circle" md="md-close-circle" style="margin-top: 10px; font-size: 18px;" (click)="closeAddSizeRow()"></ion-icon>
+          <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" (click)="createSizeOption()" style="margin-top: 10px; font-size: 18px; margin-right: 10px;" color="success"></ion-icon>
+          <ion-icon ios="ios-close-circle" md="md-close-circle" style="margin-top: 10px; font-size: 18px; color: red;" (click)="closeAddSizeRow()"></ion-icon>
         </ion-col>
       </ion-row>
     <h5>For Color</h5>
-    <ion-row>
+    <ion-row class="header-row">
       <ion-col size="2">
         Pos 
       </ion-col >
@@ -302,7 +302,7 @@
       </ion-col>
     </ion-row>
     <!-- <div *ngFor="let option of options"> -->
-      <ion-row *ngFor="let variant_color of variants_color">
+      <ion-row *ngFor="let variant_color of variants_color" class="option-row">
         <!-- <ion-input type="text" hidden="true" [(ngModel)]="option.option_id"></ion-input> -->
         <ion-input type="text" hidden="true" [(ngModel)]="variant_color.id"></ion-input>
         <ion-col size="2">
@@ -324,9 +324,9 @@
                            
         </ion-col>
         <ion-col size="3">
-          <ion-icon  ios="ios-add-circle" md="md-add-circle" (click)="openAddColorRow()" style="margin-right: 10px; margin-top: 10px;" ></ion-icon> 
-          <ion-icon name="construct" style="margin-top: 10px;" (click)="updateColorOption()"></ion-icon>
-          <ion-icon  ios="ios-trash" md="md-trash" style="margin-left: 10px;" (click)="updateColorOption(variant_color.position)" ></ion-icon> 
+          <ion-icon  ios="ios-add-circle" md="md-add-circle" (click)="openAddColorRow()" style="margin-right: 10px; margin-top: 10px;" color="secondary"></ion-icon> 
+          <ion-icon name="construct" style="margin-top: 10px;" (click)="updateColorOption()" color="primary"></ion-icon>
+          <ion-icon  ios="ios-trash" md="md-trash" style="margin-left: 10px; color: red;" (click)="updateColorOption(variant_color.position)" ></ion-icon> 
         </ion-col>
       </ion-row>
     <!-- </div> -->
@@ -350,8 +350,8 @@
                          
       </ion-col>
       <ion-col size="3">
-        <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" (click)="createColorOption()" style="margin-top: 10px; font-size: 18px; margin-right: 10px;"></ion-icon>
-        <ion-icon ios="ios-close-circle" md="md-close-circle" style="margin-top: 10px; font-size: 18px;" (click)="closeAddColorRow()"></ion-icon>
+        <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" (click)="createColorOption()" style="margin-top: 10px; font-size: 18px; margin-right: 10px;" color="success"></ion-icon>
+        <ion-icon ios="ios-close-circle" md="md-close-circle" style="margin-top: 10px; font-size: 18px; color: red;" (click)="closeAddColorRow()"></ion-icon>
       </ion-col>
     </ion-row>
   </ion-grid>  

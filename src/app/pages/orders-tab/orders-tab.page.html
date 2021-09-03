@@ -1,0 +1,36 @@
+<!-- Headder -->
+<ion-header no-border>
+  <ion-toolbar color="color1">
+
+    <!-- Side menu option -->
+    <ion-buttons slot="start">
+      <ion-menu-toggle menu="pages">
+        <ion-button color="white">
+          <ion-icon name="md-list" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+
+    <!-- Page Title -->
+    <ion-title>Orders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-tabs class="ion-padding">
+
+    <ion-tab-bar slot="top">
+      <ion-tab-button tab="orders-tab1">
+        <ion-label>Orders</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="orders-tab2">
+        <!-- <ion-icon name="return"></ion-icon> -->
+        <ion-label>Returns</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="orders-tab3">
+        <!-- <ion-icon name="shipping"></ion-icon> -->
+        <ion-label>Shipping</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>
