@@ -106,6 +106,7 @@ export class OrdersService extends AppService {
   }
 
   updateOrderDetail(id,data){
+    console.log(data);
     return new Promise((resolve)=>{
       this.edit(id,data).subscribe(res=>{
         console.log(res);

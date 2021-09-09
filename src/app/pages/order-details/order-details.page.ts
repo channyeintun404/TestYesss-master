@@ -8,6 +8,9 @@ import { ProductsService } from '../../services/products.service';
 import { IonSelect,IonButton } from '@ionic/angular';
 import { Store, select } from '@ngrx/store';
 import { UpdateProduct, UpdateOrder} from "../order-details/order-details.actions";
+import { image } from '@cloudinary/base/qualifiers/source';
+import { ShippingsService } from 'src/app/services/shippings.servicre';
+import { Shipping } from 'src/app/models/shipping.model';
 
 @Component({
   selector: 'app-order-details',
@@ -26,11 +29,85 @@ export class OrderDetailsPage implements OnInit {
    currentStatus: string;
    order: any;
    products: any[] = [];
+   product_array : any[]=[];
    statuses: any;
    isLoaded = false;
    needReload = false;
 
-  constructor(public menuCtrl: MenuController,private store:Store<{currentOrder: object}>,private statusesService: StatusesService, private productsService: ProductsService, private ordersService: OrdersService,private usergroupsService:UsergroupsService,private route: ActivatedRoute,private router: Router) {
+   //Shipping
+   active_shipping: Shipping[];
+   currentShipping: Shipping;
+   currentShipping_id: string;
+
+  slideOpts = {
+    on: {
+      beforeInit() {
+        const swiper = this;
+        swiper.classNames.push(`${swiper.params.containerModifierClass}fade`);
+        const overwriteParams = {
+          slidesPerView: 1,
+          slidesPerColumn: 1,
+          slidesPerGroup: 1,
+          watchSlidesProgress: true,
+          spaceBetween: 0,
+          virtualTranslate: true,
+        };
+        swiper.params = Object.assign(swiper.params, overwriteParams);
+        swiper.params = Object.assign(swiper.originalParams, overwriteParams);
+      },
+      setTranslate() {
+        const swiper = this;
+        const { slides } = swiper;
+        for (let i = 0; i < slides.length; i += 1) {
+          const $slideEl = swiper.slides.eq(i);
+          const offset$$1 = $slideEl[0].swiperSlideOffset;
+          let tx = -offset$$1;
+          if (!swiper.params.virtualTranslate) tx -= swiper.translate;
+          let ty = 0;
+          if (!swiper.isHorizontal()) {
+            ty = tx;
+            tx = 0;
+          }
+          const slideOpacity = swiper.params.fadeEffect.crossFade
+            ? Math.max(1 - Math.abs($slideEl[0].progress), 0)
+            : 1 + Math.min(Math.max($slideEl[0].progress, -1), 0);
+          $slideEl
+            .css({
+              opacity: slideOpacity,
+            })
+            .transform(`translate3d(${tx}px, ${ty}px, 0px)`);
+        }
+      },
+      setTransition(duration) {
+        const swiper = this;
+        const { slides, $wrapperEl } = swiper;
+        slides.transition(duration);
+        if (swiper.params.virtualTranslate && duration !== 0) {
+          let eventTriggered = false;
+          slides.transitionEnd(() => {
+            if (eventTriggered) return;
+            if (!swiper || swiper.destroyed) return;
+            eventTriggered = true;
+            swiper.animating = false;
+            const triggerEvents = ['webkitTransitionEnd', 'transitionend'];
+            for (let i = 0; i < triggerEvents.length; i += 1) {
+              $wrapperEl.trigger(triggerEvents[i]);
+            }
+          });
+        }
+      },
+    }
+  }
+   
+
+  constructor(public menuCtrl: MenuController,
+    private store:Store<{currentOrder: object}>,
+    private statusesService: StatusesService,
+    private shippingService: ShippingsService,
+     private productsService: ProductsService,
+      private ordersService: OrdersService,
+      private usergroupsService:UsergroupsService,
+      private route: ActivatedRoute,private router: Router) {
     this.route.params.subscribe( params => {
       this.orderid = params.id;
       this.previd = (parseInt(params.id) + 1).toString();
@@ -42,6 +119,7 @@ export class OrderDetailsPage implements OnInit {
     this.settingListRef.open();
   }
   ngOnInit() {
+    this.getShippings();
     this.getOrderById(this.orderid);
     this.getStatuses();
     this.checkAdjecentOrders();
@@ -56,6 +134,19 @@ export class OrderDetailsPage implements OnInit {
      
       
     // }
+  }
+  
+  // get Shipping
+  getShippings() {
+   this.shippingService.getAllShipping().then(res=>{
+     this.active_shipping=[];
+     Object.values(res).forEach(element => {
+       if(element["status"]=="A"){
+          this.active_shipping.push(element)
+       }
+     });
+     console.log(this.active_shipping);
+   })
   }
   getManagers(){
     this.usergroupsService.getUserGroups("usergroup_id=6&");
@@ -76,10 +167,40 @@ export class OrderDetailsPage implements OnInit {
 })
   }
   saveChanges(){
+
+    let shipping;
+    let delivery_time;
+    let min_weight;
+    let max_weight;
+    this.active_shipping.forEach(element => {
+      if(element["shipping_id"]==parseInt(this.currentShipping_id)){
+        shipping=element["shipping"];
+        delivery_time=element["delivery_time"];
+        min_weight=element["min_weight"];
+        max_weight=element["max_weight"];
+        
+        console.log(shipping,delivery_time,min_weight,max_weight);
+        // this.currentShipping.shipping=element["shipping"];
+        // this.currentShipping.delivery_time=element["delivery_time"];
+        // this.currentShipping.min_weight=element["min_weight"];
+        // this.currentShipping.max_weight=element["max_weight"];
+      }
+    });
     this.ordersService.updateOrderDetail(this.orderid,{
       "status": this.currentStatus,
       "notes": this.order.notes,
-      "details":this.order.details,
+      "details":this.order.details,      
+      "product_groups": 
+        {
+          "chosen_shippings": 
+            {
+              "shipping_id": this.currentShipping_id,
+              "shipping": shipping,
+              "delivery_time": delivery_time,
+              "min_weight": min_weight,
+              "max_weight": max_weight
+            }
+        }
      });
       this.store.dispatch(UpdateOrder({
             currentOrder: this.order,
@@ -90,6 +211,7 @@ export class OrderDetailsPage implements OnInit {
       this.ordersService.getOrderDetailById(id).then( res=>{
         console.log(res);
           this.order = res;
+          console.log("order",this.order)
           this.currentStatus = res["status"];
           this.GetProductList(res["products"]);
           this.store.dispatch(UpdateOrder({
@@ -117,8 +239,12 @@ export class OrderDetailsPage implements OnInit {
   async GetProductList(obj) {
       await Object.keys(obj).map(async (index)=>{
         let item = obj[index];
+        this.product_array.push(item);
+        this.product_array.reverse();
+        console.log(this.product_array);
         const productDetail =  await this.productsService.getProductById(item.product_id);
         this.products.push(productDetail);
+        console.log("products",this.products)
         this.store.dispatch(UpdateProduct({
           currentProducts: JSON.parse(JSON.stringify(this.products))
         }))
@@ -128,14 +254,28 @@ export class OrderDetailsPage implements OnInit {
   getStatuses(){
     this.statusesService.getStatuses().then(res=>{
       this.statuses = res;
+      console.log(this.statuses)
     })
   }
 
-  public getImage(obj) {
-    if(Object.values(obj)[0] != null)
-    return Object.values(obj)[0]["detailed"]["image_path"];
-    else
-    return "https://placeimg.com/150/300/any";
+  public getImage(image_pair,main_pair) {
+    // console.log(this.products);
+    console.log(image_pair);
+    console.log(main_pair);
+    const image_array=[];
+    if(Object.values(main_pair)[0] != null)
+      image_array.push(main_pair["detailed"]["image_path"])
+
+    if(Object.values(image_pair)[0] != null){     
+      Object.values(image_pair).forEach(element => {
+        image_array.push(element["detailed"]["image_path"])
+      });
+    }    
+    // else{
+    //   image_array.push("https://placeimg.com/150/300/any")
+    // }
+    // console.log(image_array);
+    return image_array;
   };
 
   public handleCusNotesChange(data) {

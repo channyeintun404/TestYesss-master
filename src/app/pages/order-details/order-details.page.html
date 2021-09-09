@@ -102,14 +102,23 @@
             </ion-button>
         </ion-menu-toggle>
     </ion-buttons>
-      <ion-card *ngFor="let product of products">     
+      <ion-card *ngFor="let product of products; index as i">     
         <ion-card-content>
           <ion-row class="ion-align-items-start">
             <ion-col>
               Product
             </ion-col>
             <ion-col>
-              <ion-img [src]="getImage(product.image_pairs)"></ion-img>
+              <!-- <ion-img [src]="getImage(product.image_pairs)"></ion-img> -->
+
+              <!-- Slider of Product Images -->
+              <ion-slides pager="true" [options]="slideOpts" >
+                <ion-slide *ngFor="let item of getImage(product.image_pairs,product.main_pair)">
+                  <img [src]="item" style="width: 50%; height: 70%;" />
+
+                </ion-slide>
+              </ion-slides>
+              
               <ion-text>
                 <a href="#">{{product.product}}</a>
               </ion-text>
@@ -134,7 +143,15 @@
               Quantity
             </ion-col>
             <ion-col>
-              {{product.amount}}
+              {{product_array[i].amount}}
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              SubTotal
+            </ion-col>
+            <ion-col>
+              {{product_array[i].subtotal}}
             </ion-col>
           </ion-row>
         </ion-card-content>
@@ -215,6 +232,18 @@
                 </ion-item>              
             </ion-col>
           </ion-row>
+
+          <ion-row class="ion-align-items-start">
+            <ion-col>
+              <ion-item>
+                <ion-label>Shippings</ion-label>
+                <ion-select [(ngModel)]="currentShipping_id" placeholder="Select One" >
+                  <ion-select-option *ngFor="let shipping of active_shipping" value="{{shipping.shipping_id}}">{{shipping.shipping}}</ion-select-option>
+                </ion-select>
+              </ion-item>              
+          </ion-col>
+        </ion-row>
+
           <ion-row class="ion-align-items-start">
             <ion-col>
               <ion-item>

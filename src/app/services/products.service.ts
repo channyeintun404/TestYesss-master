@@ -89,9 +89,9 @@ export class ProductsService extends AppService {
 
           //image exist
           else{
-             const imagesArr = [prod['main_pair']['detailed']['image_path']];
+             const imagesArr = [];
+            // const imagesArr = [prod['main_pair']['detailed']['image_path']];
               if (prod['image_pairs']) {  
-                // console.log(Object.values(prod['image_pairs']));
                 for (const img of Object.values(prod['image_pairs'])) {
                   imagesArr.push(img['detailed']['image_path']);
                 }      
