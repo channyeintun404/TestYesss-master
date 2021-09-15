@@ -1,8 +1,54 @@
-<p>
-  shippings works!
-</p>
+
 <ion-content>
-  <ion-text>
+  <!-- <ion-text>
+    <button (click)="getAllShipment()">Test</button>
     Welcome to Shippings Page!!!
-  </ion-text>
+  </ion-text> -->
+  <ion-row class="header-row">
+    <ion-col>
+      Shipment Time 
+    </ion-col >
+    <ion-col>
+      Order Id
+    </ion-col>
+    <ion-col>
+      Status
+    </ion-col>
+    <ion-col>
+      Order Time 
+    </ion-col >
+    <ion-col>
+     FirstName
+    </ion-col >
+    <ion-col>
+      LastName 
+    </ion-col >
+    <ion-col>
+    </ion-col >
+  </ion-row>
+  <ion-row *ngFor="let shipment of shipments" class="shipment-row">
+    <ion-input type="text" hidden="true" [(ngModel)]="shipment.shipment_id"></ion-input>
+    <ion-col>
+      <ion-text>{{shipment.shipment_timestamp}}</ion-text>
+    </ion-col >
+    <ion-col >
+      <ion-text>{{shipment.order_id}}</ion-text>
+    </ion-col>
+    <ion-col >
+      <ion-text>{{shipment.status}}</ion-text>
+    </ion-col>
+    <ion-col>
+      <ion-text>{{shipment.order_timestamp}}</ion-text>
+    </ion-col>
+    <ion-col>
+      <ion-text>{{shipment.s_firstname}}</ion-text>
+    </ion-col>
+    <ion-col>
+      <ion-text>{{shipment.s_lastname}}</ion-text>
+    </ion-col>
+    <ion-col>
+      <button (click)="getShipmentById(shipment.shipment_id)">details</button>
+    </ion-col>
+  </ion-row>
+
 </ion-content>
