@@ -36,6 +36,7 @@ import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 import {CloudinaryModule} from '@cloudinary/angular';
+import { ShipmentDetailsComponent } from './pages/shipment-details/shipment-details.component';
 
 
 @NgModule({
@@ -43,11 +44,13 @@ import {CloudinaryModule} from '@cloudinary/angular';
     ProductDetailsComponent,
     ProductEditComponent,
     CartComponent,
-    CheckoutComponent],
+    CheckoutComponent,
+    ShipmentDetailsComponent],
   entryComponents: [ProductDetailsComponent,
     ProductEditComponent,
     CartComponent,
-    CheckoutComponent],
+    CheckoutComponent,
+    ShipmentDetailsComponent],
   imports: [AutoCompleteModule,BrowserModule,StoreModule.forRoot({ currentOrder: currentOrderReducer,
      currentProducts: currentProductsReducer,
      productList: productListReducer,

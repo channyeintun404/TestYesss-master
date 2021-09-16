@@ -46,27 +46,9 @@ export class ShipmentsService extends AppService {
 
       getShipmentById(id) {
         return new Promise((resolve)=>{
-          this.get(id).subscribe(res=> {
-            console.log(res)
-
-            // for(const shipment of res["shipments"]){
-            //   this.shipment.push({
-            //     shipment_id :shipment["shipment_id"],
-            //     shipment_timestamp :shipment["shipment_timestamp"],
-            //     comments :shipment["comments"],
-            //     order_id :shipment["order_id"],
-            //     status :shipment["status"],
-            //     order_timestamp :shipment["order_timestamp"],
-            //     s_firstname :shipment["s_firstname"],
-            //     s_lastname :shipment["s_lastname"],
-            //     company :shipment["company"],
-            //     user_id :shipment["user_id"],
-            //     shipping_id :shipment["shipping_id"],
-            //     shipping :shipment["shipping"],
-            //     carrier :shipment["carrier"]
-            // });
-          
-          resolve(res);
+          this.get(id).subscribe(shipmentsDetail=> {
+            console.log(shipmentsDetail) 
+          resolve(shipmentsDetail);
           },err=>{
               console.log("Shipments List ERROR");
             });

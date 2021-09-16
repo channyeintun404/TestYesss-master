@@ -27,7 +27,7 @@
     </ion-col >
   </ion-row>
   <ion-row *ngFor="let shipment of shipments" class="shipment-row">
-    <ion-input type="text" hidden="true" [(ngModel)]="shipment.shipment_id"></ion-input>
+    <!-- <ion-input type="text" hidden="true" [(ngModel)]="shipment.shipment_id"></ion-input> -->
     <ion-col>
       <ion-text>{{shipment.shipment_timestamp}}</ion-text>
     </ion-col >
@@ -47,7 +47,8 @@
       <ion-text>{{shipment.s_lastname}}</ion-text>
     </ion-col>
     <ion-col>
-      <button (click)="getShipmentById(shipment.shipment_id)">details</button>
+      <!-- <button (click)="getShipmentById(shipment.shipment_id)">details</button> -->
+      <ion-button color="color1" size="small" (click)="goShipmentPage(shipment.shipment_id)" routeDirection="Root">Details</ion-button>
     </ion-col>
   </ion-row>
 

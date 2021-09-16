@@ -1,0 +1,44 @@
+<ion-header no-border>
+  <ion-toolbar color="color1">
+    <ion-buttons slot="start">
+      <ion-back-button color="white" default-href="" (click)="dismiss()" text="" icon="arrow-round-back">
+      </ion-back-button>
+    </ion-buttons>
+
+    <!-- Title -->
+    <ion-title>Shipping: {{shipment.shipment_id}}</ion-title>
+    
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-row>
+    <ion-col>
+      <ion-text>Shipment Timestamp: {{shipment.shipment_timestamp}}</ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-text>Order: {{shipment.order_id}}</ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-text>Status: {{shipment.status}}</ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-text>Order Time: {{shipment.order_timestamp}}</ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-text>FirstName: {{shipment.s_firstname}}</ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-text>LastName: {{shipment.s_lastname}}</ion-text>
+    </ion-col>
+  </ion-row>
+</ion-content>
