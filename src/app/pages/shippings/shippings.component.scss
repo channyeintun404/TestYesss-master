@@ -1,8 +1,14 @@
+// .header-row{
+// font-weight: bold;
+// font-size: 11px;
+// }
 .header-row{
-font-weight: bold;
-font-size: 11px;
-}
-
-.shipment-row{
+    font-weight: bolder;
     font-size: 12px;
+    border-bottom: 2px solid rgb(168, 164, 164);
+}
+.shipment-row{
+    border-bottom: 1px solid rgb(168, 164, 164);
+    font-size: 12px;
+    padding: 5px;
 }
