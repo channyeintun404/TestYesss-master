@@ -69,78 +69,62 @@
   </ion-row>
 
    <!-- Selct Sizes -->
-  <ion-row class="select-heading">
-    <ion-text>Available Sizes</ion-text>
+   <ion-row class="select-heading">
+    <ion-text style="margin-left: 15px;">Available Sizes</ion-text>
+   </ion-row>
+   <ion-row>
+    <ion-col></ion-col>
   </ion-row>
-  <ion-row class="header-row">
-    <ion-col size="4" style="border-right: 1px solid rgb(168, 164, 164);">
-      Pos 
-    </ion-col >
-    <ion-col size="4" style="border-right: 1px solid rgb(168, 164, 164);">
-      Size
-    </ion-col>
-    <ion-col size="4">
-      Status
-    </ion-col>
-  </ion-row>
-  <ion-row *ngFor="let variant_size of variants_size" class="option-row">
-    <ion-input type="text" hidden="true" [(ngModel)]="variant_size.id"></ion-input>
-    <ion-col size="4" style="border-right: 1px solid rgb(168, 164, 164);">
-      <ion-label color="primary">{{variant_size.position}}</ion-label>
-    </ion-col >
-    <ion-col size="4" style="border-right: 1px solid rgb(168, 164, 164);">
-      <ion-label color="primary">{{variant_size.variant_name}}</ion-label>
-    </ion-col>
-    <ion-col size="4">
-      <ion-label color="primary">{{variant_size.status}}</ion-label>
-    </ion-col>
-    </ion-row>
-    <br>
+  <table>
+    <thead>
+      <tr>
+        <th>Pos</th>
+        <th>Size</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let variant_size of variants_size" >
+      <ion-input type="text" hidden="true" [(ngModel)]="variant_size.id"></ion-input>
+      <tr>
+        <td >{{variant_size.position}}</td>
+        <td>{{variant_size.variant_name}}</td>
+        <td>{{variant_size.status}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
   <!-- Select Color -->
   <ion-row class="select-heading">
-    <ion-text>Available color</ion-text>
+    <ion-text style="margin-left: 15px;">Available Colors</ion-text>
   </ion-row>
-  <ion-row class="header-row">
-    <ion-col size="4" style="border-right: 1px solid rgb(168, 164, 164);">
-      Pos 
-    </ion-col >
-    <ion-col size="4" style="border-right: 1px solid rgb(168, 164, 164);">
-      Color
-    </ion-col>
-    <ion-col size="4">
-      Status
-    </ion-col>
+  <ion-row>
+    <ion-col></ion-col>
   </ion-row>
-    <ion-row *ngFor="let variant_color of variants_color" class="option-row">
+  <table>
+    <thead>
+      <tr>
+        <th>Pos</th>
+        <th>Color</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let variant_color of variants_color">
       <ion-input type="text" hidden="true" [(ngModel)]="variant_color.id"></ion-input>
-      <ion-col size="4" style="border-right: 1px solid rgb(168, 164, 164);">
-        <ion-label color="primary">{{variant_color.position}}</ion-label>
-      </ion-col >
-      <ion-col size="4" style="border-right: 1px solid rgb(168, 164, 164);">
-        <ion-label color="primary">{{variant_color.variant_name}}</ion-label>
-      </ion-col>
-      <ion-col size="4">
-        <ion-label color="primary">{{variant_color.status}}</ion-label>
-      </ion-col>
-    </ion-row>
-<!-- Product Sizes -->
-<!-- <ion-radio-group>
-  <ion-row class="ion-padding-start">
-    <ion-col size="3" *ngFor="let item of size">
-      <ion-item lines="none">
-        <ion-label class="size-label">{{item}}</ion-label>
-        <ion-radio color="color1" mode="ios" [value]="item"></ion-radio>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-</ion-radio-group> -->
+      <tr>
+        <td>{{variant_color.position}}</td>
+        <td>{{variant_color.variant_name}}</td>
+        <td>{{variant_color.status}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
 </ion-content>
 
 <!-- Footer -->
 <ion-footer no-border>
   <ion-toolbar class="ion-padding" transparent>
     <!-- Add To Cart Button -->
-    <ion-button class="add-to-cart" color="color1" expand="block" (click)="goToProductEditPage()">EDIT PRODUCT
+    <ion-button class="add-to-cart" color="color1" expand="block" (click)="goToProductEditPage()" >EDIT PRODUCT
     </ion-button>
   </ion-toolbar>
 </ion-footer>

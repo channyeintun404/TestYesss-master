@@ -171,166 +171,124 @@
    </ion-row>
     </ion-grid>
     <!-- Available Size -->
-    <ion-grid>
-      <h5>For Size</h5>
-      <ion-row class="header-row">
-        <ion-col size="2">
-          Pos 
-        </ion-col >
-        <ion-col size="3">
-          Size
-        </ion-col>
-        <ion-col size="2">
-          Status
-        </ion-col>
-        <ion-col size="2">     
-                           
-        </ion-col>
-        <ion-col size="3">
-          
-        </ion-col>
-      </ion-row>
-      <ion-row *ngFor="let variant_size of variants_size" class="option-row">
-        <!-- <ion-input type="text" hidden="true" [(ngModel)]="option.option_id"></ion-input> -->
+    <ion-row class="select-heading">
+      <ion-text style="margin-left: 15px;">Available Sizes</ion-text>
+     </ion-row>
+     <ion-row>
+      <ion-col></ion-col>
+    </ion-row>
+    <table>
+      <thead>
+        <tr>
+          <th>Pos</th>
+          <th>Size</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let variant_size of variants_size">
         <ion-input type="text" hidden="true" [(ngModel)]="variant_size.id"></ion-input>
-        <ion-col size="2">
-          <ion-input type="text"  [(ngModel)]="variant_size.position"></ion-input>
-        </ion-col >
-        <ion-col size="3">
-          <ion-input type="text"  [(ngModel)]="variant_size.variant_name"></ion-input>
-        </ion-col>
-        <ion-col size="2">
-          <!-- <ion-input type="text"  [(ngModel)]="variants.status"></ion-input> -->
-          <ion-select [(ngModel)]="variant_size.status" [ngModelOptions]="{standalone: true}" value="status">
-            <ion-select-option value="A">Active</ion-select-option>
-            <ion-select-option value="D">Disable</ion-select-option>
-            <ion-select-option value="H">Hidden</ion-select-option>
-            
-          </ion-select>
-        </ion-col>
-        <!-- <ion-col size="1">     
-                           
-        </ion-col> -->
-        <ion-col size="5" class="txt-option">
+        <tr>
+          <td>
+            <ion-input type="text"  [(ngModel)]="variant_size.position"></ion-input>
+          </td>
+          <td>
+            <ion-input type="text"  [(ngModel)]="variant_size.variant_name"></ion-input>
+          </td>
+          <td>
+            <ion-select [(ngModel)]="variant_size.status" [ngModelOptions]="{standalone: true}" value="status">
+              <ion-select-option value="A">Active</ion-select-option>
+              <ion-select-option value="D">Disable</ion-select-option>
+              <ion-select-option value="H">Hidden</ion-select-option>
+            </ion-select>
+          </td>
+          <td>
+            <ion-text (click)="openAddSizeRow()" class="txt-add">Add</ion-text>
+            <ion-text (click)="updateOptionSize()" class="txt-edit">Edit</ion-text>
+            <ion-text (click)="updateOptionSize(variant_size.position)" class="txt-delete">Delete</ion-text>
+          </td>
+        </tr>
+      </tbody>
+        <tr *ngIf="addOptionSize" class="option-row">
+          <td> 
+            <ion-input type="text" placeholder="pos" [(ngModel)]="optionSizePostion"> </ion-input>
+          </td>
+          <td>
+            <ion-input type="text" placeholder="size" [(ngModel)]="optionSizeName"></ion-input>
+          </td>
+          <td>
+            <ion-select [(ngModel)]="optionSizeStatus" [ngModelOptions]="{standalone: true}" >
+              <ion-select-option value="A">Active</ion-select-option>
+              <ion-select-option value="D">Disable</ion-select-option>
+              <ion-select-option value="H">Hidden</ion-select-option> 
+            </ion-select>
+          </td>
+          <td>
+            <ion-text (click)="createSizeOption()" class="txt-done">Done</ion-text>
+            <ion-text (click)="closeAddSizeRow()" class="txt-close">Close</ion-text>
+          </td>
+        </tr>
+    </table>
 
-          <ion-text (click)="openAddSizeRow()" class="txt-add">Add</ion-text>
-          <ion-text (click)="updateOptionSize()" class="txt-edit">Edit</ion-text>
-          <ion-text (click)="updateOptionSize(variant_size.position)" class="txt-delete">Delete</ion-text>
-
-          <!-- <ion-icon  ios="ios-add-circle" md="md-add-circle" (click)="openAddSizeRow()" style="margin-right: 10px; margin-top: 10px;" color="secondary"></ion-icon> 
-          <ion-icon name="construct" style="margin-top: 10px;" (click)="updateOptionSize()" color="primary"></ion-icon>
-          <ion-icon  ios="ios-trash" md="md-trash" style="margin-left: 10px; color: red;" (click)="updateOptionSize(variant_size.position)" ></ion-icon>  -->
-        </ion-col>
-      </ion-row>
-    <!-- </div> -->
-      <ion-row *ngIf="addOptionSize" class="option-row">
-        <ion-col size="2">
-          <ion-input type="text" placeholder="postion" [(ngModel)]="optionSizePostion"> </ion-input>
-        </ion-col >
-        <ion-col size="3">
-          <ion-input type="text" placeholder="optionName" [(ngModel)]="optionSizeName"></ion-input>
-        </ion-col>
-        <ion-col size="2">
-          <!-- <ion-input type="text" placeholder="optionStatus" [(ngModel)]="optionStatus"></ion-input> -->
-          <ion-select [(ngModel)]="optionSizeStatus" [ngModelOptions]="{standalone: true}" >
-            <ion-select-option value="A">Active</ion-select-option>
-            <ion-select-option value="D">Disable</ion-select-option>
-            <ion-select-option value="H">Hidden</ion-select-option>
-            
-          </ion-select>
-        </ion-col>
-        <ion-col size="1">     
-                           
-        </ion-col>
-        <ion-col size="4">
-          <ion-text (click)="createSizeOption()" class="txt-done">Done</ion-text>
-          <ion-text (click)="closeAddSizeRow()" class="txt-close">Close</ion-text>
-          <!-- <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" (click)="createSizeOption()" style="margin-top: 10px; font-size: 18px; margin-right: 10px;" color="success"></ion-icon>
-          <ion-icon ios="ios-close-circle" md="md-close-circle" style="margin-top: 10px; font-size: 18px; color: red;" (click)="closeAddSizeRow()"></ion-icon> -->
-        </ion-col>
-      </ion-row>
-      <!-- Available Color -->
-    <h5>For Color</h5>
-    <ion-row class="header-row">
-      <ion-col size="2">
-        Pos 
-      </ion-col >
-      <ion-col size="3">
-        Color
-      </ion-col>
-      <ion-col size="2">
-        Status
-      </ion-col>
-      <ion-col size="2">     
-                         
-      </ion-col>
-      <ion-col size="3">
-        
-      </ion-col>
+    <ion-row class="select-heading">
+      <ion-text style="margin-left: 15px;">Available Colors</ion-text>
+     </ion-row>
+     <ion-row>
+      <ion-col></ion-col>
     </ion-row>
-    <!-- <div *ngFor="let option of options"> -->
-      <ion-row *ngFor="let variant_color of variants_color" class="option-row">
-        <!-- <ion-input type="text" hidden="true" [(ngModel)]="option.option_id"></ion-input> -->
+    <table>
+      <thead>
+        <tr>
+          <th>Pos</th>
+          <th>Color</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let variant_color of variants_color">
         <ion-input type="text" hidden="true" [(ngModel)]="variant_color.id"></ion-input>
-        <ion-col size="2">
-          <ion-input type="text"  [(ngModel)]="variant_color.position"></ion-input>
-        </ion-col >
-        <ion-col size="3">
-          <ion-input type="text"  [(ngModel)]="variant_color.variant_name"></ion-input>
-        </ion-col>
-        <ion-col size="2">
-          <!-- <ion-input type="text"  [(ngModel)]="variants.status"></ion-input> -->
-          <ion-select [(ngModel)]="variant_color.status" [ngModelOptions]="{standalone: true}" value="status">
-            <ion-select-option value="A">Active</ion-select-option>
-            <ion-select-option value="D">Disable</ion-select-option>
-            <ion-select-option value="H">Hidden</ion-select-option>
-            
-          </ion-select>
-        </ion-col>
-        <!-- <ion-col size="1">     
-                           
-        </ion-col> -->
-        <ion-col size="5" class="txt-option">
-
-          <ion-text (click)="openAddColorRow()" class="txt-add">Add</ion-text>
-          <ion-text (click)="updateOptionColor()" class="txt-edit">Edit</ion-text>
-          <ion-text (click)="updateOptionColor(variant_color.position)" class="txt-delete">Delete</ion-text>
-
-          <!-- <ion-icon  ios="ios-add-circle" md="md-add-circle" (click)="openAddColorRow()" style="margin-right: 10px; margin-top: 10px;" color="secondary"></ion-icon> 
-          <ion-icon name="construct" style="margin-top: 10px;" (click)="updateOptionColor()" color="primary"></ion-icon>
-          <ion-icon  ios="ios-trash" md="md-trash" style="margin-left: 10px; color: red;" (click)="updateOptionColor(variant_color.position)" ></ion-icon>  -->
-        </ion-col>
-      </ion-row>
-    <!-- </div> -->
-    <ion-row *ngIf="addOptionColor" class="option-row">
-      <ion-col size="2">
-        <ion-input type="text" placeholder="postion" [(ngModel)]="optionColorPostion"> </ion-input>
-      </ion-col >
-      <ion-col size="3">
-        <ion-input type="text" placeholder="optionName" [(ngModel)]="optionColorName"></ion-input>
-      </ion-col>
-      <ion-col size="2">
-        <!-- <ion-input type="text" placeholder="optionStatus" [(ngModel)]="optionStatus"></ion-input> -->
-        <ion-select [(ngModel)]="optionColorStatus" [ngModelOptions]="{standalone: true}" >
-          <ion-select-option value="A">Active</ion-select-option>
-          <ion-select-option value="D">Disable</ion-select-option>
-          <ion-select-option value="H">Hidden</ion-select-option>
-          
-        </ion-select>
-      </ion-col>
-      <ion-col size="1">     
-                         
-      </ion-col>
-      <ion-col size="4">
-
-        <ion-text (click)="createColorOption()" class="txt-done">Done</ion-text>
-        <ion-text (click)="closeAddColorRow()" class="txt-close">Close</ion-text>
-
-        <!-- <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" (click)="createColorOption()" style="margin-top: 10px; font-size: 18px; margin-right: 10px;" color="success"></ion-icon>
-        <ion-icon ios="ios-close-circle" md="md-close-circle" style="margin-top: 10px; font-size: 18px; color: red;" (click)="closeAddColorRow()"></ion-icon> -->
-      </ion-col>
-    </ion-row>
-  </ion-grid>  
+        <tr>
+          <td>
+            <ion-input type="text"  [(ngModel)]="variant_color.position"></ion-input>
+          </td>
+          <td>
+            <ion-input type="text"  [(ngModel)]="variant_color.variant_name"></ion-input>
+          </td>
+          <td>
+            <ion-select [(ngModel)]="variant_color.status" [ngModelOptions]="{standalone: true}" value="status">
+              <ion-select-option value="A">Active</ion-select-option>
+              <ion-select-option value="D">Disable</ion-select-option>
+              <ion-select-option value="H">Hidden</ion-select-option>
+            </ion-select>
+          </td>
+          <td>
+            <ion-text (click)="openAddColorRow()" class="txt-add">Add</ion-text>
+            <ion-text (click)="updateOptionColor()" class="txt-edit">Edit</ion-text>
+            <ion-text (click)="updateOptionColor(variant_color.position)" class="txt-delete">Delete</ion-text>
+          </td>
+        </tr>
+      </tbody>
+        <tr *ngIf="addOptionColor" class="option-row">
+          <td> 
+            <ion-input type="text" placeholder="pos" [(ngModel)]="optionColorPostion"> </ion-input>
+          </td>
+          <td>
+            <ion-input type="text" placeholder="size" [(ngModel)]="optionColorName"></ion-input>
+          </td>
+          <td>
+            <ion-select [(ngModel)]="optionColorStatus" [ngModelOptions]="{standalone: true}" >
+              <ion-select-option value="A">Active</ion-select-option>
+              <ion-select-option value="D">Disable</ion-select-option>
+              <ion-select-option value="H">Hidden</ion-select-option> 
+            </ion-select>
+          </td>
+          <td>
+            <ion-text (click)="createColorOption()" class="txt-done">Done</ion-text>
+            <ion-text (click)="closeAddColorRow()" class="txt-close">Close</ion-text>
+          </td>
+        </tr>
+    </table>
+    
   </div>
   <div id="complete-section" *ngIf="steps[2].isSelected" style="height: 70%">
     <ion-grid class="ion-padding" style="height: 100%">

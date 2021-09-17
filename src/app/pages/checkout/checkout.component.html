@@ -202,9 +202,10 @@
           <input type="file" (change)= "onFileSelected($event)" accept="image/*">
         </ion-col >       
         <ion-col size="3" *ngIf="last">
-          <ion-icon name="cloud-upload" (click)="onUpload()" style="margin-right: 13px;" color="danger"></ion-icon>
-          <!-- <button type="button" (click)="onUpload()">Upload</button> -->
-          <ion-icon *ngIf="addImage"   ios="ios-add-circle" md="md-add-circle" (click)="openAddImageRow()" color="secondary"></ion-icon> 
+          <ion-text (click)="onUpload()" class="txt-upload" >Upload</ion-text>
+          <ion-text *ngIf="addImage" (click)="openAddImageRow()" class="txt-addimg">Add</ion-text>
+          <!-- <ion-icon name="cloud-upload" (click)="onUpload()" style="margin-right: 13px;" color="danger"></ion-icon> -->
+          <!-- <ion-icon *ngIf="addImage"   ios="ios-add-circle" md="md-add-circle" (click)="openAddImageRow()" color="secondary"></ion-icon>  -->
         </ion-col>
      </ion-row>
     </ion-grid>
@@ -249,13 +250,16 @@
             
           </ion-select>
         </ion-col>
-        <ion-col size="2">     
+        <!-- <ion-col size="2">     
                            
-        </ion-col>
-        <ion-col size="3">
-          <ion-icon  ios="ios-add-circle" md="md-add-circle" (click)="openAddSizeRow()" style="margin-right: 10px; margin-top: 10px;" color="secondary"></ion-icon> 
+        </ion-col> -->
+        <ion-col size="5" class="txt-option">
+          <ion-text (click)="openAddSizeRow()" class="txt-add">Add</ion-text>
+          <ion-text (click)="updateSizeOption()" class="txt-edit">Edit</ion-text>
+          <ion-text (click)="updateSizeOption(variant_size.position)" class="txt-delete">Delete</ion-text>
+          <!-- <ion-icon  ios="ios-add-circle" md="md-add-circle" (click)="openAddSizeRow()" style="margin-right: 10px; margin-top: 10px;" color="secondary"></ion-icon> 
           <ion-icon name="construct" style="margin-top: 10px;" (click)="updateSizeOption()" color="primary"></ion-icon>
-          <ion-icon  ios="ios-trash" md="md-trash" style="margin-left: 10px; color: red;" (click)="updateSizeOption(variant_size.position)" ></ion-icon> 
+          <ion-icon  ios="ios-trash" md="md-trash" style="margin-left: 10px; color: red;" (click)="updateSizeOption(variant_size.position)" ></ion-icon>  -->
         </ion-col>
       </ion-row>
     <!-- </div> -->
@@ -275,12 +279,14 @@
             
           </ion-select>
         </ion-col>
-        <ion-col size="2">     
+        <ion-col size="1">     
                            
         </ion-col>
-        <ion-col size="3">
-          <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" (click)="createSizeOption()" style="margin-top: 10px; font-size: 18px; margin-right: 10px;" color="success"></ion-icon>
-          <ion-icon ios="ios-close-circle" md="md-close-circle" style="margin-top: 10px; font-size: 18px; color: red;" (click)="closeAddSizeRow()"></ion-icon>
+        <ion-col size="4">
+          <ion-text (click)="createSizeOption()" class="txt-done">Done</ion-text>
+          <ion-text (click)="closeAddSizeRow()" class="txt-close">Close</ion-text>
+          <!-- <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" (click)="createSizeOption()" style="margin-top: 10px; font-size: 18px; margin-right: 10px;" color="success"></ion-icon> -->
+          <!-- <ion-icon ios="ios-close-circle" md="md-close-circle" style="margin-top: 10px; font-size: 18px; color: red;" (click)="closeAddSizeRow()"></ion-icon> -->
         </ion-col>
       </ion-row>
     <h5>For Color</h5>
@@ -320,13 +326,18 @@
             
           </ion-select>
         </ion-col>
-        <ion-col size="2">     
+        <!-- <ion-col size="2">     
                            
-        </ion-col>
-        <ion-col size="3">
-          <ion-icon  ios="ios-add-circle" md="md-add-circle" (click)="openAddColorRow()" style="margin-right: 10px; margin-top: 10px;" color="secondary"></ion-icon> 
-          <ion-icon name="construct" style="margin-top: 10px;" (click)="updateColorOption()" color="primary"></ion-icon>
-          <ion-icon  ios="ios-trash" md="md-trash" style="margin-left: 10px; color: red;" (click)="updateColorOption(variant_color.position)" ></ion-icon> 
+        </ion-col> -->
+        <ion-col size="5" class="txt-option">
+
+          <ion-text (click)="openAddColorRow()" class="txt-add">Add</ion-text>
+          <ion-text (click)="updateColorOption()" class="txt-edit">Edit</ion-text>
+          <ion-text (click)="updateColorOption(variant_color.position)" class="txt-delete">Delete</ion-text>
+
+          <!-- <ion-icon  ios="ios-add-circle" md="md-add-circle" (click)="openAddColorRow()" style="margin-right: 10px; margin-top: 10px;" color="secondary"></ion-icon>  -->
+          <!-- <ion-icon name="construct" style="margin-top: 10px;" (click)="updateColorOption()" color="primary"></ion-icon> -->
+          <!-- <ion-icon  ios="ios-trash" md="md-trash" style="margin-left: 10px; color: red;" (click)="updateColorOption(variant_color.position)" ></ion-icon>  -->
         </ion-col>
       </ion-row>
     <!-- </div> -->
@@ -346,12 +357,16 @@
           
         </ion-select>
       </ion-col>
-      <ion-col size="2">     
+      <ion-col size="1">     
                          
       </ion-col>
-      <ion-col size="3">
-        <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" (click)="createColorOption()" style="margin-top: 10px; font-size: 18px; margin-right: 10px;" color="success"></ion-icon>
-        <ion-icon ios="ios-close-circle" md="md-close-circle" style="margin-top: 10px; font-size: 18px; color: red;" (click)="closeAddColorRow()"></ion-icon>
+      <ion-col size="4">
+
+        <ion-text (click)="createColorOption()" class="txt-done">Done</ion-text>
+        <ion-text (click)="closeAddColorRow()" class="txt-close">Close</ion-text>
+
+        <!-- <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" (click)="createColorOption()" style="margin-top: 10px; font-size: 18px; margin-right: 10px;" color="success"></ion-icon> -->
+        <!-- <ion-icon ios="ios-close-circle" md="md-close-circle" style="margin-top: 10px; font-size: 18px; color: red;" (click)="closeAddColorRow()"></ion-icon> -->
       </ion-col>
     </ion-row>
   </ion-grid>  

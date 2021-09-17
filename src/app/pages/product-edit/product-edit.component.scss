@@ -157,3 +157,31 @@ ion-item {
     color:#f0f0f0;
     margin-left: 5px;
 }
+table { 
+    width: 85%; 
+    border-collapse: collapse;
+    margin-left: 10px;
+    border: none;
+    // box-shadow: 5px 10px 8px #888888;
+}
+
+/* Zebra striping */
+tr:nth-of-type(odd) { 
+    background: #eee;
+}
+
+th { 
+    background: #008C76FF; 
+    color: white; 
+    font-weight: bold; 
+}
+tr{
+    font-size: 12px;
+}
+td, th { 
+    padding: 6px; 
+     border: 2px solid #fff;
+    border-right: 2px solid #fff;
+    border-radius: 7px; 
+    text-align: left; 
+}
