@@ -20,7 +20,13 @@ import { MenuController } from '@ionic/angular';
   // }
 export class OrdersTabPage {
 
-  constructor(private menuController: MenuController) {
+  constructor(private menuController: MenuController, private router: Router) {
     this.menuController.enable(true); // Enable side menu
+  }
+
+  clickTab(event: Event, tabPath: string) {
+    event.stopImmediatePropagation();
+    console.log( event, tabPath );
+    this.router.navigate([`${tabPath}`]);
   }
 }
