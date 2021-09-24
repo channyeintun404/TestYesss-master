@@ -11,34 +11,146 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-row>
-    <ion-col>
-      <ion-text>Shipment Timestamp: {{shipment.shipment_timestamp}}</ion-text>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-text>Order: {{shipment.order_id}}</ion-text>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-text>Status: {{shipment.status}}</ion-text>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-text>Order Time: {{shipment.order_timestamp}}</ion-text>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-text>FirstName: {{shipment.s_firstname}}</ion-text>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-text>LastName: {{shipment.s_lastname}}</ion-text>
-    </ion-col>
-  </ion-row>
+  <!-- For Billing Address -->
+    <ion-card>     
+      <ion-card-content>
+        <h3><b>Billing Address</b></h3>
+        <ion-row class="ion-align-items-start">
+          <ion-col>
+            <ion-row>
+              <ion-col>
+                <ion-text>
+                  {{order.b_address}}
+                </ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-text>
+                  {{order.b_city}}, {{order.b_state_descr}} {{order.b_zipcode}}
+                </ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-text>
+                  {{order.b_country_descr}}
+                </ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-text>
+                  {{order.b_phone}}
+                </ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-text>{{order.firstname}} {{order.lastname}} {{order.email}}</ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-text>IP address: {{order.ip_address}}</ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-text>Phone: {{order.b_phone}}</ion-text>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+    </ion-card>
+  <!-- For Shipping Address -->
+    <ion-card>     
+      <ion-card-content>
+        <h3><b>Shipping Address</b></h3>
+        <ion-row class="ion-align-items-start">
+          <ion-col>
+            <ion-row>
+              <ion-col>
+                <ion-text>
+                  {{order.firstname}} {{order.lastname}}
+                </ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-text>
+                  {{order.b_address}}
+                </ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-text>
+                  {{order.b_city}}, {{order.b_state_descr}} {{order.b_zipcode}}
+                </ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-text>
+                  {{order.b_country_descr}}
+                </ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-text>{{order.b_phone}}</ion-text>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+    </ion-card>
+
+  <!-- For Product -->
+    <ion-card *ngFor="let product of product_array; index as i">     
+      <ion-card-content>
+        <ion-row class="ion-align-items-start">
+          <ion-col>
+            Product
+          </ion-col>
+          <ion-col>
+            <ion-text>
+              <a href="#">{{product.product}}</a>
+            </ion-text>
+            <ion-text>
+              <p>{{product.product_code}}</p>
+            </ion-text>
+            <ion-text *ngIf="order.points_info !== undefined">
+              <p>Points in Price : {{order.points_info.price | currency:"MMK":"symbol"}}</p>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-start">
+          <ion-col>
+            Price
+          </ion-col>
+          <ion-col>
+            {{product.price | currency:"MMK":"symbol"}}
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-start">
+          <ion-col>
+            Quantity
+          </ion-col>
+          <ion-col>
+            {{product_array[i].amount}}
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-start">
+          <ion-col>
+            SubTotal
+          </ion-col>
+          <ion-col>
+            {{product_array[i].subtotal}}
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
 </ion-content>

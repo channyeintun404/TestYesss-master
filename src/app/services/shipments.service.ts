@@ -54,6 +54,14 @@ export class ShipmentsService extends AppService {
             });
         })
       }
-      
+      createShipment(data:any){
+        console.log(data);
+        return new Promise((resolve)=>{
+          this.create(data).subscribe(res=>{
+            // console.log("add res "+JSON.stringify(res));
+            resolve(res);
+          })
+        })
+      }
 
 }

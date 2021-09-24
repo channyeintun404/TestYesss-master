@@ -11,6 +11,7 @@ import { UpdateProduct, UpdateOrder} from "../order-details/order-details.action
 import { image } from '@cloudinary/base/qualifiers/source';
 import { ShippingsService } from 'src/app/services/shippings.servicre';
 import { Shipping } from 'src/app/models/shipping.model';
+import { ShipmentsService } from 'src/app/services/shipments.service';
 
 @Component({
   selector: 'app-order-details',
@@ -38,6 +39,9 @@ export class OrderDetailsPage implements OnInit {
    active_shipping: Shipping[];
    currentShipping: Shipping;
    currentShipping_id: string;
+   showBtn: boolean;
+   currentShippingName:any;
+   users_id: any;
 
   slideOpts = {
     on: {
@@ -107,7 +111,8 @@ export class OrderDetailsPage implements OnInit {
      private productsService: ProductsService,
       private ordersService: OrdersService,
       private usergroupsService:UsergroupsService,
-      private route: ActivatedRoute,private router: Router) {
+      private route: ActivatedRoute,private router: Router,
+      private shipmentsService: ShipmentsService) {
     this.route.params.subscribe( params => {
       this.orderid = params.id;
       this.previd = (parseInt(params.id) + 1).toString();
@@ -214,6 +219,7 @@ export class OrderDetailsPage implements OnInit {
           console.log("order",this.order)
           this.currentStatus = res["status"];
           this.GetProductList(res["products"]);
+          this.users_id = res["user_id"]
           this.store.dispatch(UpdateOrder({
             currentOrder: JSON.parse(JSON.stringify(this.order)),
           }));
@@ -284,5 +290,25 @@ export class OrderDetailsPage implements OnInit {
     // this.store.dispatch(UpdateOrder({
     //   currentOrder: clonedOrder,
     // }));
+  }
+  createButton(){
+    this.showBtn= true;
+  }
+  createShipment(){
+    console.log(this.users_id)
+    this.shippingService.getShippingById(this.currentShipping_id).then(res=>{
+      console.log(res['shipping'])
+      this.currentShippingName = res['shipping'];
+    })
+    this.shipmentsService.createShipment({
+      "carrier": "Fedex",
+      "order_id": this.orderid,
+      "products": this.GetProductList,
+      "shipping": this.currentShippingName,
+      "shipping_id": this.currentShipping_id,
+      "user_id": this.users_id
+    }).then((resp: any) => {
+   console.log(resp);
+    })
   }
 }

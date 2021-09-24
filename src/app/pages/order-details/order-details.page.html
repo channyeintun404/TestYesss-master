@@ -237,13 +237,20 @@
             <ion-col>
               <ion-item>
                 <ion-label>Shippings</ion-label>
-                <ion-select [(ngModel)]="currentShipping_id" placeholder="Select One" >
+                <ion-select [(ngModel)]="currentShipping_id" [ngModelOptions]="{standalone: true}" (cancel)="onCancel()" (ionChange)="createButton()"data-live-search="true" placeholder="Select One" >
                   <ion-select-option *ngFor="let shipping of active_shipping" value="{{shipping.shipping_id}}">{{shipping.shipping}}</ion-select-option>
                 </ion-select>
               </ion-item>              
           </ion-col>
         </ion-row>
-
+        
+        <ion-row *ngIf="showBtn">
+          <ion-col size="3"></ion-col>
+          <ion-col size="3"></ion-col>
+          <ion-col size="6">
+            <ion-button class="createShipment" (click)="createShipment()">CreateShipment</ion-button>
+          </ion-col>
+        </ion-row>
           <ion-row class="ion-align-items-start">
             <ion-col>
               <ion-item>
