@@ -12,14 +12,17 @@
       Order_Id
     </ion-col>
     <ion-col size="2">
-      Status
-    </ion-col>
-    <ion-col size="3">
-      Order_Time 
+      Shipment Date
     </ion-col >
-    <ion-col size="3">
+    <ion-col size="2">
+      Order Date
+    </ion-col >
+    <ion-col size="2">
      Customer
     </ion-col >
+    <ion-col size="2">
+      Status
+    </ion-col>
     <!-- <ion-col size="2">
       Last_Name 
     </ion-col > -->
@@ -27,19 +30,26 @@
   <ion-row *ngFor="let shipment of shipments" class="shipment-row">
     <!-- <ion-input type="text" hidden="true" [(ngModel)]="shipment.shipment_id"></ion-input> -->
     <ion-col size="2">
-      <a (click)="goShipmentPage(shipment.shipment_id)">#{{shipment.shipment_id}}</a>
+      <a (click)="goShipmentDetailPage(shipment.shipment_id)">#{{shipment.shipment_id}}</a>
     </ion-col >
     <ion-col size="2">
       <ion-text>{{shipment.order_id}}</ion-text>
     </ion-col>
     <ion-col size="2">
-      <ion-text>{{shipment.status}}</ion-text>
+      <ion-text>{{shipment.shipment_timestamp * 1000 | date:'MM/dd/yyyy'}}</ion-text>
     </ion-col>
-    <ion-col size="3">
-      <ion-text>{{shipment.order_timestamp}}</ion-text>
+    <ion-col size="2">
+      <ion-text>{{shipment.order_timestamp * 1000 | date:'MM/dd/yyyy'}}</ion-text>
     </ion-col>
-    <ion-col size="3">
+    <ion-col size="2">
       <ion-text>{{shipment.s_firstname}} {{shipment.s_lastname}}</ion-text>
+    </ion-col>
+    <ion-col size="2" style="margin-left: -20px; margin-top: -10px;">
+      <ion-select [(ngModel)]="shipment.status" [ngModelOptions]="{standalone: true}" value="shipment.status">
+        <ion-select-option value="A">Picked</ion-select-option>
+        <ion-select-option value="P">Pick up</ion-select-option>
+        <ion-select-option value="S">Shiped</ion-select-option>
+      </ion-select>
     </ion-col>
     <!-- <ion-col>
       <ion-text>{{shipment.s_lastname}}</ion-text>

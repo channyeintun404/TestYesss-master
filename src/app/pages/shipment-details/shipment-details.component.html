@@ -5,6 +5,13 @@
       </ion-back-button>
     </ion-buttons>
 
+    <ion-buttons slot="end">
+      <ion-select interface="popover" placeholder="⚙️" #settingList (ionChange)='changeSetting($event.target.value)'>
+        <ion-select-option value="1">Save and process payment</ion-select-option>
+  </ion-select>
+      <ion-button color="white"  (click)="saveChanges(shipment.shipment_id)">Save</ion-button>
+    </ion-buttons>
+
     <!-- Title -->
     <ion-title>Shipping: {{shipment.shipment_id}}</ion-title>
     
@@ -153,4 +160,31 @@
         </ion-row>
       </ion-card-content>
     </ion-card>
+
+    <ion-card>     
+      <ion-card-content>
+        <h3><b>Comments</b></h3>
+        <ion-row class="ion-align-items-start">
+          <ion-col>
+            <ion-item class="item-background-color">
+              <ion-textarea placeholder="comments" [(ngModel)]="shipment.comments"></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>     
+      <ion-card-content>
+        <h3><b>Shippment Date</b></h3>
+        <ion-row class="ion-align-items-start">
+          <ion-col>
+            <ion-item>
+              <ion-datetime displayFormat="MM/DD/YYYY H:mm"  value="{{shipment.shipment_timestamp * 1000| date:'MM/dd/yyyy H:mm'}}"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    
 </ion-content>

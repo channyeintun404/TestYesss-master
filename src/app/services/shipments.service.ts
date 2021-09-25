@@ -54,6 +54,8 @@ export class ShipmentsService extends AppService {
             });
         })
       }
+
+      //create new shipment
       createShipment(data:any){
         console.log(data);
         return new Promise((resolve)=>{
@@ -63,5 +65,16 @@ export class ShipmentsService extends AppService {
           })
         })
       }
+
+      //updaste shipments
+      updateShipmentDetail(id: number,data:any){
+        console.log(data);
+        return new Promise((resolve)=>{
+          this.edit(id,data).subscribe(res=>{
+            console.log(res);
+          })
+        })
+      }
+      
 
 }

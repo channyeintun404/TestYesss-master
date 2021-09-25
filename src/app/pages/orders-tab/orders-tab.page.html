@@ -20,20 +20,18 @@
   <ion-tabs class="ion-padding">
 
     <ion-tab-bar slot="top">
-      <ion-tab-button tab="orders-tab1">
+      <ion-tab-button (click)="clickTab($event, '/tabs/tab3/orders-tab1')" [routerLink]="['orders-tab3']" tab="orders-tab3">
         <ion-label>Orders</ion-label>
       </ion-tab-button>
-      <!-- <a routerLink="/tabs/tab3/orders-tab2">
-        <ion-label>Returns</ion-label>
-      </a> -->
-      <ion-tab-button>
-        <!-- <ion-icon name="return"></ion-icon> -->
-        <a routerLink="/tabs/tab3/orders-tab2"><ion-label>Returns</ion-label></a>
-      </ion-tab-button>
       <ion-tab-button (click)="clickTab($event, '/tabs/tab3/orders-tab3')" [routerLink]="['orders-tab3']" tab="orders-tab3">
-        <!-- <ion-icon name="shipping"></ion-icon> -->
-        <ion-label>Shipping</ion-label>
+       
+        <ion-label>Shipments</ion-label>
       </ion-tab-button>
+      <ion-tab-button (click)="clickTab($event, '/tabs/tab3/orders-tab2')" [routerLink]="['orders-tab3']" tab="orders-tab3">
+    
+        <ion-label>Returns</ion-label>
+      </ion-tab-button>
+
     </ion-tab-bar>
   </ion-tabs>
 </ion-content>

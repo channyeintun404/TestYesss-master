@@ -15,15 +15,12 @@ export class ShipmentDetailsComponent implements OnInit {
   order : any;
   products: any[] = [];
   currentStatus: string;
-
   orderid: string;
-   previd: string;
-   nextid: string;
-   product_array : any[]=[];
-   statuses: any;
-   isLoaded = false;
-   needReload = false;
-   users_id: any;
+  product_array : any[]=[];
+  isLoaded = false;
+  needReload = false;
+  users_id: any;
+
 
   constructor(private shipmentsService: ShipmentsService,
               private modalController: ModalController,
@@ -65,16 +62,34 @@ async GetProductList(obj) {
 });
 }
 
-
+// get shipment by id
   getShipmentById(id){
     console.log(id);
     this.shipmentsService.getShipmentById(id).then(res=>{
       this.shipment = res;
       this.order_id = res['order_id'];
       this.getOrderById(this.order_id);
-      console.log(res['order_id'])
+      console.log(res['shipment_timestamp'])
     })
   }
+
+  //save comments to shipment by id
+  saveChanges(id){
+    console.log(this.shipment.shipment_timestamp)
+    // this.shipmentsService.updateShipmentDetail(id,{
+    // //   "carrier": "Fedex",
+    // //   "order_id": this.orderid,
+    // //   "products": {
+    // //     "335646445": "1",
+    // //     "1214322108": "1"
+    // // },
+    // //   "shipping": "SBS Delivery",
+    // //   "shipping_id": "8",
+    // //   "user_id": this.users_id,
+    //   "comments" :this.shipment.comments
+    // })
+  }
+
   dismiss() {
     this.modalController.dismiss({
       'dismissed': true

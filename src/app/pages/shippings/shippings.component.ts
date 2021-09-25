@@ -41,7 +41,7 @@ export class ShippingsComponent implements OnInit {
   }
 
     // Go to detail shipment page
-    async goShipmentPage(id) {
+    async goShipmentDetailPage(id) {
       console.log(id)
       const modal = await this.modalController.create({
         component: ShipmentDetailsComponent,

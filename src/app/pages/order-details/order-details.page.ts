@@ -12,6 +12,8 @@ import { image } from '@cloudinary/base/qualifiers/source';
 import { ShippingsService } from 'src/app/services/shippings.servicre';
 import { Shipping } from 'src/app/models/shipping.model';
 import { ShipmentsService } from 'src/app/services/shipments.service';
+import { ModalController } from '@ionic/angular';
+import { ShipmentDetailsComponent } from '../shipment-details/shipment-details.component';
 
 @Component({
   selector: 'app-order-details',
@@ -42,6 +44,7 @@ export class OrderDetailsPage implements OnInit {
    showBtn: boolean;
    currentShippingName:any;
    users_id: any;
+   newShippment_id: any;
 
   slideOpts = {
     on: {
@@ -102,6 +105,7 @@ export class OrderDetailsPage implements OnInit {
       },
     }
   }
+ 
    
 
   constructor(public menuCtrl: MenuController,
@@ -112,6 +116,7 @@ export class OrderDetailsPage implements OnInit {
       private ordersService: OrdersService,
       private usergroupsService:UsergroupsService,
       private route: ActivatedRoute,private router: Router,
+      private modalController: ModalController,
       private shipmentsService: ShipmentsService) {
     this.route.params.subscribe( params => {
       this.orderid = params.id;
@@ -308,7 +313,21 @@ export class OrderDetailsPage implements OnInit {
       "shipping_id": this.currentShipping_id,
       "user_id": this.users_id
     }).then((resp: any) => {
-   console.log(resp);
+       console.log(resp['shipment_id'])
+       this.newShippment_id=resp['shipment_id']
+       this.goShipmentDetailPage(this.newShippment_id)
     })
   }
+
+  
+    // Go to detail shipment page
+    async goShipmentDetailPage(id) {
+      console.log(id)
+      const modal = await this.modalController.create({
+        component: ShipmentDetailsComponent,
+        componentProps: { id: id }
+      });
+      return await modal.present();
+    }
+
 }
