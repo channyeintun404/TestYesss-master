@@ -75,6 +75,21 @@ export class ShipmentsService extends AppService {
           })
         })
       }
+
+      //get shipment By orderId
+      getShipmentByOrderId(order_id) {
+        this.shipment;
+        return new Promise((resolve)=>{
+          this.getByQueryString("&order_id="+order_id).subscribe(res=> {
+            console.log(res)
+            this.shipment=res['shipments']
+          resolve(this.shipment);
+          },err=>{
+              console.log("Shipment List ERROR");
+            });
+        })
+      }
+
       
       //delete shipments
       deleteShipment(id){

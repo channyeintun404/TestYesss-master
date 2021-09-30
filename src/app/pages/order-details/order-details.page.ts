@@ -14,6 +14,7 @@ import { Shipping } from 'src/app/models/shipping.model';
 import { ShipmentsService } from 'src/app/services/shipments.service';
 import { ModalController } from '@ionic/angular';
 import { ShipmentDetailsComponent } from '../shipment-details/shipment-details.component';
+import { Shipment } from 'src/app/models/shipment.model';
 
 @Component({
   selector: 'app-order-details',
@@ -45,6 +46,9 @@ export class OrderDetailsPage implements OnInit {
    currentShippingName:any;
    users_id: any;
    newShippment_id: any;
+
+     //shipment
+  shipments:Shipment[];
 
   slideOpts = {
     on: {
@@ -105,6 +109,8 @@ export class OrderDetailsPage implements OnInit {
       },
     }
   }
+  currentShipment: any;
+  currentShipmentId: any;
  
    
 
@@ -132,6 +138,7 @@ export class OrderDetailsPage implements OnInit {
     this.getShippings();
     this.getOrderById(this.orderid);
     this.getStatuses();
+    this.checkShipment();
     this.checkAdjecentOrders();
     this.getManagers();
     // this.store.select('currentOrder').subscribe(result=>{
@@ -317,6 +324,32 @@ export class OrderDetailsPage implements OnInit {
        this.newShippment_id=resp['shipment_id']
        this.goShipmentDetailPage(this.newShippment_id)
     })
+  }
+
+  //get all shipment
+  // getShipmentByOrderId(){
+  //   this.shipmentsService.getByQueryString("order_id=").then(res=>{
+  //     this.shipments=[];
+  //     Object.values(res).forEach(element => {
+  //       this.shipments.push(element)
+  //     });
+  //   })
+  //   console.log(this.shipments);
+  // }
+
+  checkShipment(){
+    this.shipmentsService.getShipmentByOrderId(this.orderid).then(res=>{
+      console.log(res[0]["shipment_id"]);
+      this.currentShipment = res[0]["shipping"];
+      this.currentShipmentId =  res[0]["shipment_id"];
+    })
+    console.log(this.shipments)
+    // this.shipments.forEach(element => {
+    //   if(element.order_id==parseInt(this.orderid)){
+    //     console.log(element.shipping_id)
+    //   }
+    //   console.log(element)
+    // });
   }
 
   
