@@ -76,5 +76,13 @@ export class ShipmentsService extends AppService {
         })
       }
       
+      //delete shipments
+      deleteShipment(id){
+        return new Promise((resolve)=>{
+          this.delete(id).subscribe(res=>{
+            console.log(res);
+          })
+        })
+      }
 
 }

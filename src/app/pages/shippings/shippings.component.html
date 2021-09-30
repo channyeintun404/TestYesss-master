@@ -5,10 +5,10 @@
     Welcome to Shippings Page!!!
   </ion-text> -->
   <ion-row class="header-row">
-    <ion-col size="2">
+    <ion-col size="1">
       Shipment_Id 
     </ion-col >
-    <ion-col size="2">
+    <ion-col size="1">
       Order_Id
     </ion-col>
     <ion-col size="2">
@@ -21,6 +21,8 @@
      Customer
     </ion-col >
     <ion-col size="2">
+    </ion-col>
+    <ion-col size="2">
       Status
     </ion-col>
     <!-- <ion-col size="2">
@@ -29,10 +31,10 @@
   </ion-row>
   <ion-row *ngFor="let shipment of shipments" class="shipment-row">
     <!-- <ion-input type="text" hidden="true" [(ngModel)]="shipment.shipment_id"></ion-input> -->
-    <ion-col size="2">
+    <ion-col size="1">
       <a (click)="goShipmentDetailPage(shipment.shipment_id)">#{{shipment.shipment_id}}</a>
     </ion-col >
-    <ion-col size="2">
+    <ion-col size="1">
       <ion-text>{{shipment.order_id}}</ion-text>
     </ion-col>
     <ion-col size="2">
@@ -45,19 +47,19 @@
       <ion-text>{{shipment.s_firstname}} {{shipment.s_lastname}}</ion-text>
     </ion-col>
     <ion-col size="2" style="margin-left: -20px; margin-top: -10px;">
+      <ion-select interface="popover" placeholder="⚙️" #settingList (ionChange)='changeSetting($event.target.value, shipment.shipment_id)'>
+        <ion-select-option value="V" class="settinglist">View</ion-select-option>
+        <ion-select-option value="P" class="settinglist">Print Slip</ion-select-option>
+        <ion-select-option value="D" class="settinglist">Delete</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col size="2" style="margin-left: 10px; margin-top: -10px;">
       <ion-select [(ngModel)]="shipment.status" [ngModelOptions]="{standalone: true}" value="shipment.status">
         <ion-select-option value="A">Picked</ion-select-option>
         <ion-select-option value="P">Pick up</ion-select-option>
         <ion-select-option value="S">Shiped</ion-select-option>
       </ion-select>
     </ion-col>
-    <!-- <ion-col>
-      <ion-text>{{shipment.s_lastname}}</ion-text>
-    </ion-col> -->
-    <!-- <ion-col>
-      <button (click)="getShipmentById(shipment.shipment_id)">details</button>
-      <ion-button color="color1" size="small" (click)="goShipmentPage(shipment.shipment_id)" routeDirection="Root">Details</ion-button>
-    </ion-col> -->
   </ion-row>
 
 </ion-content>

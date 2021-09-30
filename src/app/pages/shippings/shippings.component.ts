@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ShipmentsService } from 'src/app/services/shipments.service';
 import { Shipment } from 'src/app/models/shipment.model';
 import { ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ShipmentDetailsComponent } from '../shipment-details/shipment-details.component';
 @Component({
   selector: 'app-shippings',
@@ -9,14 +11,14 @@ import { ShipmentDetailsComponent } from '../shipment-details/shipment-details.c
   styleUrls: ['./shippings.component.scss'],
 })
 export class ShippingsComponent implements OnInit {
-  
   //shipment
   shipments:Shipment[];
   shipment:Shipment;
+  deleteRow:boolean;
 
   constructor(
     private shipmentsService: ShipmentsService,
-    public modalController: ModalController) { }
+    public modalController: ModalController,private router: Router,protected http: HttpClient) { }
 
   ngOnInit() {
     this.getAllShipment();
@@ -49,5 +51,23 @@ export class ShippingsComponent implements OnInit {
       });
       return await modal.present();
     }
-
+    changeSetting(value, shipment_id){
+       console.log(shipment_id)
+      if(value=="D"){
+        this.shipmentsService.deleteShipment(shipment_id).then(res=>{
+          console.log(res);
+        })
+       
+      }
+      if(value=="V"){
+        this.goShipmentDetailPage(shipment_id);
+      }
+      if(value=="P"){
+      //  this.clickTab;
+      // this.router.navigate([`http://yesss.com.mm/admin.php?dispatch=shipments.packing_slip&shipment_ids[]=27`]);
+      window.open('http://yesss.com.mm/admin.php?dispatch=shipments.packing_slip&shipment_ids[]=' + shipment_id, "_blank");
+      }
+      this.getAllShipment();
+    }
+    
 }
