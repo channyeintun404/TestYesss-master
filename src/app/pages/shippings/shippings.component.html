@@ -33,27 +33,28 @@
     <!-- <ion-input type="text" hidden="true" [(ngModel)]="shipment.shipment_id"></ion-input> -->
     <ion-col size="1">
       <a (click)="goShipmentDetailPage(shipment.shipment_id)">#{{shipment.shipment_id}}</a>
+      <!-- <a [routerLink]="['/shipment-details',shipment.shipment_id]" routeDirection="Root">#{{shipment.shipment_id}}</a> -->
     </ion-col >
     <ion-col size="1">
-      <ion-text>{{shipment.order_id}}</ion-text>
+      <a [routerLink]="['/order-details',shipment.order_id]" routeDirection="Root">#{{shipment.order_id}}</a>
     </ion-col>
     <ion-col size="2">
       <ion-text>{{shipment.shipment_timestamp * 1000 | date:'MM/dd/yyyy'}}</ion-text>
     </ion-col>
-    <ion-col size="2">
+    <ion-col size="2" >
       <ion-text>{{shipment.order_timestamp * 1000 | date:'MM/dd/yyyy'}}</ion-text>
     </ion-col>
     <ion-col size="2">
       <ion-text>{{shipment.s_firstname}} {{shipment.s_lastname}}</ion-text>
     </ion-col>
     <ion-col size="2" style="margin-left: -20px; margin-top: -10px;">
-      <ion-select interface="popover" placeholder="⚙️" #settingList (ionChange)='changeSetting($event.target.value, shipment.shipment_id)'>
+      <ion-select interface="popover" placeholder="⚙️" #settingList (ionChange)='changeSetting($event.target.value, shipment.shipment_id)' class="select-placeholder">
         <ion-select-option value="V" class="settinglist">View</ion-select-option>
         <ion-select-option value="P" class="settinglist">Print Slip</ion-select-option>
         <ion-select-option value="D" class="settinglist">Delete</ion-select-option>
       </ion-select>
     </ion-col>
-    <ion-col size="2" style="margin-left: 10px; margin-top: -10px;">
+    <ion-col size="2" style="margin-left: 5px; margin-top: -10px;">
       <ion-select [(ngModel)]="shipment.status" [ngModelOptions]="{standalone: true}" value="shipment.status">
         <ion-select-option value="A">Picked</ion-select-option>
         <ion-select-option value="P">Pick up</ion-select-option>

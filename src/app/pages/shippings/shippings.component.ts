@@ -5,6 +5,8 @@ import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ShipmentDetailsComponent } from '../shipment-details/shipment-details.component';
+import { OrderDetailsPage } from '../order-details/order-details.page';
+import { ShippingsService } from 'src/app/services/shippings.servicre';
 @Component({
   selector: 'app-shippings',
   templateUrl: './shippings.component.html',
@@ -18,7 +20,8 @@ export class ShippingsComponent implements OnInit {
 
   constructor(
     private shipmentsService: ShipmentsService,
-    public modalController: ModalController,private router: Router,protected http: HttpClient) { }
+    public modalController: ModalController,private router: Router,protected http: HttpClient,
+    private shippingsService: ShippingsService) { }
 
   ngOnInit() {
     this.getAllShipment();
@@ -51,6 +54,7 @@ export class ShippingsComponent implements OnInit {
       });
       return await modal.present();
     }
+
     changeSetting(value, shipment_id){
        console.log(shipment_id)
       if(value=="D"){
