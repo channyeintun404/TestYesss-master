@@ -55,6 +55,7 @@ export class ShippingsComponent implements OnInit {
       return await modal.present();
     }
 
+    //handle change setting dropdown
     changeSetting(value, shipment_id){
        console.log(shipment_id)
       if(value=="D"){
@@ -73,5 +74,13 @@ export class ShippingsComponent implements OnInit {
       }
       this.getAllShipment();
     }
+
+    //update shipment status
+    updateshipemnt(status,shipmentId){
+      this.shipmentsService.updateShipmentDetail(shipmentId,{
+        "status": status
+      });
+    }
+    
     
 }

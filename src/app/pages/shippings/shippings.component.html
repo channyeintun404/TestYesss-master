@@ -55,7 +55,7 @@
       </ion-select>
     </ion-col>
     <ion-col size="2" style="margin-left: 5px; margin-top: -10px;">
-      <ion-select [(ngModel)]="shipment.status" [ngModelOptions]="{standalone: true}" value="shipment.status">
+      <ion-select [(ngModel)]="shipment.status"[ngModelOptions]="{standalone: true}" (cancel)="onCancel()" (ionChange)="updateshipemnt(shipment.status, shipment.shipment_id)"data-live-search="true" value="shipment.status">
         <ion-select-option value="A">Picked</ion-select-option>
         <ion-select-option value="P">Pick up</ion-select-option>
         <ion-select-option value="S">Shiped</ion-select-option>

@@ -320,6 +320,7 @@ export class OrderDetailsPage implements OnInit {
       "shipping_id": this.currentShipping_id,
       "user_id": this.users_id
     }).then((resp: any) => {
+      this.showBtn = false;
        console.log(resp['shipment_id'])
        this.newShippment_id=resp['shipment_id']
        this.goShipmentDetailPage(this.newShippment_id)
@@ -355,12 +356,18 @@ export class OrderDetailsPage implements OnInit {
   
     // Go to detail shipment page
     async goShipmentDetailPage(id) {
-      console.log(id)
+      this.checkShipment();
       const modal = await this.modalController.create({
         component: ShipmentDetailsComponent,
         componentProps: { id: id }
       });
       return await modal.present();
+    }
+
+    //refresh page
+    refreshPage(){      
+    this.getOrderById(this.orderid);
+    this.checkShipment();
     }
 
 }
