@@ -5,6 +5,7 @@ import { ProductsService } from '../../services/products.service';
 import { OptionsService } from 'src/app/services/options.service';
 import { Option } from 'src/app/models/option.model';
 import { Variant } from 'src/app/models/variants.model';
+import { Router } from '@angular/router';
 
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 import axios from 'axios';
@@ -20,6 +21,7 @@ export class ProductEditComponent implements OnInit {
   steps: any = [];
   cards: any = [];
   checks: any= [];
+  backs: any= [];
 
   @Input() id: number;
   name: String;
@@ -82,7 +84,8 @@ export class ProductEditComponent implements OnInit {
   constructor(public modalController: ModalController,    
     private optionsService : OptionsService,
     private productService : ProductsService,
-    private productsService: ProductsService) { }
+    private productsService: ProductsService
+    , private router: Router) { }
     
 
   ngOnInit() {
@@ -124,6 +127,20 @@ this.checks = [
 
 ]
 
+this.backs = [
+
+  {
+    isSelected: true
+  },
+  {
+    isSelected: false
+  },
+  {
+    isSelected: false
+  }
+
+]
+
   // Payment cards images
   this.cards = ["assets/images/cards/visa.png",
     "assets/images/cards/mastercard.png",
@@ -139,6 +156,9 @@ this.checks = [
     this.steps[1].isSelected = true;
     this.checks[0].isSelected = true;
     this.checks[1].isSelected = true;
+    this.backs[0].isSelected = false;    
+    this.backs[1].isSelected = true;
+    this.backs[2].isSelected = false;
     this.saveChanges();
   }
   // If current section is Billing then next section confirm will be visible 
@@ -149,6 +169,9 @@ this.checks = [
      this.checks[0].isSelected = true;
     this.checks[1].isSelected = true;
     this.checks[2].isSelected = true;
+    this.backs[0].isSelected = false;    
+    this.backs[1].isSelected = false;
+    this.backs[2].isSelected = true;
     this.saveChangesProductImage();
   }
 }
@@ -542,12 +565,9 @@ this.productsService.updateProduct(this.id, {
 
 // Go to product details page
 async goToProductDetails() {
-  this.addproduct();
-  const modal = await this.modalController.create({
-    component: ProductDetailsComponent,
-    componentProps: this.products
-  });
-  return await modal.present();
+  // this.dismiss();  
+  this.router.navigate([`/tabs/products`]);
+  location.reload();
 }
 
 addproduct() {
@@ -643,5 +663,26 @@ dismiss() {
     'dismissed': true
   })
 }
-
+backfirstpage(){
+  this.backs[0].isSelected = true;
+  this.backs[1].isSelected = false;
+  this.backs[2].isSelected = false;
+  this.steps[0].isSelected = true;
+  this.steps[1].isSelected = false;  
+  this.steps[2].isSelected = false;
+  this.checks[0].isSelected = true;
+  this.checks[1].isSelected = false;
+  this.checks[2].isSelected = false;
+}
+backsecondpage(){
+  this.backs[0].isSelected = false;
+  this.backs[1].isSelected = true;
+  this.backs[2].isSelected = false;
+  this.steps[0].isSelected = false;
+  this.steps[1].isSelected = true;  
+  this.steps[2].isSelected = false;
+  this.checks[0].isSelected = true;
+  this.checks[1].isSelected = true;
+  this.checks[2].isSelected = false;
+}
 }

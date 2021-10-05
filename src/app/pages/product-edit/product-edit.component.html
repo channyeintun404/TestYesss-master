@@ -10,9 +10,16 @@
   <ion-toolbar color="color1">
 
     <!-- Back to previous page option button -->
-    <ion-buttons slot="start">
-      <ion-back-button color="white" default-href="" (click)="dismiss()" text="" icon="arrow-round-back">
-      </ion-back-button>      
+    <ion-buttons slot="start">   
+      <ion-back-button *ngIf="backs[0].isSelected && backs[1].isSelected == false && backs[2].isSelected== false" color="white" default-href="" (click)="dismiss()" text="" icon="arrow-round-back">
+      </ion-back-button>
+      <ion-back-button *ngIf="backs[0].isSelected==false && backs[1].isSelected == true && backs[2].isSelected== false" color="white" default-href="" (click)="backfirstpage()" text="" icon="arrow-round-back">
+      </ion-back-button>
+      <ion-back-button *ngIf="backs[0].isSelected==false && backs[1].isSelected == false && backs[2].isSelected== true" color="white" default-href="" (click)="backsecondpage()" text="" icon="arrow-round-back">
+      </ion-back-button>            
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <a href="/tabs/tab1" style="font-size: 23px; color: white;"><ion-icon name="ios-close-circle-outline"></ion-icon></a>   
     </ion-buttons>
     
 
