@@ -37,6 +37,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 import {CloudinaryModule} from '@cloudinary/angular';
 import { ShipmentDetailsComponent } from './pages/shipment-details/shipment-details.component';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { ShipmentDetailsComponent } from './pages/shipment-details/shipment-deta
     File,
     Media,
     StreamingMedia,
-    PhotoViewer
+    PhotoViewer,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

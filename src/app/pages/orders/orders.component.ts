@@ -13,6 +13,8 @@ import { StatusesService } from '../../services/statuses.service';
 import { Status } from 'src/app/models/status.modal';
 import { Store } from '@ngrx/store';
 import { UpdateOrderList } from './orders.actions';
+import { CookieService } from 'ngx-cookie-service';
+
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -52,6 +54,7 @@ export class OrdersComponent implements OnInit {
     isSelected: false
   }, ];
 orders: Order[];
+  vendorId: any;
 
   // Orders Sample Data
   // orders: any = [{
@@ -74,7 +77,8 @@ orders: Order[];
   //   totalPrice: 300
   // }];
   constructor(private ordersService: OrdersService,private statusesService: StatusesService,private store:Store<{orderList: Order[]}>,
-    public modalController: ModalController) { 
+    public modalController: ModalController,
+    private cookieService: CookieService) { 
     }
 
   ngOnInit() {
@@ -85,6 +89,9 @@ orders: Order[];
     this.getStatuses();
   }
   getOrderList(queryString,callback?:() => void ) {
+
+    this.vendorId=this.cookieService.get('vendorId');  // get the cookie value
+    console.log(this.vendorId);
 
   //get data from service
     this.ordersService.getOrders(queryString).then((res :Order[])  =>{  
