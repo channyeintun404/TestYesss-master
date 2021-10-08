@@ -94,7 +94,8 @@ orders: Order[];
     console.log(this.vendorId);
 
   //get data from service
-    this.ordersService.getOrders(queryString).then((res :Order[])  =>{  
+    this.ordersService.getOrders(queryString, this.vendorId).then((res :Order[])  =>{  
+      console.log(res);
       this.store.dispatch(UpdateOrderList({
         Type: "Update",
         OrderList: JSON.parse(JSON.stringify(res))

@@ -14,7 +14,7 @@ export class SigninComponent implements OnInit {
   ngOnInit() {}
 
   setCookie(){
-    this.cookieService.set('vendorId',"12");
+    this.cookieService.set('vendorId',"13");
     // console.log("cookie");
   }
 
