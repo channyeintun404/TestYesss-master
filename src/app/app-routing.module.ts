@@ -16,13 +16,39 @@ const routes: Routes = [
   { path: 'order-details/:id/edit',  loadChildren: () => import('./pages/order-edit/order-edit.module').then( m => m.OrderEditPageModule)},
   {
     path: 'order-edit',
-    loadChildren: () => import('./pages/order-edit/order-edit.module').then( m => m.OrderEditPageModule)
+    loadChildren: () => import('./pages/account/account.module').then( m => m.AccountModule)
   },
-  // {
-  //   path: '',
-  //   loadChildren: () => import('./pages/orders-tab/orders-tab.module').then( m => m.OrdersTabPageModule)
-  // },
+  { path: 'account', loadChildren: () => import('./pages/vendor/vendor.module').then(m => m.VendorModule) },
   { path: 'orders-tab', loadChildren: () => import('./pages/orders-tab/orders-tab.module').then(m => m.OrdersTabPageModule) },
+  {
+    path: 'setting',
+    loadChildren: () => import('./pages/setting/setting.module').then( m => m.SettingPageModule)
+  },
+  {
+    path: 'vendor-admin',
+    loadChildren: () => import('./pages/vendor-admin/vendor-admin.module').then( m => m.VendorAdminPageModule)
+  },
+  {
+    path: 'vendor-plan',
+    loadChildren: () => import('./pages/vendor-plan/vendor-plan.module').then( m => m.VendorPlanPageModule)
+  },
+  {
+    path: 'accounting',
+    loadChildren: () => import('./pages/accounting/accounting.module').then( m => m.AccountingPageModule)
+  },
+  {
+    path: 'shipping-method',
+    loadChildren: () => import('./pages/shipping-method/shipping-method.module').then( m => m.ShippingMethodPageModule)
+  },  {
+    path: 'payment-methods',
+    loadChildren: () => import('./pages/payment-methods/payment-methods.module').then( m => m.PaymentMethodsPageModule)
+  },
+
+
+
+
+
+
 
 
   // {

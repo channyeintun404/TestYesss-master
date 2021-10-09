@@ -72,54 +72,43 @@
       </ion-item-divider>
 
       <ion-item lines="none">
-        <ion-label>Unpaid</ion-label>
-        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+        <ion-label>Vendor</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end" (click)="openVendorPage()"></ion-icon>
       </ion-item>
       <ion-item lines="none">
-        <ion-label>To be shipped</ion-label>
-        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+        <ion-label>Vendor's Admin</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end" (click)="clickTab($event, 'vendor-admin')" [routerLink]="['vendor-admin']" tab="orders-tab3"></ion-icon>
       </ion-item>
       <ion-item lines="none">
-        <ion-label>Shipped</ion-label>
-        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+        <ion-label>Vendor Plan</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end" (click)="clickTab($event, 'vendor-plan')" [routerLink]="['vendor-plan']" tab="orders-tab3"></ion-icon>
       </ion-item>
       <ion-item lines="none">
-        <ion-label>Cancelled</ion-label>
-        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+        <ion-label>Accounting</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end" (click)="clickTab($event, 'accounting')" [routerLink]="['accounting']" tab="orders-tab3"></ion-icon>
       </ion-item>
       <ion-item lines="none">
-        <ion-label>In dispute</ion-label>
+        <ion-label>Shippping Methods</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end" (click)="clickTab($event, 'shipping-method')" [routerLink]="['shipping-method']" tab="orders-tab3"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Payment Methods</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end" (click)="clickTab($event, 'payment-methods')" [routerLink]="['payment-methods']" tab="orders-tab3"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Logout</ion-label>
         <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
       </ion-item>
     </ion-item-group>
   </ion-card>
 
-  <ion-card>
-    <ion-item-group>
-      <ion-item lines="none">
-        <ion-label>Analytics</ion-label>
-        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label>Manage Shippings</ion-label>
-        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label>Manage Coupon code</ion-label>
-        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label>Questions & Answers</ion-label>
-        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
-      </ion-item>
-    </ion-item-group>
-  </ion-card>
 
   <ion-card>
     <ion-item-group>
       <ion-item lines="none">
         <ion-label>Settings</ion-label>
-        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+        <ion-icon name="arrow-forward" size="small" slot="end" (click)="clickTab($event, 'setting')" [routerLink]="['setting']" tab="orders-tab3"></ion-icon>
+        <!-- <a href="/setting">text</a> -->
       </ion-item>
       <ion-item lines="none">
         <ion-label>App Suggestion</ion-label>

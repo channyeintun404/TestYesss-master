@@ -38,6 +38,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import {CloudinaryModule} from '@cloudinary/angular';
 import { ShipmentDetailsComponent } from './pages/shipment-details/shipment-details.component';
 import { CookieService } from 'ngx-cookie-service';
+import { VendorComponent } from './pages/vendor/vendor.component';
 
 
 @NgModule({
@@ -46,12 +47,14 @@ import { CookieService } from 'ngx-cookie-service';
     ProductEditComponent,
     CartComponent,
     CheckoutComponent,
-    ShipmentDetailsComponent],
+    ShipmentDetailsComponent,
+    VendorComponent],
   entryComponents: [ProductDetailsComponent,
     ProductEditComponent,
     CartComponent,
     CheckoutComponent,
-    ShipmentDetailsComponent],
+    ShipmentDetailsComponent,
+    VendorComponent],
   imports: [AutoCompleteModule,BrowserModule,StoreModule.forRoot({ currentOrder: currentOrderReducer,
      currentProducts: currentProductsReducer,
      productList: productListReducer,
