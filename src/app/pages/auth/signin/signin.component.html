@@ -33,7 +33,7 @@
         <ion-label>
           <ion-icon name="md-mail" color="color2"></ion-icon>
         </ion-label>
-        <ion-input type="email" placeholder="Email" name="email"></ion-input>
+        <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="email"></ion-input>
       </ion-item>
 
       <!-- Password -->
@@ -41,7 +41,7 @@
         <ion-label>
           <ion-icon name="md-eye" color="color2"></ion-icon>
         </ion-label>
-        <ion-input type="password" placeholder="Password" name="password"></ion-input>
+        <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="password"></ion-input>
       </ion-item>
 
       <!-- Forget Password Button -->
@@ -53,7 +53,7 @@
 
       <!-- SignIn Buttons -->
       <div class="buttons">
-        <ion-button expand="block" color="color1" routerLink="/tabs/tab1" routerDirection="root" (click)="setCookie()">
+        <ion-button expand="block" color="color1"  (click)="checkLogin()">
           <ion-text><strong>SIGN IN</strong></ion-text>
         </ion-button>
 

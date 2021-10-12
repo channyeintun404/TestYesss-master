@@ -26,7 +26,7 @@ export class OrdersService extends AppService {
 
   getOrders(queryString, vendorId) {
     return new Promise((resolve) => {
-        this.getByQueryString(queryString+"items_per_page=10&"+vendorId+"$sortBy=order_id&orderBy=asc").subscribe(res=> {
+        this.getByQueryString(queryString+"items_per_page=10&"+vendorId+"$sortBy=timestamp&sort_order=desc").subscribe(res=> {
           let orderLength = res['orders'].length;
           let completedOrderLength = 0;
           let completedOrderLength$ =new BehaviorSubject<number>(0);
