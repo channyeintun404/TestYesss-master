@@ -4,11 +4,11 @@ import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 @Component({
-  selector: 'app-general',
-  templateUrl: './general.page.html',
-  styleUrls: ['./general.page.scss'],
+  selector: 'app-description',
+  templateUrl: './description.page.html',
+  styleUrls: ['./description.page.scss'],
 })
-export class GeneralPage implements OnInit {
+export class DescriptionPage implements OnInit {
 
   constructor(private menuController: MenuController,private modalController: ModalController,private router: Router,
     private location: Location) { 

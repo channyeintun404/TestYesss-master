@@ -59,6 +59,16 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'tab6',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../vendor/vendor.module').then(m => m.VendorPageModule)
+          }
+        ]
+      },
+      {
         path: 'categories',
         children: [
           {
@@ -95,6 +105,16 @@ const routes: Routes = [
             path: '',
             loadChildren: () =>
               import('../orders-tab/orders-tab.module').then(m => m.OrdersTabPageModule)
+          }
+        ]
+      },
+      {
+        path: 'vendor',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../vendor/vendor.module').then(m => m.VendorPageModule)
           }
         ]
       },

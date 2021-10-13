@@ -42,10 +42,35 @@ const routes: Routes = [
   {
     path: 'payment-methods',
     loadChildren: () => import('./pages/payment-methods/payment-methods.module').then( m => m.PaymentMethodsPageModule)
-  },  {
-    path: 'vendor',
-    loadChildren: () => import('./pages/vendor/vendor.module').then( m => m.VendorPageModule)
   },
+  {
+    path: 'vendor', loadChildren: () => import('./pages/vendor/vendor.module').then( m => m.VendorPageModule)
+  },
+  {
+    path: 'description',
+    loadChildren: () => import('./pages/description/description.module').then( m => m.DescriptionPageModule)
+  },
+  {
+    path: 'logos',
+    loadChildren: () => import('./pages/logos/logos.module').then( m => m.LogosPageModule)
+  },
+  {
+    path: 'method-shipping',
+    loadChildren: () => import('./pages/method-shipping/method-shipping.module').then( m => m.MethodShippingPageModule)
+  },
+  {
+    path: 'plan',
+    loadChildren: () => import('./pages/plan/plan.module').then( m => m.PlanPageModule)
+  },
+  {
+    path: 'terms-conditions',
+    loadChildren: () => import('./pages/terms-conditions/terms-conditions.module').then( m => m.TermsConditionsPageModule)
+  },
+  {
+    path: 'reviews',
+    loadChildren: () => import('./pages/reviews/reviews.module').then( m => m.ReviewsPageModule)
+  },
+
   {
     path: 'general',
     loadChildren: () => import('./pages/general/general.module').then( m => m.GeneralPageModule)
