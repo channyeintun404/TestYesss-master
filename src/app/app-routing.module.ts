@@ -18,7 +18,6 @@ const routes: Routes = [
     path: 'order-edit',
     loadChildren: () => import('./pages/account/account.module').then( m => m.AccountModule)
   },
-  { path: 'account', loadChildren: () => import('./pages/vendor/vendor.module').then(m => m.VendorModule) },
   { path: 'orders-tab', loadChildren: () => import('./pages/orders-tab/orders-tab.module').then(m => m.OrdersTabPageModule) },
   {
     path: 'setting',
@@ -39,10 +38,19 @@ const routes: Routes = [
   {
     path: 'shipping-method',
     loadChildren: () => import('./pages/shipping-method/shipping-method.module').then( m => m.ShippingMethodPageModule)
-  },  {
+  },
+  {
     path: 'payment-methods',
     loadChildren: () => import('./pages/payment-methods/payment-methods.module').then( m => m.PaymentMethodsPageModule)
+  },  {
+    path: 'vendor',
+    loadChildren: () => import('./pages/vendor/vendor.module').then( m => m.VendorPageModule)
   },
+  {
+    path: 'general',
+    loadChildren: () => import('./pages/general/general.module').then( m => m.GeneralPageModule)
+  },
+
 
 
 

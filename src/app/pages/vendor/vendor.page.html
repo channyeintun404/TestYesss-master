@@ -1,0 +1,44 @@
+<ion-header no-border>
+  <ion-toolbar color="color1">
+<ion-buttons slot="start">
+  <ion-icon icon="arrow-round-back" (click)="back()"  class="icon"></ion-icon>
+</ion-buttons>
+<ion-title>Vendor</ion-title>
+</ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-tabs class="ion-padding">
+
+    <ion-tab-bar slot="top">
+      <ion-tab-button (click)="clickTab($event, 'general')" [routerLink]="['general']" tab="orders-tab3">
+        <ion-label>General</ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="clickTab($event, '/tabs/tab3/orders-tab3')" [routerLink]="['orders-tab3']" tab="orders-tab3">
+       
+        <ion-label>Description</ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="clickTab($event, '/tabs/tab3/orders-tab2')" [routerLink]="['orders-tab3']" tab="orders-tab3">
+    
+        <ion-label>Logos</ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="clickTab($event, '/tabs/tab3/orders-tab2')" [routerLink]="['orders-tab3']" tab="orders-tab3">
+    
+        <ion-label>Shipping Methods</ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="clickTab($event, '/tabs/tab3/orders-tab2')" [routerLink]="['orders-tab3']" tab="orders-tab3">
+    
+        <ion-label>Plan</ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="clickTab($event, '/tabs/tab3/orders-tab2')" [routerLink]="['orders-tab3']" tab="orders-tab3">
+    
+        <ion-label>Terms & Conditions</ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="clickTab($event, '/tabs/tab3/orders-tab2')" [routerLink]="['orders-tab3']" tab="orders-tab3">
+    
+        <ion-label>Reviews</ion-label>
+      </ion-tab-button>
+
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>

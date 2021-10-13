@@ -73,7 +73,7 @@
 
       <ion-item lines="none">
         <ion-label>Vendor</ion-label>
-        <ion-icon name="arrow-forward" size="small" slot="end" (click)="openVendorPage()"></ion-icon>
+        <ion-icon name="arrow-forward" size="small" slot="end" (click)="clickTab($event, 'vendor')" [routerLink]="['vendor']" tab="orders-tab3"></ion-icon>
       </ion-item>
       <ion-item lines="none">
         <ion-label>Vendor's Admin</ion-label>
