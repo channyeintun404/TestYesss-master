@@ -12,7 +12,7 @@ import { Option } from '../models/option.model';
   
     constructor(protected http: HttpClient) {
       super(http);
-      this.setModel('users');
+      this.setModel('vendors');
     }
   
 
