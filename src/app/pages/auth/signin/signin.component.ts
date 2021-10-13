@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-import { UsersService } from 'src/app/services/users.service';
+import { VendorsService } from 'src/app/services/vendors.services';
 
 
 @Component({
@@ -19,12 +19,12 @@ export class SigninComponent implements OnInit {
 
   constructor(private cookieService: CookieService,
     private router: Router,
-    private usersService: UsersService) { }
+    private vendorsService: VendorsService) { }
 
   ngOnInit() {}
 
   checkLogin(){
-    this.usersService.getUserByEmailAndPassword(this.email,this.password).then( res=>{
+    this.vendorsService.getUserByEmailAndPassword(this.email,this.password).then( res=>{
       console.log(res);
       this.user_info = res['user_info'];
       if(this.user_info!=null){
