@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { VendorsService } from 'src/app/services/vendors.services';
+import { UsersService }  from 'src/app/services/users.service';
 
 
 @Component({
@@ -16,15 +17,17 @@ export class SigninComponent implements OnInit {
   user_info: any;
   vendorName: any;
   userId: any;
+  companyId: any;
 
   constructor(private cookieService: CookieService,
     private router: Router,
-    private vendorsService: VendorsService) { }
+    private vendorsService: VendorsService,
+    private usersService: UsersService) { }
 
   ngOnInit() {}
 
   checkLogin(){
-    this.vendorsService.getUserByEmailAndPassword(this.email,this.password).then( res=>{
+    this.usersService.getUserByEmailAndPassword(this.email,this.password).then( res=>{
       console.log(res);
       this.user_info = res['user_info'];
       if(this.user_info!=null){
@@ -32,6 +35,8 @@ export class SigninComponent implements OnInit {
         this.cookieService.set('vendorName',this.vendorName);
         this.userId = this.user_info.user_id;
         this.cookieService.set('userId',this.userId);
+        this.companyId = this.user_info.company_id;
+        this.cookieService.set('companyId',this.companyId);
         this.router.navigate([`${"/tabs/tab1"}`]);
         console.log(this.user_info);
       }
