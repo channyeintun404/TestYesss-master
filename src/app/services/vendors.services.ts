@@ -25,7 +25,7 @@ import { Option } from '../models/option.model';
   }
   getVendorById(id) {
     return new Promise((resolve)=> {
-        this.get(id).subscribe(res=>{
+      this.getOptionByQueryString('vendors&extend[logos]=1&extend[placement_info]=1&company_id='+id).subscribe(res=>{
           resolve(res);
         },
         err=>{

@@ -21,8 +21,11 @@
       <ion-col size="2" >
         <ion-label style="margin-left: 15px;">Status:</ion-label>
       </ion-col>
-      <ion-col size="10">
-          <ion-radio value="Status" [(ngModel)]="Status" name="status"></ion-radio>
+      <ion-col size="1">
+          <ion-radio value="Status" [(ngModel)]="Status" name="status" checked="true" color="medium"></ion-radio>
+      </ion-col>
+      <ion-col size="9" >
+        <ion-text *ngIf="Status=='A'" >Active</ion-text>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -51,7 +54,7 @@
           <ion-label color="000">Address</ion-label>
       </ion-col>
       <ion-col size="10">
-          <ion-input  type="text" placeholder="Enter Address" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+          <ion-input  type="text" name ="address" placeholder="Enter Address" [(ngModel)]="Address" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -59,7 +62,7 @@
           <ion-label color="000">City</ion-label>
       </ion-col>
       <ion-col size="10">
-          <ion-input  type="text" placeholder="Enter City" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+          <ion-input  type="text" name ="city" placeholder="Enter City" [(ngModel)]="City" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -67,7 +70,7 @@
           <ion-label color="000">Country</ion-label>
       </ion-col>
       <ion-col size="10">
-          <ion-input  type="text" placeholder="Enter Country" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+          <ion-input  type="text" name ="country" placeholder="Enter Country" [(ngModel)]="Country" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -75,7 +78,7 @@
           <ion-label color="000">State/Province:</ion-label>
       </ion-col>
       <ion-col size="10">
-          <ion-input  type="text" placeholder="Enter State/Province:" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+          <ion-input  type="text" name ="state" placeholder="Enter State/Province:" [(ngModel)]="State" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -83,7 +86,7 @@
           <ion-label color="000">Phone:</ion-label>
       </ion-col>
       <ion-col size="10">
-          <ion-input  type="text" placeholder="Enter Phone Number" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+          <ion-input  type="text" name ="phone" placeholder="Enter Phone Number" [(ngModel)]="Phone" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -91,7 +94,7 @@
           <ion-label color="000">Url:</ion-label>
       </ion-col>
       <ion-col size="10">
-          <ion-input  type="text" placeholder="Enter Url" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+          <ion-input  type="text" name ="url" placeholder="Enter Url" [(ngModel)]="Url" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
       </ion-col>
     </ion-row>
   </form>
