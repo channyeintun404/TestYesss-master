@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { VendorsService } from 'src/app/services/vendors.services';
 import { CookieService } from 'ngx-cookie-service';
+import { createNgModule } from '@angular/compiler/src/core';
 // import { Vendor } from 'src/app/models/vendor.model';
 @Component({
   selector: 'app-general',
@@ -34,23 +35,37 @@ export class GeneralPage implements OnInit {
     this.companyId =  this.cookieService.get('companyId');
     this.getVendorsById(this.companyId);
   }
-getVendorsById(id){
-  this.vendorsServices.getVendorById(id).then(res=>{
-    console.log(res["vendors"]["0"]);
-    this.company_info = res["vendors"]["0"];
-    this.companyName = this.company_info.company;
-    this.Status = this.company_info.status;
-    this.Language =this.company_info.lang_code;
-    this.Email = this.company_info.email;
-    this.Address = this.company_info.address;
-    this.City = this.company_info.city;
-    this.Country = this.company_info.country;
-    this.State = this.company_info.state;
-    this.Phone = this.company_info.phone;
-    this.Url = this.company_info.url;
-    console.log(this.companyName)
-  })
-}
+  getVendorsById(id){
+    this.vendorsServices.getVendorById(id).then(res=>{
+      console.log(res["vendors"]["0"]);
+      this.company_info = res["vendors"]["0"];
+      this.companyName = this.company_info.company;
+      this.Status = this.company_info.status;
+      this.Language =this.company_info.lang_code;
+      this.Email = this.company_info.email;
+      this.Address = this.company_info.address;
+      this.City = this.company_info.city;
+      this.Country = this.company_info.country;
+      this.State = this.company_info.state;
+      this.Phone = this.company_info.phone;
+      this.Url = this.company_info.url;
+      console.log(this.companyName)
+    })
+  }
+
+  saveActivity(){
+    this.vendorsServices.updateVerdor(this.companyId,{
+      "company": this.companyName,
+      "email" : this.Email,
+      "lang_code" : this.Language,
+      "address" : this.Address,
+      "city" : this.City,
+      "country" : this.Country,
+      "state" : this.State,
+      "phone" : this.Phone,
+      "url" : this.Url
+    })
+  }
 
   back(): void {
     this.location.back()

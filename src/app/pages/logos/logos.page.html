@@ -3,10 +3,36 @@
 <ion-buttons slot="start">
   <ion-icon icon="arrow-round-back" (click)="back()"  class="icon"></ion-icon>
 </ion-buttons>
+<ion-buttons slot="end">
+  <ion-button   (click)="saveActivity()">Save</ion-button>
+</ion-buttons>
 <ion-title>Logos</ion-title>
 </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-row>
+    <ion-col >
+      <ion-label color="000">Logo for the customer area</ion-label>
+      <img [src]="company_logo1" style="width: 50%; height: 50%;" />
+      <ion-input  type="text"  style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;" [(ngModel)]="alt_image1" name="alt"></ion-input>
+    </ion-col>
+    <ion-col >
+      <ion-label color="000">Select a image</ion-label>
+      <input type="file" (change)= "onFileSelected($event)" accept="image/*">
+    </ion-col>
+  </ion-row>
+ 
+  <ion-row>
+    <ion-col >
+      <ion-label color="000">Logo for invoices</ion-label>
+      <img [src]="company_logo2" style="width: 50%; height: 50%;" />
+      <ion-input  type="text"  style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;" [(ngModel)]="alt_image2" name="alt"></ion-input>
+    </ion-col>
+    <ion-col>
+      <ion-label color="000">Select a image</ion-label>
+      <input type="file" (change)= "onFileSelected($event)" accept="image/*">
+    </ion-col>    
+  </ion-row>  
 </ion-content>

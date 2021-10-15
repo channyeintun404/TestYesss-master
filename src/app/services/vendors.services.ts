@@ -36,7 +36,14 @@ import { Option } from '../models/option.model';
     })
   }
 
-  
+  updateVerdor(id,data){
+    console.log(data);
+    return new Promise((resolve)=>{
+      this.edit(id,data).subscribe(res=>{
+        console.log(res);
+      })
+    })
+  }
 
   }
   
