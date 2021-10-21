@@ -10,6 +10,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AccountComponent implements OnInit {
   vendorName: any;
+  company: any;
 
   constructor(private menuController: MenuController,
     private modalController: ModalController,
@@ -20,7 +21,7 @@ export class AccountComponent implements OnInit {
 
 
   ngOnInit() {
-    this.vendorName =  this.cookieService.get('vendorName');
+    this.company =  this.cookieService.get('company');
   }
 
   clickTab(event: Event, tabPath: string) {
@@ -29,4 +30,11 @@ export class AccountComponent implements OnInit {
     this.router.navigate([`${tabPath}`]);
   }
   
+
+  Logout(event: Event, tabPath: string){
+    this.cookieService.deleteAll();
+    event.stopImmediatePropagation();
+    console.log( event, tabPath );
+    this.router.navigate([`${tabPath}`]);
+  }
 }

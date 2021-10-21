@@ -3,10 +3,63 @@
 <ion-buttons slot="start">
   <ion-icon icon="arrow-round-back" (click)="back()"  class="icon"></ion-icon>
 </ion-buttons>
+<ion-buttons slot="end">
+  <ion-button   (click)="saveActivity()">Save</ion-button>
+</ion-buttons>
 <ion-title>Vendor's Admin</ion-title>
 </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <p>Welcome to Vendor Admin Page</p>
+  <br>
+  <ion-label>Account Informations</ion-label>
+  <form class="ion-padding" style="margin-left: 10px;">
+    <!-- Full Name -->    
+    <ion-row>
+      <ion-col>
+        <ion-item >          
+          <ion-label>Email</ion-label>
+          <ion-input  type="text" placeholder="email" name="email" [(ngModel)]="email"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+      <!-- Address 1 -->
+      <ion-row>
+        <ion-col>
+          <ion-item class="item-background-color">
+            <ion-input type="text" placeholder="firstname" name="firstname" [(ngModel)]="firstname"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- Address 2 -->
+      <ion-row>
+        <ion-col>
+          <ion-item class="item-background-color">
+            <ion-input type="text" placeholder="phone" name="phone" [(ngModel)]="phone"> </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>    
+
+    <!-- Status -->
+    <ion-row>
+      <ion-col>
+        <ion-item class="item-background-color">
+          <ion-label>Choose Status</ion-label>
+          <ion-select [(ngModel)]="status" [ngModelOptions]="{standalone: true}" value="status">
+            <ion-select-option value="A">Active</ion-select-option>
+            <ion-select-option value="D">Disable</ion-select-option>
+            <ion-select-option value="H">Hidden</ion-select-option>
+          </ion-select>
+        </ion-item>    
+      </ion-col>
+    </ion-row>
+  </form>
+
+  <ion-row>
+    <ion-col>
+      <ion-item class="item-background-color">
+        <ion-input type="text" placeholder="b_address" name="b_address" [(ngModel)]="b_address"> </ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
 </ion-content>

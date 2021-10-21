@@ -35,13 +35,13 @@
 
     <!-- Name of User -->
     <ion-label>
-      <h2>{{vendorName}}</h2>
+      <h2>{{company}}</h2>
       <p>Silver Seller</p>
     </ion-label>
   </ion-item>
 
   <!-- Some Menu Options -->
-  <ion-card>
+  <!-- <ion-card>
     <ion-grid>
       <ion-row class="ion-text-center">
         <ion-col>
@@ -62,14 +62,11 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-card>
+  </ion-card> -->
 
   <!-- Some Orders Option -->
   <ion-card>
     <ion-item-group>
-      <ion-item-divider>
-        <ion-label>Orders</ion-label>
-      </ion-item-divider>
 
       <ion-item lines="none" >
         <ion-label>Vendor</ion-label>
@@ -95,9 +92,9 @@
         <ion-label>Payment Methods</ion-label>
         <ion-icon name="arrow-forward" size="small" slot="end" (click)="clickTab($event, 'payment-methods')" [routerLink]="['payment-methods']" tab="orders-tab3"></ion-icon>
       </ion-item>
-      <ion-item lines="none">
+      <ion-item lines="none" (click)="Logout($event, './')">
         <ion-label>Logout</ion-label>
-        <ion-icon name="arrow-forward" size="small" slot="end"></ion-icon>
+        <ion-icon name="arrow-forward" size="small" slot="end" ></ion-icon>
       </ion-item>
     </ion-item-group>
   </ion-card>

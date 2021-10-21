@@ -15,12 +15,33 @@ import { Option } from '../models/option.model';
       this.setModel('users');
     }
   
+    gerUserById(id){
+      return new Promise((resolve)=> {
+        this.get(id).subscribe(res=>{
+          resolve(res);
+        },
+        err=>{
+          resolve(null);
+        },()=>{
+
+        })
+    })
+    }
 
   getUserByEmailAndPassword(email,pass) {
     return new Promise((resolve)=>{
       this.getOptionByQueryString('login&user_login='+email+'&password='+pass).subscribe(res=> {
         resolve(res);
       });
+    })
+  }
+
+  updateUser(id,data){
+    console.log(data);
+    return new Promise((resolve)=>{
+      this.edit(id,data).subscribe(res=>{
+        console.log(res);
+      })
     })
   }
   

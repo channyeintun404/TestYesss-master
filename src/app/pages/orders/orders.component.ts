@@ -90,7 +90,7 @@ orders: Order[];
   }
   getOrderList(queryString,callback?:() => void ) {
 
-    this.vendorId=this.cookieService.get('vendorId');  // get the cookie value
+    this.vendorId=this.cookieService.get('companyId');  // get the cookie value
     console.log(this.vendorId);
 
   //get data from service

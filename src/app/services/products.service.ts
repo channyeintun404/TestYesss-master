@@ -63,10 +63,10 @@ export class ProductsService extends AppService {
     });
   }
 
-  getProducts(cid) {
+  getProducts(cid, companyId) {
     return new Promise((resolve) => {
       let cid_qp = cid ? '&cid=' + cid : '';
-      this.getByQueryString('items_per_page=0' + cid_qp + '&subcats=Y&company_id=13').subscribe(res => {
+      this.getByQueryString('items_per_page=0' + cid_qp + '&subcats=Y&company_id='+companyId).subscribe(res => {
         console.log(res);
         this.products = [];
         for(const prod of res['products']) {

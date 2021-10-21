@@ -35,7 +35,7 @@ import { image } from '@cloudinary/base/qualifiers/source';
 
 import { Option } from 'src/app/models/option.model';
 import { OptionsService } from 'src/app/services/options.service';
-import { Variant } from 'src/app/models/variants.model';
+import { CookieService } from 'ngx-cookie-service';
 
 const MEDIA_FOLDER_NAME = 'my_media';
 
@@ -122,6 +122,7 @@ const MEDIA_FOLDER_NAME = 'my_media';
    product_color : string="";
   imagepairdetailed: any[]=[];
   refresh: boolean=false;
+  companyId: any;
    
    constructor(public modalController: ModalController,
     private categoryService: CategoryService,
@@ -137,9 +138,11 @@ const MEDIA_FOLDER_NAME = 'my_media';
     private streamingMedia: StreamingMedia,
     private photoViewer: PhotoViewer,
     private actionSheetController: ActionSheetController,
-    private platfrom: Platform) { }
+    private platfrom: Platform, 
+    private cookieService: CookieService) { }
  
    ngOnInit() {
+    this.companyId =  this.cookieService.get('companyId'); 
     this.getCategories();
     this.getLevel2Categories();
 
@@ -314,7 +317,7 @@ level3ClickOption(categoriesByLevel3_id){
         "base_price":parseInt(this.base_price),
         "list_price":parseInt(this.list_price),
         "status": this.status,
-        "company_id": 13,        
+        "company_id": this.companyId,        
         "main_category": 275,
         "discountPrice": 50000,
         "details_layout": "default",

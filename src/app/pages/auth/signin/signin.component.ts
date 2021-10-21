@@ -18,6 +18,7 @@ export class SigninComponent implements OnInit {
   vendorName: any;
   userId: any;
   companyId: any;
+  company: any;
 
   constructor(private cookieService: CookieService,
     private router: Router,
@@ -31,12 +32,17 @@ export class SigninComponent implements OnInit {
       console.log(res);
       this.user_info = res['user_info'];
       if(this.user_info!=null){
-        this.vendorName = this.user_info.firstname+" "+this.user_info.lastname        
+        this.vendorName = this.user_info.firstname      
         this.cookieService.set('vendorName',this.vendorName);
         this.userId = this.user_info.user_id;
         this.cookieService.set('userId',this.userId);
-        this.companyId = this.user_info.company_id;
+        this.companyId = this.user_info.company_id;        
+        this.company = this.user_info.company;
         this.cookieService.set('companyId',this.companyId);
+        this.cookieService.set('company',this.company);
+        this.cookieService.set('password',this.password);
+        this.cookieService.set('email',this.email);           
+        this.cookieService.set('vendorName',this.vendorName);
         this.router.navigate([`${"/tabs/tab1"}`]);
         console.log(this.user_info);
       }

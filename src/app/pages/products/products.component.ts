@@ -14,6 +14,7 @@ import { ProductDetailsComponent } from '../product-details/product-details.comp
 import { FilterComponent } from '../filter/filter.component';
 import { CheckoutComponent } from '../checkout/checkout.component';
 import { ActivatedRoute } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { throwError } from 'rxjs';
 
 @Component({
@@ -38,15 +39,18 @@ export class ProductsComponent implements OnInit {
   grid: Boolean = true;
   oneColumn: Boolean = false;
   list: Boolean = false;
+  companyId: string;
 
 
   constructor(private route: ActivatedRoute,
     private productsService: ProductsService,
-    public modalController: ModalController) {
+    public modalController: ModalController, 
+    private cookieService: CookieService) {
       
      }
 
-  ngOnInit() {   
+  ngOnInit() {      
+    this.companyId =  this.cookieService.get('companyId'); 
         this.route.params.subscribe(params => {
           this.cid = params['cid'];
           this.priceRange_lower = params['lower'];
@@ -61,7 +65,7 @@ export class ProductsComponent implements OnInit {
   // Get List of Products
   getProductList() {    
     // this.products = this.productsService.productList();
-    this.productsService.getProducts(this.cid).then((resp: any) => {
+    this.productsService.getProducts(this.cid,this.companyId).then((resp: any) => {
       console.log(resp);
       this.products = resp
       // this.products = this.original_products;
