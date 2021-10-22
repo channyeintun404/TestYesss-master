@@ -28,6 +28,7 @@ export class VendorAdminPage implements OnInit {
   b_firstname: any;
   b_state: any;
   b_zipcode: any;
+  birthday: any;
 
   constructor(private menuController: MenuController,
     private modalController: ModalController,
@@ -43,6 +44,7 @@ export class VendorAdminPage implements OnInit {
     this.email = this.cookieService.get('email'); 
     this.password = this.cookieService.get('password');  
     this.getUserById(this.user_id);
+    this.getUserInfoByEmailAndPass(this.email,this.password);
   }
 
   getUserById(user_id: any) {
@@ -54,7 +56,7 @@ export class VendorAdminPage implements OnInit {
       this.status = resp["status"];          
       this.phone = resp["phone"];
     })    
-    this.getUserInfoByEmailAndPass(this.email,this.password);
+    // this.getUserInfoByEmailAndPass(this.email,this.password);
   }
 
   getUserInfoByEmailAndPass(email,pass){
@@ -68,14 +70,27 @@ export class VendorAdminPage implements OnInit {
       this.b_firstname = this.profile['b_firstname'];
       this.b_state = this.profile['b_state'];
       this.b_zipcode = this.profile['b_zipcode'];
+      this.password = this.profile['password'];
+      this.language = this.profile['lang_code'];
+      this.phone = this.profile['phone'];
+      this.birthday = this.profile['birthday'];
     })
   }
 
   saveActivity(){
+    console.log(this.birthday)
     this.usersService.updateUser(this.user_id,{
       "firstname": this.firstname,
       "email" : this.email,
-      "b_address": this.b_address
+      "b_address": this.b_address,
+      "b_city": this.b_city,
+      "b_country": this.b_country,
+      "b_firstname": this.b_firstname,
+      "b_state": this.b_state,
+      "b_zipcode": this.b_zipcode,
+      "language": this.language,
+      "phone": this.phone,
+      "birthday": this.birthday
     })
   }
   back(): void {

@@ -11,55 +11,249 @@
 </ion-header>
 
 <ion-content>
-  <br>
-  <ion-label>Account Informations</ion-label>
   <form class="ion-padding" style="margin-left: 10px;">
-    <!-- Full Name -->    
     <ion-row>
-      <ion-col>
-        <ion-item >          
-          <ion-label>Email</ion-label>
-          <ion-input  type="text" placeholder="email" name="email" [(ngModel)]="email"></ion-input>
-        </ion-item>
+      <ion-col size="8" style="margin-left: -25px;">
+        <ion-text><b>Account Informations</b></ion-text>
       </ion-col>
+      <ion-col size="4"></ion-col>
     </ion-row>
-      <!-- Address 1 -->
+    <!-- Email --> 
+    <ion-row>
+      <ion-col size="2" style="margin-top: 10px;">
+          <ion-label color="000">Email</ion-label>
+      </ion-col>
+      <ion-col size="10">
+          <ion-input  type="email" placeholder="email"  name="email" [(ngModel)]="email" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+      </ion-col>
+    </ion-row>   
+      <!-- Password -->
       <ion-row>
-        <ion-col>
-          <ion-item class="item-background-color">
-            <ion-input type="text" placeholder="firstname" name="firstname" [(ngModel)]="firstname"></ion-input>
-          </ion-item>
+        <ion-col size="2" style="margin-top: 10px;">
+            <ion-label color="000">Password</ion-label>
+        </ion-col>
+        <ion-col size="10">
+            <ion-input type="password"  name="password" [(ngModel)]="password" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"> </ion-input>
+        </ion-col>
+      </ion-row>   
+      <!-- Confirm Password -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+            <ion-label color="000">Confirm Password</ion-label>
+        </ion-col>
+        <ion-col size="10">
+            <ion-input type="password"  name="password" [(ngModel)]="password" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"> </ion-input>
+        </ion-col>
+      </ion-row>   
+      <!-- Language Code -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+          <ion-label>Language:</ion-label>
+        </ion-col>
+        <ion-col size="6">
+            <ion-select  [(ngModel)]="language" [ngModelOptions]="{standalone: true}" value="en" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;">
+              <ion-select-option value="en">English</ion-select-option>
+              <ion-select-option value="D">Disable</ion-select-option>
+              <ion-select-option value="H">Hidden</ion-select-option>
+            </ion-select>
+        </ion-col>
+        <ion-col size="4"></ion-col>
+      </ion-row> 
+      <!-- Contact Information -->
+      <ion-row>
+        <ion-col size="8" style="margin-left: -25px;">
+          <ion-text><b>Contact Informations</b></ion-text>
+        </ion-col>
+        <ion-col size="4"></ion-col>
+      </ion-row>
+      <!-- Full Name -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+            <ion-label color="000">Name:</ion-label>
+        </ion-col>
+        <ion-col size="10">
+            <ion-input  type="text" placeholder="Enter Name"  name="firstname" [(ngModel)]="firstname" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
         </ion-col>
       </ion-row>
-      <!-- Address 2 -->
-      <ion-row>
-        <ion-col>
-          <ion-item class="item-background-color">
-            <ion-input type="text" placeholder="phone" name="phone" [(ngModel)]="phone"> </ion-input>
-          </ion-item>
+       <!-- Phone Number  -->
+       <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+            <ion-label color="000">Phone:</ion-label>
         </ion-col>
-      </ion-row>    
-
-    <!-- Status -->
-    <ion-row>
-      <ion-col>
-        <ion-item class="item-background-color">
-          <ion-label>Choose Status</ion-label>
-          <ion-select [(ngModel)]="status" [ngModelOptions]="{standalone: true}" value="status">
-            <ion-select-option value="A">Active</ion-select-option>
-            <ion-select-option value="D">Disable</ion-select-option>
-            <ion-select-option value="H">Hidden</ion-select-option>
-          </ion-select>
-        </ion-item>    
-      </ion-col>
-    </ion-row>
+        <ion-col size="10">
+            <ion-input  type="text"  name="phone" [(ngModel)]="phone" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+        </ion-col>
+      </ion-row>
+      <!-- Date of Birth -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+            <ion-label color="000">Date of Birth:</ion-label>
+        </ion-col>
+        <ion-col size="6">
+          <ion-datetime displayFormat="MM/DD/YYYY"  name="birthday" value="{{birthday}}" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;" [(ngModel)]="birthday"></ion-datetime>
+          <!-- <ion-datetime placeholder="Enter Date of Birth" displayFormat="MM/DD/YYYY" min="1994-03-14" max="2012-12-09" value="birthday" name="birthday" [(ngModel)]="birthday" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-datetime> -->
+        </ion-col>
+        <ion-col size="4"></ion-col>
+      </ion-row>
+      <!-- Billing Address -->
+      <ion-row>
+        <ion-col size="8" style="margin-left: -25px;">
+          <ion-text><b>Billing Address</b></ion-text>
+        </ion-col>
+        <ion-col size="4"></ion-col>
+      </ion-row>
+      <!-- Full Name -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+            <ion-label color="000">Name:</ion-label>
+        </ion-col>
+        <ion-col size="10">
+            <ion-input  type="text" placeholder="Enter Name"  name="firstname" [(ngModel)]="firstname" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+        </ion-col>
+      </ion-row>
+      <!-- Phone -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+            <ion-label color="000">Phone:</ion-label>
+        </ion-col>
+        <ion-col size="10">
+            <ion-input  type="text" placeholder="Enter Phone"  name="phone" [(ngModel)]="phone" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+        </ion-col>
+      </ion-row>
+      <!-- Address -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+            <ion-label color="000">Address:</ion-label>
+        </ion-col>
+        <ion-col size="10">
+            <ion-input  type="text" placeholder="Enter Address"  name="address" [(ngModel)]="b_address" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+        </ion-col>
+      </ion-row>
+      <!-- City -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+            <ion-label color="000">City:</ion-label>
+        </ion-col>
+        <ion-col size="10">
+            <ion-input  type="text" placeholder="Enter City"  name="city" [(ngModel)]="b_city"  style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+        </ion-col>
+      </ion-row>
+      <!-- Country -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+          <ion-label>Country:</ion-label>
+        </ion-col>
+        <ion-col size="6">
+            <ion-select [(ngModel)]="b_country" [ngModelOptions]="{standalone: true}"  value="b_country" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;">
+              <ion-select-option value="MM">Myanmar</ion-select-option>
+              <ion-select-option value="D">Thai</ion-select-option>
+              <ion-select-option value="H">Hidden</ion-select-option>
+            </ion-select>
+        </ion-col>
+        <ion-col size="4"></ion-col>
+      </ion-row> 
+      <!-- State/Provience -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+          <ion-label>State/Provience:</ion-label>
+        </ion-col>
+        <ion-col size="6">
+            <ion-select [(ngModel)]="b_state" [ngModelOptions]="{standalone: true}"  value="b_state" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;">
+              <ion-select-option value="MDY">Mandalay</ion-select-option>
+              <ion-select-option value="D">Thai</ion-select-option>
+              <ion-select-option value="H">Hidden</ion-select-option>
+            </ion-select>
+        </ion-col>
+        <ion-col size="4"></ion-col>
+      </ion-row>
+      <!-- Zip Code -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+            <ion-label color="000">Zip/Postal Code:</ion-label>
+        </ion-col>
+        <ion-col size="10">
+            <ion-input  type="text" placeholder="Enter Zip Code"  name="zip" [(ngModel)]="b_zipcode"  style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+        </ion-col>
+      </ion-row>
+      <!-- Shipping Address -->
+      <ion-row>
+        <ion-col size="8" style="margin-left: -25px;">
+          <ion-text><b>Shipping Address</b></ion-text>
+        </ion-col>
+        <ion-col size="4"></ion-col>
+      </ion-row>
+      <!-- Full Name -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+            <ion-label color="000">Name:</ion-label>
+        </ion-col>
+        <ion-col size="10">
+            <ion-input  type="text" placeholder="Enter Name"  name="firstname" [(ngModel)]="firstname" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+        </ion-col>
+      </ion-row>
+      <!-- Phone -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+            <ion-label color="000">Phone:</ion-label>
+        </ion-col>
+        <ion-col size="10">
+            <ion-input  type="text" placeholder="Enter Phone"  name="phone" [(ngModel)]="phone" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+        </ion-col>
+      </ion-row>
+      <!-- Address -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+            <ion-label color="000">Address:</ion-label>
+        </ion-col>
+        <ion-col size="10">
+            <ion-input  type="text" placeholder="Enter Address"  name="address" [(ngModel)]="b_address" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+        </ion-col>
+      </ion-row>
+      <!-- City -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+            <ion-label color="000">City:</ion-label>
+        </ion-col>
+        <ion-col size="10">
+            <ion-input  type="text" placeholder="Enter City"  name="city" [(ngModel)]="b_city"  style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+        </ion-col>
+      </ion-row>
+      <!-- Country -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+          <ion-label>Country:</ion-label>
+        </ion-col>
+        <ion-col size="6">
+            <ion-select [(ngModel)]="b_country" [ngModelOptions]="{standalone: true}"  value="b_country" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;">
+              <ion-select-option value="MM">Myanmar</ion-select-option>
+              <ion-select-option value="D">Thai</ion-select-option>
+              <ion-select-option value="H">Hidden</ion-select-option>
+            </ion-select>
+        </ion-col>
+        <ion-col size="4"></ion-col>
+      </ion-row> 
+      <!-- State/Provience -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+          <ion-label>State/Provience:</ion-label>
+        </ion-col>
+        <ion-col size="6">
+            <ion-select [(ngModel)]="b_state" [ngModelOptions]="{standalone: true}"  value="b_state" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;">
+              <ion-select-option value="MDY">Mandalay</ion-select-option>
+              <ion-select-option value="D">Thai</ion-select-option>
+              <ion-select-option value="H">Hidden</ion-select-option>
+            </ion-select>
+        </ion-col>
+        <ion-col size="4"></ion-col>
+      </ion-row>
+      <!-- Zip Code -->
+      <ion-row>
+        <ion-col size="2" style="margin-top: 10px;">
+            <ion-label color="000">Zip/Postal Code:</ion-label>
+        </ion-col>
+        <ion-col size="10">
+            <ion-input  type="text" placeholder="Enter Zip Code"  name="zip" [(ngModel)]="b_zipcode"  style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+        </ion-col>
+      </ion-row>
   </form>
-
-  <ion-row>
-    <ion-col>
-      <ion-item class="item-background-color">
-        <ion-input type="text" placeholder="b_address" name="b_address" [(ngModel)]="b_address"> </ion-input>
-      </ion-item>
-    </ion-col>
-  </ion-row>
 </ion-content>

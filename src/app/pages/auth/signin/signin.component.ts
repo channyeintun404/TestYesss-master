@@ -32,8 +32,8 @@ export class SigninComponent implements OnInit {
       console.log(res);
       this.user_info = res['user_info'];
       if(this.user_info!=null){
-        this.vendorName = this.user_info.firstname      
-        this.cookieService.set('vendorName',this.vendorName);
+        // this.vendorName = this.user_info.firstname      
+        // this.cookieService.set('vendorName',this.vendorName);
         this.userId = this.user_info.user_id;
         this.cookieService.set('userId',this.userId);
         this.companyId = this.user_info.company_id;        
