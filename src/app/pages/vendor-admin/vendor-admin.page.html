@@ -27,28 +27,10 @@
           <ion-input  type="email" placeholder="email"  name="email" [(ngModel)]="email" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
       </ion-col>
     </ion-row>   
-      <!-- Password -->
-      <ion-row>
-        <ion-col size="2" style="margin-top: 10px;">
-            <ion-label color="000">Password</ion-label>
-        </ion-col>
-        <ion-col size="10">
-            <ion-input type="password"  name="password" [(ngModel)]="password" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"> </ion-input>
-        </ion-col>
-      </ion-row>   
-      <!-- Confirm Password -->
-      <ion-row>
-        <ion-col size="2" style="margin-top: 10px;">
-            <ion-label color="000">Confirm Password</ion-label>
-        </ion-col>
-        <ion-col size="10">
-            <ion-input type="password"  name="password" [(ngModel)]="password" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"> </ion-input>
-        </ion-col>
-      </ion-row>   
       <!-- Language Code -->
       <ion-row>
         <ion-col size="2" style="margin-top: 10px;">
-          <ion-label>Language:</ion-label>
+          <ion-label>Language</ion-label>
         </ion-col>
         <ion-col size="6">
             <ion-select  [(ngModel)]="language" [ngModelOptions]="{standalone: true}" value="en" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;">
@@ -58,7 +40,18 @@
             </ion-select>
         </ion-col>
         <ion-col size="4"></ion-col>
-      </ion-row> 
+      </ion-row>
+       <!-- Password -->
+       <ion-row>
+        <ion-col size="4" >
+          <ion-button color="primary" (click)="clickTab($event, 'change-password')" [routerLink]="['change-password']" tab="orders-tab3">
+            <ion-text (click)="setOldPasswordToCookie()"> Change Password </ion-text>
+          </ion-button>
+          <!-- <a href="/change-password"  (click)="setOldPasswordToCookie()">Change Password</a> -->
+        </ion-col>
+        <ion-col size="5"></ion-col>
+        <ion-col size="3"></ion-col>
+      </ion-row>
       <!-- Contact Information -->
       <ion-row>
         <ion-col size="8" style="margin-left: -25px;">
@@ -188,7 +181,7 @@
             <ion-label color="000">Name:</ion-label>
         </ion-col>
         <ion-col size="10">
-            <ion-input  type="text" placeholder="Enter Name"  name="firstname" [(ngModel)]="firstname" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+            <ion-input  type="text" placeholder="Enter Name"  name="s_firstname" [(ngModel)]="s_firstname" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
         </ion-col>
       </ion-row>
       <!-- Phone -->
@@ -197,7 +190,7 @@
             <ion-label color="000">Phone:</ion-label>
         </ion-col>
         <ion-col size="10">
-            <ion-input  type="text" placeholder="Enter Phone"  name="phone" [(ngModel)]="phone" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+            <ion-input  type="text" placeholder="Enter Phone"  name="s_phone" [(ngModel)]="s_phone" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
         </ion-col>
       </ion-row>
       <!-- Address -->
@@ -206,7 +199,7 @@
             <ion-label color="000">Address:</ion-label>
         </ion-col>
         <ion-col size="10">
-            <ion-input  type="text" placeholder="Enter Address"  name="address" [(ngModel)]="b_address" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+            <ion-input  type="text" placeholder="Enter Address"  name="s_address" [(ngModel)]="s_address" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
         </ion-col>
       </ion-row>
       <!-- City -->
@@ -215,7 +208,7 @@
             <ion-label color="000">City:</ion-label>
         </ion-col>
         <ion-col size="10">
-            <ion-input  type="text" placeholder="Enter City"  name="city" [(ngModel)]="b_city"  style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+            <ion-input  type="text" placeholder="Enter City"  name="s_city" [(ngModel)]="s_city"  style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
         </ion-col>
       </ion-row>
       <!-- Country -->
@@ -224,7 +217,7 @@
           <ion-label>Country:</ion-label>
         </ion-col>
         <ion-col size="6">
-            <ion-select [(ngModel)]="b_country" [ngModelOptions]="{standalone: true}"  value="b_country" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;">
+            <ion-select [(ngModel)]="s_country" [ngModelOptions]="{standalone: true}"  value="s_country" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;">
               <ion-select-option value="MM">Myanmar</ion-select-option>
               <ion-select-option value="D">Thai</ion-select-option>
               <ion-select-option value="H">Hidden</ion-select-option>
@@ -238,7 +231,7 @@
           <ion-label>State/Provience:</ion-label>
         </ion-col>
         <ion-col size="6">
-            <ion-select [(ngModel)]="b_state" [ngModelOptions]="{standalone: true}"  value="b_state" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;">
+            <ion-select [(ngModel)]="s_state" [ngModelOptions]="{standalone: true}"  value="s_state" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;">
               <ion-select-option value="MDY">Mandalay</ion-select-option>
               <ion-select-option value="D">Thai</ion-select-option>
               <ion-select-option value="H">Hidden</ion-select-option>
@@ -252,7 +245,7 @@
             <ion-label color="000">Zip/Postal Code:</ion-label>
         </ion-col>
         <ion-col size="10">
-            <ion-input  type="text" placeholder="Enter Zip Code"  name="zip" [(ngModel)]="b_zipcode"  style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
+            <ion-input  type="text" placeholder="Enter Zip Code"  name="s_zip" [(ngModel)]="s_zipcode"  style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input>
         </ion-col>
       </ion-row>
   </form>

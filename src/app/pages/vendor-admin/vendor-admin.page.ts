@@ -29,6 +29,14 @@ export class VendorAdminPage implements OnInit {
   b_state: any;
   b_zipcode: any;
   birthday: any;
+  salt: any;
+  s_firstname: any;
+  s_phone: any;
+  s_address: any;
+  s_city: any;
+  s_country: any;
+  s_state: any;
+  s_zipcode: any;
 
   constructor(private menuController: MenuController,
     private modalController: ModalController,
@@ -43,6 +51,7 @@ export class VendorAdminPage implements OnInit {
     this.user_id = this.cookieService.get('userId');     
     this.email = this.cookieService.get('email'); 
     this.password = this.cookieService.get('password');  
+    this.company_id = this.cookieService.get('companyId');
     this.getUserById(this.user_id);
     this.getUserInfoByEmailAndPass(this.email,this.password);
   }
@@ -50,7 +59,7 @@ export class VendorAdminPage implements OnInit {
   getUserById(user_id: any) {
     this.usersService.gerUserById(user_id).then((resp: any) => {
       console.log(resp);
-      this.company_id = resp["company_id"];      
+      // this.company_id = resp["company_id"];      
       this.company_name = resp["company_name"];    
       this.firstname = resp["firstname"];      
       this.status = resp["status"];          
@@ -71,15 +80,24 @@ export class VendorAdminPage implements OnInit {
       this.b_state = this.profile['b_state'];
       this.b_zipcode = this.profile['b_zipcode'];
       this.password = this.profile['password'];
+      this.salt = this.profile['salt']
       this.language = this.profile['lang_code'];
       this.phone = this.profile['phone'];
       this.birthday = this.profile['birthday'];
+      this.s_firstname = this.profile['s_firstname'];
+      this.s_phone = this.profile['s_firstname'];
+      this.s_address = this.profile['s_address'];
+      this.s_city = this.profile['s_city'];
+      this.s_country = this.profile['s_country'];
+      this.s_state = this.profile['s_state'];
+      this.s_zipcode = this.profile['s_zipcode'];
     })
   }
 
   saveActivity(){
     console.log(this.birthday)
     this.usersService.updateUser(this.user_id,{
+      "company_id": this.company_id,
       "firstname": this.firstname,
       "email" : this.email,
       "b_address": this.b_address,
@@ -90,11 +108,28 @@ export class VendorAdminPage implements OnInit {
       "b_zipcode": this.b_zipcode,
       "language": this.language,
       "phone": this.phone,
-      "birthday": this.birthday
+      "birthday": this.birthday,
+      "s_firstname": this.s_firstname,
+      "s_phone": this.s_phone,
+      "s_address": this.s_address,
+      "s_city": this.s_city,
+      "s_country": this.s_country,
+      "s_state": this.s_state,
+      "s_zipcode": this.s_zipcode
     })
   }
-  back(): void {
-    this.location.back()
+  // Set Old Password form API to Cookie
+  setOldPasswordToCookie(){
+    this.cookieService.set('old_password',this.password);
+    this.cookieService.set('salt', this.salt);
+  }
+  clickTab(event: Event, tabPath: string) {
+    event.stopImmediatePropagation();
+    console.log( event, tabPath );
+    this.router.navigate([`${tabPath}`]);
+  }
+  back() {
+    this.router.navigate([`${"tabs/tab5"}`]);
   }
 
 
