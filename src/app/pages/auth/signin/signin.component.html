@@ -28,6 +28,7 @@
 
     <!-- SignIn Form -->
     <form class="ion-padding">
+      <ion-text *ngIf="error!=null"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-text>
       <!-- Email -->
       <ion-item>
         <ion-label>

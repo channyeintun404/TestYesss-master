@@ -74,7 +74,8 @@ const routes: Routes = [
   {
     path: 'general',
     loadChildren: () => import('./pages/general/general.module').then( m => m.GeneralPageModule)
-  },  {
+  },
+  {
     path: 'change-password',
     loadChildren: () => import('./pages/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
   },

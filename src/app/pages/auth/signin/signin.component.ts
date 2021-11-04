@@ -19,6 +19,7 @@ export class SigninComponent implements OnInit {
   userId: any;
   companyId: any;
   company: any;
+  error: string;
 
   constructor(private cookieService: CookieService,
     private router: Router,
@@ -45,6 +46,15 @@ export class SigninComponent implements OnInit {
         this.cookieService.set('vendorName',this.vendorName);
         this.router.navigate([`${"/tabs/tab1"}`]);
         console.log(this.user_info);
+      }else if(this.email == null || this.password == null){
+        this.error = "Please Enter Email and Password!!"
+        // this.email = null;
+        // this.password = null;
+      }
+      else{
+        this.error = "Email or Password is Invalid!!"
+        this.email = null;
+        this.password = null;
       }
     })
     

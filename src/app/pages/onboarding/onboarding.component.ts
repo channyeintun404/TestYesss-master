@@ -8,7 +8,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-
+import { MenuController } from '@ionic/angular';
 @Component({
   selector: 'app-onboarding',
   templateUrl: './onboarding.component.html',
@@ -29,7 +29,9 @@ export class OnboardingComponent implements OnInit {
   };
 
 
-  constructor() { }
+  constructor(private menuController: MenuController,) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.menuController.enable(false);
+  }
 }
