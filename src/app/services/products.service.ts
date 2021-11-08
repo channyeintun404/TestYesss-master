@@ -116,6 +116,16 @@ export class ProductsService extends AppService {
     });
   }
 
+  getDiscussionById(pid) {
+    return new Promise((resolve) => {
+      this.getOptionByQueryString('products/' + pid +'/discussions').subscribe(res => {
+        console.log(res);
+        resolve(res);
+       });
+    });
+  }
+
+
   productList() {
     this.products = [
       {

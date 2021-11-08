@@ -46,10 +46,10 @@
    optionIdArray: any[]=[];
    optionSizeId: any;
    optionColorId: any;
+
+   comment: any; 
+   rate: any;
  
- 
-   //option  
-   // variantColorNameArray: any[]=[];
  
    // Slider Options
    slideOpts = {
@@ -62,6 +62,9 @@
        dynamicBullets: true,
      },
    };
+  
+  
+  
  
    constructor(public modalController: ModalController,
      public storageService: StorageService,
@@ -71,11 +74,9 @@
  
    ngOnInit() {    
      this.getProductById();
-     // this.getProductColorOptions();
-     // this.getOptionsSizeById();
      this.getProductOptions();
+     this.getDiscussionById();
      this.addToCart();
-     console.log(this.name)
    }
  
    // Add to Cart Function
@@ -114,12 +115,12 @@
      return await modal.present();
    }
  
+   // get product by id
    getProductById(){
      console.log("id is ="+this.id)
    
      this.productsService.getProductById(this.id).then( res=>{
        console.log(res);
-       // console.log("options id "+JSON.stringify(res['option_id']))
        this.name = res['product']
        this.price = res['price'] 
      })
@@ -129,7 +130,6 @@
      this.optionsService.getProductsOptions(this.id).then((resp: any) => {
    console.log(Object.values(resp))
        for (const variants of Object.values(resp)) {
-         // console.log(variants['option_id']) 
          this.optionIdArray.push(variants['option_id'])
               
        }
@@ -166,9 +166,6 @@
        this.variantSizePositionArray=[]
        this.variantSizeStatusArray=[]
        for (const variant of Object.values(res['variants'])) {
-           // imagesArr.push(img['detailed']['image_path']);
-           // console.log("variant are "+variant['variant_name'])
-   
            this.variantSizeNameArray.push(variant['variant_name'])
            this.variantSizePositionArray.push(variant['position'])
            this.variantSizeStatusArray.push(variant['status'])
@@ -195,41 +192,24 @@
          })  
        }  
        console.log(this.variants_size)
-       // console.log("this get opiton is "+JSON.stringify(this.options))
-       // console.log("variants name are "+JSON.stringify(this.variantnameArray))
      })
    }  
+
    //getOtionsColorById
    getOptionsColorById(option_id){
      this.optionsService.getOptionsById(option_id).then((res: any) => {
-       // this.options=[];
-       
        this.variants_color=[]
        this.variantColorIdArray=[]
        this.variantColorNameArray=[]
        this.variantColorPositionArray=[]
        this.variantColorStatusArray=[]
        for (const variant of Object.values(res['variants'])) {
-           // imagesArr.push(img['detailed']['image_path']);
-           // console.log("variant are "+variant['variant_name'])
-   
            this.variantColorNameArray.push(variant['variant_name'])
            this.variantColorPositionArray.push(variant['position'])
            this.variantColorStatusArray.push(variant['status'])
            this.variantColorIdArray.push(variant['variant_id'])
            console.log("variant are "+this.variantColorNameArray)
          }  
-   
-       // console.log("this getopiton res"+JSON.stringify(resp));
-       // this.options.push({
-       //     option_id : parseInt( res['option_id']),
-       //     option_name:  res['option_name'],
-       //     product_id:parseInt( res['product_id']),
-       //     variant_id:this.variantIdArray,
-       //     position: this.variantPositionArray,
-       //     status:this.variantStatusArray,
-       //     variant_name:this.variantnameArray
-       // })
    
        for(var i =0; i<this.variantColorNameArray.length; i++){
          this.variants_color.push({
@@ -240,8 +220,17 @@
          })  
        }  
        console.log(this.variants_color)
-       // console.log("this get opiton is "+JSON.stringify(this.options))
-       // console.log("variants name are "+JSON.stringify(this.variantnameArray))
+     })
+   }
+
+    // get product by id
+   getDiscussionById(){
+     this.rate=0;
+     console.log("id is ="+this.id);
+     this.productsService.getDiscussionById(256).then( res=>{
+       console.log(res);
+       this.comment = res['discussions']['0']['message'];
+       this.rate = res['discussions']['0']['rating_value'];
      })
    }
    

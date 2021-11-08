@@ -18,8 +18,10 @@
       <ion-button color="white" (click)="resetPage()">
           <ion-icon name="refresh"></ion-icon>
       </ion-button>
-      <a href="/tabs/tab1" style="font-size: 23px; color: white;"><ion-icon name="ios-close-circle-outline"></ion-icon></a>
-      </ion-buttons>
+    <ion-button>
+      <a href="/tabs/tab1" style="font-size: 20px; color: white;"><ion-icon name="close-circle-outline"></ion-icon></a>
+    </ion-button> 
+    </ion-buttons>
 
     <!-- Title -->
     <ion-title>Product Details</ion-title>
@@ -63,7 +65,62 @@
   <ion-row class="ion-padding-start product-name">
     <ion-text>{{name}}</ion-text>
   </ion-row>
+<br>
+  <ion-row class="select-heading">
+    <ion-text style="margin-left: 15px;">Comment</ion-text>
+  </ion-row>
+  <ion-row style="margin-left: 15px;">
+    <ion-text style="margin-left: 15px;">{{comment}}</ion-text>
+  </ion-row>
+  <br>
+  <ion-row class="select-heading">
+    <ion-text style="margin-left: 15px;">Rating</ion-text>
+  </ion-row>
+  <ion-row style="margin-left: 30px;">
+  <div *ngIf="rate==0">
+    <ion-icon color="primary" name="star-outline" ></ion-icon>
+    <ion-icon color="primary" name="star-outline"></ion-icon>
+    <ion-icon color="primary" name="star-outline"></ion-icon>
+    <ion-icon color="primary" name="star-outline"></ion-icon>
+    <ion-icon color="primary" name="star-outline"></ion-icon>
+  </div>
+  <div *ngIf="rate==1">
+    <ion-icon color="primary" name="star" ></ion-icon>
+    <ion-icon color="primary" name="star-outline"></ion-icon>
+    <ion-icon color="primary" name="star-outline"></ion-icon>
+    <ion-icon color="primary" name="star-outline"></ion-icon>
+    <ion-icon color="primary" name="star-outline"></ion-icon>
+  </div>
+  <div *ngIf="rate==2">
+    <ion-icon color="primary" name="star"></ion-icon>
+    <ion-icon color="primary" name="star"></ion-icon>
+    <ion-icon color="primary" name="star-outline"></ion-icon>
+    <ion-icon color="primary" name="star-outline"></ion-icon>
+    <ion-icon color="primary" name="star-outline"></ion-icon>
+  </div>
 
+  <div *ngIf="rate==3">
+    <ion-icon color="primary" name="star"></ion-icon>
+    <ion-icon color="primary" name="star"></ion-icon>
+    <ion-icon color="primary" name="star"></ion-icon>
+    <ion-icon color="primary" name="star-outline"></ion-icon>
+    <ion-icon color="primary" name="star-outline"></ion-icon>
+  </div>
+  <div *ngIf="rate==4">
+    <ion-icon color="primary" name="star"></ion-icon>
+    <ion-icon color="primary" name="star"></ion-icon>
+    <ion-icon color="primary" name="star"></ion-icon>
+    <ion-icon color="primary" name="star"></ion-icon>
+    <ion-icon color="primary" name="star-outline"></ion-icon>
+  </div>
+  <div *ngIf="rate==5">
+    <ion-icon color="primary" name="star"></ion-icon>
+    <ion-icon color="primary" name="star"></ion-icon>
+    <ion-icon color="primary" name="star"></ion-icon>
+    <ion-icon color="primary" name="star"></ion-icon>
+    <ion-icon color="primary" name="star"></ion-icon>
+  </div>
+</ion-row>
   <!-- Product Description -->
   <ion-row class="ion-padding">
     <ion-text color="medium" [innerHTML]="description"></ion-text>
