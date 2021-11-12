@@ -13,7 +13,8 @@
  import { ProductEditComponent } from '../product-edit/product-edit.component';
  import { ProductsService } from '../../services/products.service';
  import { OptionsService } from 'src/app/services/options.service';
- 
+ import { ReviewDetailsComponent } from 'src/app/review-details/review-details.component';
+ import { Router } from '@angular/router';
  @Component({
    selector: 'app-product-details',
    templateUrl: './product-details.component.html',
@@ -62,6 +63,8 @@
        dynamicBullets: true,
      },
    };
+   discussions: any[];
+   discussionLength: number;
   
   
   
@@ -69,7 +72,8 @@
    constructor(public modalController: ModalController,
      public storageService: StorageService,
      private optionsService : OptionsService,
-     private productsService : ProductsService) {
+     private productsService : ProductsService,
+     private router: Router) {
    }
  
    ngOnInit() {    
@@ -114,7 +118,18 @@
      });
      return await modal.present();
    }
- 
+
+  async goToReviewDetailsPage() {
+    // this.dismiss();  
+    const modal = await this.modalController.create({
+      component: ReviewDetailsComponent,
+      componentProps:  { 
+        id: this.id
+      }
+    });
+    // console.log(this.products)
+    return await modal.present();
+  }
    // get product by id
    getProductById(){
      console.log("id is ="+this.id)
@@ -227,10 +242,14 @@
    getDiscussionById(){
      this.rate=0;
      console.log("id is ="+this.id);
-     this.productsService.getDiscussionById(256).then( res=>{
+     this.productsService.getDiscussionById(this.id).then( res=>{
        console.log(res);
-       this.comment = res['discussions']['0']['message'];
-       this.rate = res['discussions']['0']['rating_value'];
+       this.discussions = [];
+       for (const discussion of Object.values(res['discussions'])){
+        console.log(discussion)
+        this.discussions.push(discussion)
+      }
+      this.discussionLength = this.discussions.length
      })
    }
    
