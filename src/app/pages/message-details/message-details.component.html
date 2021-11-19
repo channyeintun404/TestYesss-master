@@ -38,14 +38,14 @@
       </ion-col>
       <ion-col size="8" >
         <!-- <ion-input  type="text-area" placeholder="Your Message"  name="msg" style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-input> -->
-          <ion-textarea rows="6" cols="20" placeholder="Enter your message...." style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;"></ion-textarea>
+          <ion-textarea rows="6" cols="20" name="message" placeholder="Enter your message...." style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;" [(ngModel)]="message"></ion-textarea>
       </ion-col> 
     </ion-row> 
     <ion-row style="margin-top: 20px;">
       <ion-col size="8"></ion-col>
       <ion-col size="4">
         <a style="border: 1px solid #f3f5f3a4; background-color: #a2a3a2a4; padding: 10px; border-radius: 3px; color: #000;">Cancel</a>
-        <a style="border: 1px solid #036dcc; background-color: #036dcc; padding: 10px; border-radius: 3px; color: #fff; margin-left: 5px;">Add</a>
+        <a (click)="createMessage()" style="border: 1px solid #036dcc; background-color: #036dcc; padding: 10px; border-radius: 3px; color: #fff; margin-left: 5px;">Add</a>
       </ion-col>
       <!-- <ion-col size="2">
         <a style="border: 1px solid #036dcc; background-color: #036dcc; padding: 10px; border-radius: 3px; color: #fff;">Add</a>

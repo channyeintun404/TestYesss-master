@@ -151,7 +151,6 @@ export class OrderDetailsPage implements OnInit {
     this.checkAdjecentOrders();
     this.getManagers();
     this.getMessageById();
-    this.checkMessage();
     // this.store.select('currentOrder').subscribe(result=>{
     //   console.log('count - ',Object.keys(result).length)
     //   if(Object.keys(result).length == 0){
@@ -363,13 +362,7 @@ export class OrderDetailsPage implements OnInit {
     //   console.log(element)
     // });
   }
-  checkMessage(){
-   this.usersService.getUserById(this.user_id).then(res=>{
-     console.log(res["firstname"], res["lastname"]);
-     this.firstname = res["firstname"];
-   })
   
-  }
   getMessageById(){
     this.ordersService.getMessageById(this.orderid).then(res=>{
       console.log(res)
@@ -395,7 +388,9 @@ export class OrderDetailsPage implements OnInit {
     async goToMessageDetails(){
       const modal = await this.modalController.create({
         component: MessageDetailsComponent,
-        // componentProps: this.products
+        componentProps:  { 
+          order_id: this.orderid
+        }
       });
       return await modal.present();
     }
@@ -403,6 +398,7 @@ export class OrderDetailsPage implements OnInit {
     refreshPage(){      
     this.getOrderById(this.orderid);
     this.checkShipment();
+    this.getMessageById();
     }
 
 }
