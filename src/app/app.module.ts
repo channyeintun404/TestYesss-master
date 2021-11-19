@@ -39,6 +39,7 @@ import {CloudinaryModule} from '@cloudinary/angular';
 import { ShipmentDetailsComponent } from './pages/shipment-details/shipment-details.component';
 import { CookieService } from 'ngx-cookie-service';
 import { ReviewDetailsComponent } from './review-details/review-details.component';
+import { MessageDetailsComponent } from './pages/message-details/message-details.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -47,13 +48,15 @@ import { ReviewDetailsComponent } from './review-details/review-details.componen
     CartComponent,
     CheckoutComponent,
     ShipmentDetailsComponent,
-  ReviewDetailsComponent],
+    ReviewDetailsComponent,
+    MessageDetailsComponent],
   entryComponents: [ProductDetailsComponent,
     ProductEditComponent,
     CartComponent,
     CheckoutComponent,
     ShipmentDetailsComponent,
-    ReviewDetailsComponent],
+    ReviewDetailsComponent,
+    MessageDetailsComponent],
   imports: [AutoCompleteModule,BrowserModule,StoreModule.forRoot({ currentOrder: currentOrderReducer,
      currentProducts: currentProductsReducer,
      productList: productListReducer,

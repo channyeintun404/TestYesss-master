@@ -15,7 +15,7 @@ import { Option } from '../models/option.model';
       this.setModel('users');
     }
   
-    gerUserById(id){
+    getUserById(id){
       return new Promise((resolve)=> {
         this.get(id).subscribe(res=>{
           resolve(res);

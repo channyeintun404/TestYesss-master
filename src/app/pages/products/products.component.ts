@@ -65,7 +65,7 @@ export class ProductsComponent implements OnInit {
   // Get List of Products
   getProductList() {    
     // this.products = this.productsService.productList();
-    this.productsService.getProducts(this.cid,this.companyId).then((resp: any) => {
+    this.productsService.getProducts(this.cid,13).then((resp: any) => {
       console.log(resp);
       this.products = resp
       // this.products = this.original_products;

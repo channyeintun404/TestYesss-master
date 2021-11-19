@@ -15,7 +15,9 @@ import { ShipmentsService } from 'src/app/services/shipments.service';
 import { ModalController } from '@ionic/angular';
 import { ShipmentDetailsComponent } from '../shipment-details/shipment-details.component';
 import { Shipment } from 'src/app/models/shipment.model';
-
+import { CookieService } from 'ngx-cookie-service';
+import { UsersService } from 'src/app/services/users.service';
+import { MessageDetailsComponent } from '../message-details/message-details.component';
 @Component({
   selector: 'app-order-details',
   templateUrl: './order-details.page.html',
@@ -111,6 +113,10 @@ export class OrderDetailsPage implements OnInit {
   }
   currentShipment: any;
   currentShipmentId: any;
+  discussions: any[];
+  discussionNameArray: any[];
+  user_id: any;
+  firstname: any;
  
    
 
@@ -123,7 +129,9 @@ export class OrderDetailsPage implements OnInit {
       private usergroupsService:UsergroupsService,
       private route: ActivatedRoute,private router: Router,
       private modalController: ModalController,
-      private shipmentsService: ShipmentsService) {
+      private shipmentsService: ShipmentsService,
+      private cookieService: CookieService,
+      private usersService: UsersService) {
     this.route.params.subscribe( params => {
       this.orderid = params.id;
       this.previd = (parseInt(params.id) + 1).toString();
@@ -135,12 +143,15 @@ export class OrderDetailsPage implements OnInit {
     this.settingListRef.open();
   }
   ngOnInit() {
+    this.user_id = this.cookieService.get('userId');
     this.getShippings();
     this.getOrderById(this.orderid);
     this.getStatuses();
     this.checkShipment();
     this.checkAdjecentOrders();
     this.getManagers();
+    this.getMessageById();
+    this.checkMessage();
     // this.store.select('currentOrder').subscribe(result=>{
     //   console.log('count - ',Object.keys(result).length)
     //   if(Object.keys(result).length == 0){
@@ -352,7 +363,25 @@ export class OrderDetailsPage implements OnInit {
     //   console.log(element)
     // });
   }
-
+  checkMessage(){
+   this.usersService.getUserById(this.user_id).then(res=>{
+     console.log(res["firstname"], res["lastname"]);
+     this.firstname = res["firstname"];
+   })
+  
+  }
+  getMessageById(){
+    this.ordersService.getMessageById(this.orderid).then(res=>{
+      console.log(res)
+      this.discussions = [];
+      for (const discussion of Object.values(res['discussions'])){
+        console.log(discussion)
+        this.discussions.push(discussion)
+        // this.discussionNameArray.push(discussion['name'])
+        
+      }
+    })
+  }
   
     // Go to detail shipment page
     async goShipmentDetailPage(id) {
@@ -363,7 +392,13 @@ export class OrderDetailsPage implements OnInit {
       });
       return await modal.present();
     }
-
+    async goToMessageDetails(){
+      const modal = await this.modalController.create({
+        component: MessageDetailsComponent,
+        // componentProps: this.products
+      });
+      return await modal.present();
+    }
     //refresh page
     refreshPage(){      
     this.getOrderById(this.orderid);

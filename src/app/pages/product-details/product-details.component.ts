@@ -130,6 +130,9 @@
     // console.log(this.products)
     return await modal.present();
   }
+
+  
+
    // get product by id
    getProductById(){
      console.log("id is ="+this.id)

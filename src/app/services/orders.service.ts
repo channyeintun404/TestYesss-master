@@ -104,7 +104,14 @@ export class OrdersService extends AppService {
         })
     })
   }
-
+  getMessageById(order_id) {
+    return new Promise((resolve) => {
+      this.getOptionByQueryString('discussions&object_type=o&object_id=' + order_id).subscribe(res => {
+        console.log(res);
+        resolve(res);
+       });
+    });
+  }
   updateOrderDetail(id,data){
     console.log(data);
     return new Promise((resolve)=>{

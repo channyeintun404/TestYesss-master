@@ -57,7 +57,7 @@ export class VendorAdminPage implements OnInit {
   }
 
   getUserById(user_id: any) {
-    this.usersService.gerUserById(user_id).then((resp: any) => {
+    this.usersService.getUserById(user_id).then((resp: any) => {
       console.log(resp);
       // this.company_id = resp["company_id"];      
       this.company_name = resp["company_name"];    
