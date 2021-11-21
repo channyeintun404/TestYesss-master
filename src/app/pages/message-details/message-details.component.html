@@ -29,7 +29,8 @@
         <ion-label color="000">Creation Date</ion-label>
       </ion-col>
       <ion-col size="8" style="margin-top: 10px;">
-        <ion-label>{{timestamp * 1000| date:'MM/dd/yyyy H:mm'}}</ion-label>
+        <ion-label>{{timestamp}}</ion-label>
+        <!-- <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="timestamp"></ion-datetime> -->
       </ion-col> 
     </ion-row>
     <ion-row>
@@ -44,7 +45,7 @@
     <ion-row style="margin-top: 20px;">
       <ion-col size="8"></ion-col>
       <ion-col size="4">
-        <a style="border: 1px solid #f3f5f3a4; background-color: #a2a3a2a4; padding: 10px; border-radius: 3px; color: #000;">Cancel</a>
+        <a (click)="dismiss()" style="border: 1px solid #f3f5f3a4; background-color: #a2a3a2a4; padding: 10px; border-radius: 3px; color: #000;">Cancel</a>
         <a (click)="createMessage()" style="border: 1px solid #036dcc; background-color: #036dcc; padding: 10px; border-radius: 3px; color: #fff; margin-left: 5px;">Add</a>
       </ion-col>
       <!-- <ion-col size="2">

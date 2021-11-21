@@ -117,6 +117,7 @@ export class OrderDetailsPage implements OnInit {
   discussionNameArray: any[];
   user_id: any;
   firstname: any;
+  msg_hidden: boolean =false;
  
    
 
@@ -399,6 +400,14 @@ export class OrderDetailsPage implements OnInit {
     this.getOrderById(this.orderid);
     this.checkShipment();
     this.getMessageById();
+    }
+
+    CheckHidden(){
+      if(this.msg_hidden){
+        this.msg_hidden=false
+      }else{
+        this.msg_hidden=true
+      }
     }
 
 }

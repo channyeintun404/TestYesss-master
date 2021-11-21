@@ -24,6 +24,8 @@ export class MessageDetailsComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.order_id);
+    this.timestamp = new Date().toISOString();
+    console.log(this.timestamp);
     this.user_id = this.cookieService.get('userId');
     this.checkMessage();
   }
@@ -31,7 +33,6 @@ export class MessageDetailsComponent implements OnInit {
     this.usersService.getUserById(this.user_id).then(res=>{
       console.log(res["firstname"], res["lastname"]);
       this.firstname = res["firstname"];
-      this.timestamp = res["timestamp"]
     })
    }
     //Create Product

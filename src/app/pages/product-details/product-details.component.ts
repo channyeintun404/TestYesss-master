@@ -245,7 +245,7 @@
    getDiscussionById(){
      this.rate=0;
      console.log("id is ="+this.id);
-     this.productsService.getDiscussionById(this.id).then( res=>{
+     this.productsService.getDiscussionById(256).then( res=>{
        console.log(res);
        this.discussions = [];
        for (const discussion of Object.values(res['discussions'])){

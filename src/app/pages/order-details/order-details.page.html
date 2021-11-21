@@ -225,34 +225,44 @@
       <!-- <ion-card>
         <ion-img [src]="'https://picsum.photos/100/30'"></ion-img>
       </ion-card> -->
- 
-      <ion-card>
-        <ion-row>
-          <ion-col size="4"></ion-col>
-          <ion-col size="4"></ion-col>
-          <ion-col size="4">
-            <ion-button color="primary" style="font-size: small;" (click)="goToMessageDetails()">Add Message</ion-button></ion-col>
+
+
+      
+      <ion-card >
+        <ion-row (click)="CheckHidden()">
+          <ion-col size="6"><ion-card-title   style="margin-left: 5%; color: #737373;">Contact Message</ion-card-title></ion-col>
+          <ion-col size="2"></ion-col>
+          <ion-col size="4"><ion-icon style="float: right; font-size: 20px;" ios="ios-arrow-dropdown" md="md-arrow-dropdown"></ion-icon></ion-col>
         </ion-row>
-        <ion-row class="ion-align-items-start" *ngFor="let discussion of discussions">
-              <ion-col>
-                <ion-item>
-                  <ion-label>{{discussion.name}}</ion-label>
-                  
-                </ion-item>
-                <hr>
-                <ion-row style="margin-left: 10px;">
-                  <ion-col>
-                    <ion-label>{{discussion.message}}</ion-label>
-                  </ion-col>
-                </ion-row>
-                <ion-row style="margin-left: 10px;">
-                  <ion-col size="4"></ion-col>
-                  <ion-col size="8"><ion-label>{{discussion.timestamp * 1000| date:'MM/dd/yyyy H:mm'}}</ion-label>
-                    <ion-label>   / {{discussion.ip_address}}</ion-label></ion-col>
-                  
-                </ion-row>         
-            </ion-col>
+        
+        <div *ngIf="msg_hidden">
+          <ion-row>
+            <ion-col size="4"></ion-col>
+            <ion-col size="4"></ion-col>
+            <ion-col size="4">
+              <ion-button color="primary" style="font-size: small;" (click)="goToMessageDetails()">Add Message</ion-button></ion-col>
           </ion-row>
+          <ion-row class="ion-align-items-start" *ngFor="let discussion of discussions">
+                <ion-col>
+                  <ion-item>
+                    <ion-label>{{discussion.name}}</ion-label>
+                    
+                  </ion-item>
+                  <hr>
+                  <ion-row style="margin-left: 10px;">
+                    <ion-col>
+                      <ion-label>{{discussion.message}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row style="margin-left: 10px;">
+                    <ion-col size="4"></ion-col>
+                    <ion-col size="8"><ion-label>{{discussion.timestamp * 1000| date:'MM/dd/yyyy H:mm'}}</ion-label>
+                      <ion-label>   / {{discussion.ip_address}}</ion-label></ion-col>
+                    
+                  </ion-row>         
+              </ion-col>
+            </ion-row>
+        </div>
       </ion-card>
       <ion-card>
         <ion-row class="ion-align-items-start">
