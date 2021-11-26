@@ -16,11 +16,13 @@
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button color="white" (click)="resetPage()">
-          <ion-icon name="refresh"></ion-icon>
+        <ion-icon name="refresh"></ion-icon>
       </ion-button>
-    <ion-button>
-      <a href="/tabs/tab1" style="font-size: 20px; color: white;"><ion-icon name="close-circle-outline"></ion-icon></a>
-    </ion-button> 
+      <ion-button>
+        <a href="/tabs/tab1" style="font-size: 20px; color: white;">
+          <ion-icon name="close-circle-outline"></ion-icon>
+        </a>
+      </ion-button>
     </ion-buttons>
 
     <!-- Title -->
@@ -39,7 +41,7 @@
 <!-- Main Contents of Page -->
 
 <ion-content id="product-details" fullscreen>
-  
+
   <!-- Slider of Product Images -->
   <ion-slides pager="true" [options]="slideOpts">
     <ion-slide *ngFor="let item of images">
@@ -54,7 +56,7 @@
       </ion-fab> -->
     </ion-slide>
   </ion-slides>
-  
+
   <!-- Product Price -->
   <ion-row class="ion-padding">
     <ion-text color="color1" class="price">${{discountPrice}} USD &nbsp;</ion-text>
@@ -65,17 +67,17 @@
   <ion-row class="ion-padding-start product-name">
     <ion-text>{{name}}</ion-text>
   </ion-row>
-<!-- <br> -->
+  <!-- <br> -->
   <!-- Product Description -->
   <ion-row class="ion-padding">
     <ion-text color="medium" [innerHTML]="description"></ion-text>
   </ion-row>
 
-   <!-- Selct Sizes -->
-   <ion-row class="select-heading">
+  <!-- Selct Sizes -->
+  <ion-row class="select-heading">
     <ion-text style="margin-left: 15px;">Available Sizes</ion-text>
-   </ion-row>
-   <ion-row>
+  </ion-row>
+  <ion-row>
     <ion-col></ion-col>
   </ion-row>
   <table>
@@ -86,10 +88,10 @@
         <th>Status</th>
       </tr>
     </thead>
-    <tbody *ngFor="let variant_size of variants_size" >
+    <tbody *ngFor="let variant_size of variants_size">
       <ion-input type="text" hidden="true" [(ngModel)]="variant_size.id"></ion-input>
       <tr>
-        <td >{{variant_size.position}}</td>
+        <td>{{variant_size.position}}</td>
         <td>{{variant_size.variant_name}}</td>
         <td>{{variant_size.status}}</td>
       </tr>
@@ -129,11 +131,27 @@
   </ion-row>
   <ion-row class="ion-padding" style="margin-top: -10px;">
     <ion-col *ngIf="discussionLength!=0; else other_content"><a (click)="goToReviewDetailsPage()">
-      <ion-text *ngIf="discussionLength==1" color="warning">{{discussionLength}}Review</ion-text>
-      <ion-text *ngIf="discussionLength>1">{{discussionLength}}Reviews</ion-text></a>
+        <ion-text *ngIf="discussionLength==1" color="warning">{{discussionLength}}Review</ion-text>
+        <ion-text *ngIf="discussionLength>1">{{discussionLength}}Reviews</ion-text>
+      </a>
     </ion-col>
-    <ion-col><ng-template #other_content><ion-text color="warning">{{discussionLength}}Review</ion-text>
-    </ng-template></ion-col>
+    <ion-col>
+      <ng-template #other_content>
+        <ion-text color="warning">{{discussionLength}}Review</ion-text>
+      </ng-template>
+    </ion-col>
+  </ion-row>
+  <ion-row class="select-heading">
+    <ion-text style="margin-left: 15px;">Product Inqiry Reply</ion-text>
+  </ion-row>
+  <ion-row style="margin-top: 10px; margin-bottom: 10px;">
+    <ion-col size="8">
+      <a (click)="goToProductMessage()" style="border: 1px solid #036dcc; background-color: #036dcc; padding: 10px; border-radius: 3px; color: #fff; margin-left: 10px;">Communication</a>
+    </ion-col>
+    <ion-col size="4"></ion-col>
+    <!-- <ion-col size="2">
+        <a style="border: 1px solid #036dcc; background-color: #036dcc; padding: 10px; border-radius: 3px; color: #fff;">Add</a>
+      </ion-col> -->
   </ion-row>
 </ion-content>
 
@@ -141,7 +159,7 @@
 <ion-footer no-border>
   <ion-toolbar class="ion-padding" transparent>
     <!-- Add To Cart Button -->
-    <ion-button class="add-to-cart" color="color1" expand="block" (click)="goToProductEditPage()" >EDIT PRODUCT
+    <ion-button class="add-to-cart" color="color1" expand="block" (click)="goToProductEditPage()">EDIT PRODUCT
     </ion-button>
   </ion-toolbar>
 </ion-footer>

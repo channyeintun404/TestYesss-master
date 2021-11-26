@@ -29,8 +29,8 @@
         <ion-label color="000">Creation Date</ion-label>
       </ion-col>
       <ion-col size="8" style="margin-top: 10px;">
-        <ion-label>{{timestamp}}</ion-label>
-        <!-- <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="timestamp"></ion-datetime> -->
+        <ion-label displayFormat="MM/DD/YYYY H:mm" >{{timestamp | date:'MM/dd/yyyy H:mm'}}</ion-label>
+        <!-- <ion-datetime [value]="timestamp" displayFormat="MM/DD/YYYY H:mm" ></ion-datetime> -->
       </ion-col> 
     </ion-row>
     <ion-row>

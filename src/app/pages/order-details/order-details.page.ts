@@ -118,6 +118,7 @@ export class OrderDetailsPage implements OnInit {
   user_id: any;
   firstname: any;
   msg_hidden: boolean =false;
+  total_hidden: boolean =false;
  
    
 
@@ -401,7 +402,13 @@ export class OrderDetailsPage implements OnInit {
     this.checkShipment();
     this.getMessageById();
     }
-
+    TotalCheckHidden(){
+      if(this.total_hidden){
+        this.total_hidden=false
+      }else{
+        this.total_hidden=true
+      }
+    }
     CheckHidden(){
       if(this.msg_hidden){
         this.msg_hidden=false

@@ -15,6 +15,7 @@
  import { OptionsService } from 'src/app/services/options.service';
  import { ReviewDetailsComponent } from 'src/app/review-details/review-details.component';
  import { Router } from '@angular/router';
+ import { ProductMessagesComponent } from '../product-messages/product-messages.component';
  @Component({
    selector: 'app-product-details',
    templateUrl: './product-details.component.html',
@@ -65,10 +66,6 @@
    };
    discussions: any[];
    discussionLength: number;
-  
-  
-  
- 
    constructor(public modalController: ModalController,
      public storageService: StorageService,
      private optionsService : OptionsService,
@@ -118,6 +115,16 @@
      });
      return await modal.present();
    }
+
+   async goToProductMessage(){
+    const modal = await this.modalController.create({
+      component: ProductMessagesComponent,
+      // componentProps:  { 
+      //   order_id: this.orderid
+      // }
+    });
+    return await modal.present();
+  }
 
   async goToReviewDetailsPage() {
     // this.dismiss();  
@@ -256,6 +263,8 @@
      })
    }
    
+   
+
    // Back to previous page function
    dismiss() {
      this.modalController.dismiss({

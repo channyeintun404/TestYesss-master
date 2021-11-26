@@ -10,6 +10,7 @@ import { Observable} from "rxjs";
 export class ProductsService extends AppService {
 
   products: Product[];
+  message: any[];
 
   constructor(protected http: HttpClient) {
     super(http);
@@ -251,5 +252,50 @@ export class ProductsService extends AppService {
     ];
 
     return this.products;
+  }
+
+  messageLists(){
+    this.message = [
+      {
+        id: 1,
+        customer_id: 21,
+        name: "Soe Pyae",
+        message: "message1",
+        date: "11/25/2021"
+      },
+      {
+        id: 2,
+        customer_id: 22,
+        name: "Ko Chan",
+        message: "message2",
+        date: "11/25/2021"
+      },
+      {
+        id: 3,
+        customer_id: 21,
+        name: "Soe Pyae",
+        message: "message3",
+        date: "11/25/2021"
+      },
+      {
+        id: 4,
+        customer_id: 22,
+        name: "Ko Chan",
+        message: "message4",
+        date: "11/25/2021"
+      }
+    ];
+    return new Promise((resolve) => {
+        resolve(this.message);
+       });
+  }
+  createProductMessage(data:any){
+    console.log(data);
+    return new Promise((resolve)=>{
+      this.create(data).subscribe(res=>{
+        // console.log("add res "+JSON.stringify(res));
+        resolve(res);
+      })
+    })
   }
 }

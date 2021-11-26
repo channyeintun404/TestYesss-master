@@ -40,7 +40,7 @@ import { ShipmentDetailsComponent } from './pages/shipment-details/shipment-deta
 import { CookieService } from 'ngx-cookie-service';
 import { ReviewDetailsComponent } from './review-details/review-details.component';
 import { MessageDetailsComponent } from './pages/message-details/message-details.component';
-
+import { ProductMessagesComponent } from './pages/product-messages/product-messages.component';
 @NgModule({
   declarations: [AppComponent,
     ProductDetailsComponent,
@@ -49,14 +49,16 @@ import { MessageDetailsComponent } from './pages/message-details/message-details
     CheckoutComponent,
     ShipmentDetailsComponent,
     ReviewDetailsComponent,
-    MessageDetailsComponent],
+    MessageDetailsComponent,
+    ProductMessagesComponent],
   entryComponents: [ProductDetailsComponent,
     ProductEditComponent,
     CartComponent,
     CheckoutComponent,
     ShipmentDetailsComponent,
     ReviewDetailsComponent,
-    MessageDetailsComponent],
+    MessageDetailsComponent,
+    ProductMessagesComponent],
   imports: [AutoCompleteModule,BrowserModule,StoreModule.forRoot({ currentOrder: currentOrderReducer,
      currentProducts: currentProductsReducer,
      productList: productListReducer,

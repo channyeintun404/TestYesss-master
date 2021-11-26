@@ -1,18 +1,18 @@
 <ion-header no-border>
   <ion-toolbar color="color1">
     <ion-buttons slot="start">
-      <ion-menu-button autoHide="false" menuToggle="start" ></ion-menu-button>
+      <ion-menu-button autoHide="false" menuToggle="start"></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button color="white" (click)="refreshPage()">
-          <ion-icon name="refresh"></ion-icon>
+        <ion-icon name="refresh"></ion-icon>
       </ion-button>
-      </ion-buttons>
+    </ion-buttons>
     <ion-title>Order #{{orderid}}</ion-title>
   </ion-toolbar>
 </ion-header>
 <div *ngIf="isLoaded">
-  <ion-menu side="end" menuId="menuAdmin" type="overlay" persistent="true" contentId="mainContent"> 
+  <ion-menu side="end" menuId="menuAdmin" type="overlay" persistent="true" contentId="mainContent">
     <ion-content>
       <ion-card>
         <ion-item>
@@ -26,153 +26,162 @@
               </ion-col>
               <ion-col size="11">
                 <ion-text>{{order.b_firstname}} {{order.b_lastname}}
-                  <br/>email: {{order.email}}
-                  <br/>ip-address: {{order.ip_address}}<br/>Phone:{{order.phone}}
+                  <br />email: {{order.email}}
+                  <br />ip-address: {{order.ip_address}}<br />Phone:{{order.phone}}
                 </ion-text>
               </ion-col>
             </ion-row>
           </ion-grid>
         </ion-card-content>
       </ion-card>
-          <ion-card>
-            <ion-item>
-              <ion-label>Billing Address</ion-label>
-            </ion-item>
-            <ion-card-content>
-              <ion-grid>
-                <ion-row>
-                  <ion-col size="1">
-                    <ion-icon name="pricetags"></ion-icon>
-                  </ion-col>
-                  <ion-col size="11">
-                    <ion-text>{{order.b_firstname}} {{order.b_lastname}}
-                      <br/>{{order.b_address}}<br/>{{order.b_city}}, {{order.b_state_descr}} {{order.b_zipcode}}
-                    </ion-text>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-card-content>
-          </ion-card>
-          <ion-card>
-            <ion-item>
-              <ion-label>Shipping Address</ion-label>
-            </ion-item>
-            <ion-card-content>
-              <ion-grid>
-                <ion-row>
-                  <ion-col size="1">
-                    <ion-icon name="bus"></ion-icon>
-                  </ion-col>
-                  <ion-col size="11">
-                    <ion-text>{{order.s_firstname}} {{order.s_lastname}}
-                      <br/>{{order.s_address}}<br/>{{order.s_city}}, {{order.s_state_descr}} {{order.s_zipcode}}
-                    </ion-text>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-card-content>
-          </ion-card>
-    </ion-content>
-  </ion-menu>
-  </div>
-<ion-content>
-    <ion-toolbar>
-      <ion-buttons class="text-center">
-        <ion-button [routerLink]="['/order-details',previd]" #prev>
-          <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-        </ion-button>
-        <ion-button [routerLink]="['/order-details',nextid]" #next>
-          <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
-        </ion-button>
-         <!-- <ion-button   ion-button block (click)="openSetting()">
-          <ion-icon slot="icon-only" name="settings"></ion-icon>
-        </ion-button> -->
-        <ion-select interface="popover" placeholder="⚙️" #settingList (ionChange)='changeSetting($event.target.value)'>
-            <ion-select-option value="1">Print invoice</ion-select-option>
-            <ion-select-option value="2">Print invoice (pdf)</ion-select-option>
-            <ion-select-option value="3">Tweak and send invoice</ion-select-option>
-            <ion-select-option value="4">Print packing slip</ion-select-option>
-            <ion-select-option value="5">Print packing slip (pdf)</ion-select-option>
-            <ion-select-option value="6" >Edit Order</ion-select-option>
-            <ion-select-option value="7">Copy</ion-select-option>
-      </ion-select>
-        <ion-button color="primary"  (click)="saveChanges()">Save Changes</ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-    <div *ngIf="isLoaded">
-      <ion-buttons class="cusInfoBtn"  slot="end">
-        <ion-menu-toggle menu="end">
-            <ion-button>
-              <ion-icon slot="icon-only" ios="ios-person" md="md-person"></ion-icon>
-            </ion-button>
-        </ion-menu-toggle>
-    </ion-buttons>
-      <ion-card *ngFor="let product of products; index as i">     
+      <ion-card>
+        <ion-item>
+          <ion-label>Billing Address</ion-label>
+        </ion-item>
         <ion-card-content>
-          <ion-row class="ion-align-items-start">
-            <ion-col>
-              Product
-            </ion-col>
-            <ion-col>
-              <!-- <ion-img [src]="getImage(product.image_pairs)"></ion-img> -->
-
-              <!-- Slider of Product Images -->
-              <ion-slides pager="true" [options]="slideOpts" >
-                <ion-slide *ngFor="let item of getImage(product.image_pairs,product.main_pair)">
-                  <img [src]="item" style="width: 50%; height: 70%;" />
-
-                </ion-slide>
-              </ion-slides>
-              
-              <ion-text>
-                <a href="#">{{product.product}}</a>
-              </ion-text>
-              <ion-text>
-                <p>{{product.product_code}}</p>
-              </ion-text>
-              <ion-text *ngIf="order.points_info !== undefined">
-                <p>Points in Price : {{order.points_info.price | currency:"MMK":"symbol"}}</p>
-              </ion-text>
-            </ion-col>
-          </ion-row>
-          <ion-row class="ion-align-items-start">
-            <ion-col>
-              Price
-            </ion-col>
-            <ion-col>
-              {{product.price | currency:"MMK":"symbol"}}
-            </ion-col>
-          </ion-row>
-          <ion-row class="ion-align-items-start">
-            <ion-col>
-              Quantity
-            </ion-col>
-            <ion-col>
-              {{product_array[i].amount}}
-            </ion-col>
-          </ion-row>
-          <ion-row class="ion-align-items-start">
-            <ion-col>
-              SubTotal
-            </ion-col>
-            <ion-col>
-              {{product_array[i].subtotal}}
-            </ion-col>
-          </ion-row>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="1">
+                <ion-icon name="pricetags"></ion-icon>
+              </ion-col>
+              <ion-col size="11">
+                <ion-text>{{order.b_firstname}} {{order.b_lastname}}
+                  <br />{{order.b_address}}<br />{{order.b_city}}, {{order.b_state_descr}} {{order.b_zipcode}}
+                </ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-card-content>
       </ion-card>
       <ion-card>
-        <ion-card-header>
+        <ion-item>
+          <ion-label>Shipping Address</ion-label>
+        </ion-item>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="1">
+                <ion-icon name="bus"></ion-icon>
+              </ion-col>
+              <ion-col size="11">
+                <ion-text>{{order.s_firstname}} {{order.s_lastname}}
+                  <br />{{order.s_address}}<br />{{order.s_city}}, {{order.s_state_descr}} {{order.s_zipcode}}
+                </ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </ion-content>
+  </ion-menu>
+</div>
+<ion-content>
+  <ion-toolbar>
+    <ion-buttons class="text-center">
+      <ion-button [routerLink]="['/order-details',previd]" #prev>
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+      <ion-button [routerLink]="['/order-details',nextid]" #next>
+        <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
+      </ion-button>
+      <!-- <ion-button   ion-button block (click)="openSetting()">
+          <ion-icon slot="icon-only" name="settings"></ion-icon>
+        </ion-button> -->
+      <ion-select interface="popover" placeholder="⚙️" #settingList (ionChange)='changeSetting($event.target.value)'>
+        <ion-select-option value="1">Print invoice</ion-select-option>
+        <ion-select-option value="2">Print invoice (pdf)</ion-select-option>
+        <ion-select-option value="3">Tweak and send invoice</ion-select-option>
+        <ion-select-option value="4">Print packing slip</ion-select-option>
+        <ion-select-option value="5">Print packing slip (pdf)</ion-select-option>
+        <ion-select-option value="6">Edit Order</ion-select-option>
+        <ion-select-option value="7">Copy</ion-select-option>
+      </ion-select>
+      <ion-button color="primary" (click)="saveChanges()">Save Changes</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <div *ngIf="isLoaded">
+    <ion-buttons class="cusInfoBtn" slot="end">
+      <ion-menu-toggle menu="end">
+        <ion-button>
+          <ion-icon slot="icon-only" ios="ios-person" md="md-person"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+    <ion-card *ngFor="let product of products; index as i">
+      <ion-card-content>
+        <ion-row class="ion-align-items-start">
+          <ion-col>
+            Product
+          </ion-col>
+          <ion-col>
+            <!-- <ion-img [src]="getImage(product.image_pairs)"></ion-img> -->
+
+            <!-- Slider of Product Images -->
+            <ion-slides pager="true" [options]="slideOpts">
+              <ion-slide *ngFor="let item of getImage(product.image_pairs,product.main_pair)">
+                <img [src]="item" style="width: 50%; height: 70%;" />
+
+              </ion-slide>
+            </ion-slides>
+
+            <ion-text>
+              <a href="#">{{product.product}}</a>
+            </ion-text>
+            <ion-text>
+              <p>{{product.product_code}}</p>
+            </ion-text>
+            <ion-text *ngIf="order.points_info !== undefined">
+              <p>Points in Price : {{order.points_info.price | currency:"MMK":"symbol"}}</p>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-start">
+          <ion-col>
+            Price
+          </ion-col>
+          <ion-col>
+            {{product.price | currency:"MMK":"symbol"}}
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-start">
+          <ion-col>
+            Quantity
+          </ion-col>
+          <ion-col>
+            {{product_array[i].amount}}
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-start">
+          <ion-col>
+            SubTotal
+          </ion-col>
+          <ion-col>
+            {{product_array[i].subtotal}}
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-row (click)="TotalCheckHidden()">
+        <ion-col size="6">
+          <ion-card-title style="margin-left: 5%; color: #737373;">Total</ion-card-title>
+        </ion-col>
+        <ion-col size="2"></ion-col>
+        <ion-col size="4">
+          <ion-icon style="float: right; font-size: 20px;" ios="ios-arrow-dropdown" md="md-arrow-dropdown"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <!-- <ion-card-header>
           <ion-card-title>Total</ion-card-title>
-        </ion-card-header>
-      
+        </ion-card-header> -->
+      <div *ngIf="total_hidden">
         <ion-card-content>
           <ion-row class="ion-align-items-start">
             <ion-col>
               SubTotal
             </ion-col>
             <ion-col>
-                {{order.subtotal | currency:"MMK":"symbol"}}
+              {{order.subtotal | currency:"MMK":"symbol"}}
             </ion-col>
           </ion-row>
           <ion-row class="ion-align-items-start">
@@ -180,7 +189,7 @@
               Shipping Cost
             </ion-col>
             <ion-col>
-                {{order.shipping_cost|currency:"MMK":"symbol"}}
+              {{order.shipping_cost|currency:"MMK":"symbol"}}
             </ion-col>
           </ion-row>
           <!-- <ion-row class="ion-align-items-start">
@@ -198,9 +207,9 @@
               </ion-text>
             </ion-col>
             <ion-col>
-                <ion-text color="success">
-                 {{order.total | currency:"MMK":"symbol"}}
-                </ion-text>
+              <ion-text color="success">
+                {{order.total | currency:"MMK":"symbol"}}
+              </ion-text>
             </ion-col>
           </ion-row>
           <ion-row class="ion-align-items-start">
@@ -220,90 +229,102 @@
             </ion-col>
           </ion-row>
         </ion-card-content>
-      </ion-card>
+      </div>
+    </ion-card>
 
-      <!-- <ion-card>
+    <!-- <ion-card>
         <ion-img [src]="'https://picsum.photos/100/30'"></ion-img>
       </ion-card> -->
 
 
-      
-      <ion-card >
-        <ion-row (click)="CheckHidden()">
-          <ion-col size="6"><ion-card-title   style="margin-left: 5%; color: #737373;">Contact Message</ion-card-title></ion-col>
-          <ion-col size="2"></ion-col>
-          <ion-col size="4"><ion-icon style="float: right; font-size: 20px;" ios="ios-arrow-dropdown" md="md-arrow-dropdown"></ion-icon></ion-col>
+
+    <ion-card>
+      <ion-row (click)="CheckHidden()">
+        <ion-col size="6">
+          <ion-card-title style="margin-left: 5%; color: #737373;">Order Inqiry Reply</ion-card-title>
+        </ion-col>
+        <ion-col size="2"></ion-col>
+        <ion-col size="4">
+          <ion-icon style="float: right; font-size: 20px;" ios="ios-arrow-dropdown" md="md-arrow-dropdown"></ion-icon>
+        </ion-col>
+      </ion-row>
+
+      <div *ngIf="msg_hidden">
+        <ion-row>
+          <ion-col size="4"></ion-col>
+          <ion-col size="4"></ion-col>
+          <ion-col size="4">
+            <ion-button color="primary" style="font-size: small;" (click)="goToMessageDetails()">Add Message
+            </ion-button>
+          </ion-col>
         </ion-row>
-        
-        <div *ngIf="msg_hidden">
-          <ion-row>
-            <ion-col size="4"></ion-col>
-            <ion-col size="4"></ion-col>
-            <ion-col size="4">
-              <ion-button color="primary" style="font-size: small;" (click)="goToMessageDetails()">Add Message</ion-button></ion-col>
-          </ion-row>
-          <ion-row class="ion-align-items-start" *ngFor="let discussion of discussions">
-                <ion-col>
-                  <ion-item>
-                    <ion-label>{{discussion.name}}</ion-label>
-                    
-                  </ion-item>
-                  <hr>
-                  <ion-row style="margin-left: 10px;">
-                    <ion-col>
-                      <ion-label>{{discussion.message}}</ion-label>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row style="margin-left: 10px;">
-                    <ion-col size="4"></ion-col>
-                    <ion-col size="8"><ion-label>{{discussion.timestamp * 1000| date:'MM/dd/yyyy H:mm'}}</ion-label>
-                      <ion-label>   / {{discussion.ip_address}}</ion-label></ion-col>
-                    
-                  </ion-row>         
+        <ion-row class="ion-align-items-start" *ngFor="let discussion of discussions">
+          <ion-col>
+            <ion-item>
+              <ion-label>{{discussion.name}}</ion-label>
+
+            </ion-item>
+            <hr>
+            <ion-row style="margin-left: 10px;">
+              <ion-col>
+                <ion-label>{{discussion.message}}</ion-label>
               </ion-col>
             </ion-row>
-        </div>
-      </ion-card>
-      <ion-card>
-        <ion-row class="ion-align-items-start">
-              <ion-col>
-                <ion-item>
-                  <ion-label>Status</ion-label>
-                  <ion-select [(ngModel)]="currentStatus" placeholder="Select One" value="{{order.status}}">
-                    <ion-select-option *ngFor="let status of statuses" value="{{status.status}}">{{status.description}}</ion-select-option>
-                  </ion-select>
-                </ion-item>              
-            </ion-col>
-          </ion-row>
+            <ion-row style="margin-left: 10px;">
+              <ion-col size="4"></ion-col>
+              <ion-col size="8">
+                <ion-label>{{discussion.timestamp * 1000| date:'MM/dd/yyyy H:mm'}}</ion-label>
+                <ion-label> / {{discussion.ip_address}}</ion-label>
+              </ion-col>
 
-          <ion-row class="ion-align-items-start" *ngIf="currentShipment != null">
-            <ion-col>
-              <ion-item>
-                <ion-label>Shippings</ion-label>
-                <a (click)="goShipmentDetailPage(currentShipmentId)">{{currentShipment}}</a>
-              </ion-item>              
-          </ion-col>
-          </ion-row>  
-
-          <ion-row class="ion-align-items-start" *ngIf="currentShipment == null">
-            <ion-col *ngIf="currentStatus=='K'||currentStatus=='J'||currentStatus=='A'">
-              <ion-item>
-                <ion-label>Shippings</ion-label>
-                <ion-select [(ngModel)]="currentShipping_id" [ngModelOptions]="{standalone: true}" (cancel)="onCancel()" (ionChange)="createButton()"data-live-search="true" placeholder="Select One" >
-                  <ion-select-option *ngFor="let shipping of active_shipping" value="{{shipping.shipping_id}}">{{shipping.shipping}}</ion-select-option>
-                </ion-select>
-              </ion-item>              
+            </ion-row>
           </ion-col>
         </ion-row>
-        
-        <ion-row *ngIf="showBtn">
-          <ion-col size="3"></ion-col>
-          <ion-col size="3"></ion-col>
-          <ion-col size="6">
-            <ion-button class="createShipment" (click)="createShipment()">CreateShipment</ion-button>
-          </ion-col>
-        </ion-row>
-          <!-- <ion-row class="ion-align-items-start">
+      </div>
+    </ion-card>
+    <ion-card>
+      <ion-row class="ion-align-items-start">
+        <ion-col>
+          <ion-item>
+            <ion-label>Status</ion-label>
+            <ion-select [(ngModel)]="currentStatus" placeholder="Select One" value="{{order.status}}">
+              <ion-select-option *ngFor="let status of statuses" value="{{status.status}}">{{status.description}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-align-items-start" *ngIf="currentShipment != null">
+        <ion-col>
+          <ion-item>
+            <ion-label>Shippings</ion-label>
+            <a (click)="goShipmentDetailPage(currentShipmentId)">{{currentShipment}}</a>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-align-items-start" *ngIf="currentShipment == null">
+        <ion-col *ngIf="currentStatus=='K'||currentStatus=='J'||currentStatus=='A'">
+          <ion-item>
+            <ion-label>Shippings</ion-label>
+            <ion-select [(ngModel)]="currentShipping_id" [ngModelOptions]="{standalone: true}" (cancel)="onCancel()"
+              (ionChange)="createButton()" data-live-search="true" placeholder="Select One">
+              <ion-select-option *ngFor="let shipping of active_shipping" value="{{shipping.shipping_id}}">
+                {{shipping.shipping}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="showBtn">
+        <ion-col size="3"></ion-col>
+        <ion-col size="3"></ion-col>
+        <ion-col size="6">
+          <ion-button class="createShipment" (click)="createShipment()">CreateShipment</ion-button>
+        </ion-col>
+      </ion-row>
+      <!-- <ion-row class="ion-align-items-start">
             <ion-col>
               <ion-item>
                 <ion-label>Manager</ion-label>
@@ -311,6 +332,6 @@
               </ion-item>              
           </ion-col>
         </ion-row> -->
-      </ion-card>
-    </div>
+    </ion-card>
+  </div>
 </ion-content>
