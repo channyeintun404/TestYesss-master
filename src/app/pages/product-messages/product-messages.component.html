@@ -14,25 +14,26 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-card  *ngFor="let customer_name of unique_customername">
-    <ion-row (click)="MessageCheckHidden(customer_id)" >
-      <ion-col size="6">
-        <ion-card-title style="margin-left: 5%; color: #737373;">{{customer_name}}</ion-card-title>
+  <ion-card  *ngFor="let customer_name of unique_customername; let i = index" [attr.data-index]="i">
+    <ion-row (click)="MessageCheckHidden(i)" >
+      <ion-col size="8">
+        <ion-card-title style="margin-left: 5%;color: #737373;">{{customer_name}}</ion-card-title>
+        <ion-label style="margin-left: 5%;">{{unique_customer_phone[i]}}</ion-label><br/>
+        <ion-label style="margin-left: 5%;">{{unique_customer_email[i]}}</ion-label>
       </ion-col>
-      <ion-col size="2"></ion-col>
       <ion-col size="4">
         <ion-icon style="float: right; font-size: 20px;" ios="ios-arrow-dropdown" md="md-arrow-dropdown"></ion-icon>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <div *ngIf="message_hidden">
+        <div *ngIf="show_msg_list[i]">
           <ion-card-content *ngFor="let message of msgLists">
             <ion-row *ngIf="message.name==customer_name">
               <ion-col size="12">
                 <div  class="rating">
                   <ion-label>{{message.message}}</ion-label>
-                  <ion-label style="margin-left: 300px;">{{message.date}}</ion-label>
+                  <ion-label style="float: right;">{{message.date}}</ion-label>
                 </div>
               </ion-col>
               <!-- <ion-label style="margin-left: 5px;">{{message.name}}</ion-label> -->

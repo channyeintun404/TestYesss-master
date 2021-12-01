@@ -260,6 +260,8 @@ export class ProductsService extends AppService {
         id: 1,
         customer_id: 21,
         name: "Soe Pyae",
+        email:"soepyae404@gmail.com",
+        phone:"097888775656",
         message: "message1",
         date: "11/25/2021"
       },
@@ -267,6 +269,8 @@ export class ProductsService extends AppService {
         id: 2,
         customer_id: 22,
         name: "Ko Chan",
+        email:"kochan122@gmail.com",
+        phone:"09788877888",
         message: "message2",
         date: "11/25/2021"
       },
@@ -274,6 +278,8 @@ export class ProductsService extends AppService {
         id: 3,
         customer_id: 21,
         name: "Soe Pyae",
+        email:"soepyae404@gmail.com",
+        phone:"097888775656",
         message: "message3",
         date: "11/25/2021"
       },
@@ -281,7 +287,36 @@ export class ProductsService extends AppService {
         id: 4,
         customer_id: 22,
         name: "Ko Chan",
+        email:"kochan122@gmail.com",
+        phone:"09788877888",
         message: "message4",
+        date: "11/25/2021"
+      },
+      {
+        id: 5,
+        customer_id: 23,
+        name: "Pyae Shan",
+        email:"pyaeshan122@gmail.com",
+        phone:"0978887",
+        message: "can i order?",
+        date: "11/25/2021"
+      },
+      {
+        id: 6,
+        customer_id: 23,
+        name: "Pyae Shan",
+        email:"pyaeshan122@gmail.com",
+        phone:"0978887",
+        message: "how can i do?",
+        date: "11/25/2021"
+      },
+      {
+        id: 7,
+        customer_id: 23,
+        name: "Pyae Shan",
+        email:"pyaeshan122@gmail.com",
+        phone:"0978887",
+        message: "come on",
         date: "11/25/2021"
       }
     ];
