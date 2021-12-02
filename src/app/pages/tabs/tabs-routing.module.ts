@@ -69,6 +69,16 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'tab7',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../about/about.module').then(m => m.AboutPageModule)
+          }
+        ]
+      },
+      {
         path: 'categories',
         children: [
           {

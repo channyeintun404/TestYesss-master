@@ -48,7 +48,13 @@ export class PagesService {
         title: 'Account',
         url: '/tabs/tab5',
         icon: 'person'
+      },
+      {
+        title: 'About',
+        url: '/tabs/tab7',
+        icon: 'alert'
       }
+      
     ];
   }
 }
