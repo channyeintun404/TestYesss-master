@@ -77,6 +77,15 @@ const routes: Routes = [
               import('../about/about.module').then(m => m.AboutPageModule)
           }
         ]
+      },{
+        path: 'tab8',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../version/version.module').then(m => m.VersionPageModule)
+          }
+        ]
       },
       {
         path: 'categories',

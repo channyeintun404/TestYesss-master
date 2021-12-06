@@ -53,6 +53,11 @@ export class PagesService {
         title: 'About',
         url: '/tabs/tab7',
         icon: 'alert'
+      },
+      {
+        title: 'Version',
+        url: '/tabs/tab8',
+        icon: 'git-branch'
       }
       
     ];

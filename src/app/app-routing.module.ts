@@ -82,6 +82,10 @@ const routes: Routes = [
     path: 'about',
     loadChildren: () => import('./pages/about/about.module').then( m => m.AboutPageModule)
   },
+  {
+    path: 'version',
+    loadChildren: () => import('./pages/version/version.module').then( m => m.VersionPageModule)
+  },
 
 
 
