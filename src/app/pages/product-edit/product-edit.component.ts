@@ -27,6 +27,7 @@ export class ProductEditComponent implements OnInit {
   name: String;
   description: String;
   product_code:String;
+  product_amount: String;
   price: number;
   list_price : number;
   base_price : number;
@@ -185,7 +186,8 @@ getProductById(){
     console.log(res);
     this.name = res['product']
     this.price = res['price']
-    this.product_code = res['product_code']
+    this.product_code = res['product_code']    
+    this.product_amount = res['amount']
     this.list_price = res['list_price']
     this.base_price = res['base_price']
     this.status = res['status']
@@ -555,7 +557,8 @@ saveChanges(){
 this.productsService.updateProduct(this.id, {        
   "product": this.name,
   "price":this.price,
-  "product_code":this.product_code,
+  "product_code":this.product_code,  
+  "amount": this.product_amount,
   "list_price":this.list_price,
   "base_price": this.base_price,
   "status" : this.status

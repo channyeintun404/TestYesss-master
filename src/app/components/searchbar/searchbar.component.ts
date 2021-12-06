@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { SearchComponent } from '../../pages/search/search.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-searchbar',
@@ -9,15 +10,20 @@ import { SearchComponent } from '../../pages/search/search.component';
 })
 export class SearchbarComponent implements OnInit {
 
-  constructor(private modalController: ModalController) { }
+  constructor(private modalController: ModalController,
+    private router: Router) { }
 
   ngOnInit() { }
 
-  async gotoSearchPage() {
-    const modal = await this.modalController.create({
-      component: SearchComponent
-    });
-    return await modal.present();
+  // async gotoSearchPage() {
+  //   const modal = await this.modalController.create({
+  //     component: SearchComponent
+  //   });
+  //   return await modal.present();
+  // }
+
+  gotoSearchPage(){
+    this.router.navigate(['/tabs/products']);
   }
 
 }

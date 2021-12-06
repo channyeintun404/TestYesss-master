@@ -69,6 +69,17 @@
             <!-- Grid View Contents -->
             <ion-grid id="grid" *ngIf="grid">
                 <ion-row>
+                    <ion-searchbar placeholder="Search your product" debounce="500" (ionInput)="getProducts($event)"></ion-searchbar>
+                    <!-- <ion-grid class="ion-padding" id="empty" *ngIf="products.length == 0" style="height: 100%">
+                        <ion-row class="ion-align-items-center ion-justify-content-center" style="height: 100%; flex-direction: column">
+                          <div class="ion-text-center ion-padding">
+                            <ion-icon name="search" style="zoom:5.0;" color="medium"></ion-icon>
+                            <h4>No Search Found</h4>
+                            <p>Looks like there are no products available at this moment</p>
+                          </div>
+                        </ion-row>
+                      </ion-grid> -->
+                    
                     <ion-col sizeLg="4" sizeMd="4" sizeXs="6" *ngFor="let item of products">
                         <ion-card class="ion-no-margin">
 

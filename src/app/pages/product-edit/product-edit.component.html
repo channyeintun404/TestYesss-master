@@ -56,6 +56,9 @@
     <form class="ion-padding">
       <!-- Full Name -->
       <ion-row>
+        <ion-col size="3">
+          <ion-item class="item-background-color">Product Name:</ion-item>
+        </ion-col>
         <ion-col>
           <ion-item class="item-background-color">
             <ion-input  type="text" placeholder="Product Name" name="pname" [(ngModel)]="name"></ion-input>
@@ -64,6 +67,9 @@
       </ion-row>
         <!-- Address 1 -->
         <ion-row>
+          <ion-col size="3">
+            <ion-item class="item-background-color"> Code:</ion-item>
+          </ion-col>
           <ion-col>
             <ion-item class="item-background-color">
               <ion-input type="text" placeholder="Product Code" name="pcode" [(ngModel)]="product_code"></ion-input>
@@ -72,15 +78,31 @@
         </ion-row>
         <!-- Address 2 -->
         <ion-row>
+          <ion-col size="3">
+            <ion-item class="item-background-color"> Price:</ion-item>
+          </ion-col>
           <ion-col>
             <ion-item class="item-background-color">
               <ion-input type="text" placeholder="Price" name="price" [(ngModel)]="price"> </ion-input>
             </ion-item>
           </ion-col>
+        </ion-row>     
+
+        <!-- Address 1 -->
+        
+        <ion-row>
+          <ion-col size="3">
+            <ion-item class="item-background-color"> In Stock:</ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item class="item-background-color">
+              <ion-input type="text" placeholder="In stock" name="product_amount" [(ngModel)]="product_amount"></ion-input>
+            </ion-item>
+          </ion-col>
         </ion-row>
-      
 
       <ion-row>
+
         <ion-col>
           <!-- City -->
           <ion-item class="item-background-color">
@@ -97,6 +119,9 @@
 
       <!-- Zip Code -->
       <ion-row>
+        <ion-col size="3">
+          <ion-item class="item-background-color"> Description:</ion-item>
+        </ion-col>
         <ion-col>
           <ion-item class="item-background-color">
             <ion-textarea rows={6} placeholder="Description" name="des" [(ngModel)]="description"></ion-textarea>

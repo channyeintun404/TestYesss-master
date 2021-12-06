@@ -110,6 +110,7 @@ const MEDIA_FOLDER_NAME = 'my_media';
    productName: string=""; 
    productPrice: string="";
    productCode: string="";
+   product_amount: string="";
    productDescription: string="";
    category_ids: string;
    categoriesByLevel1_id : string="";
@@ -310,7 +311,9 @@ level3ClickOption(categoriesByLevel3_id){
     //  console.log("image url is "+ this.mainImagesURl)
     this.productService.createProduct(
       {        
-        "product": this.productName,
+        "product": this.productName,        
+        "product_code": this.productCode,
+        "amount": this.product_amount,
         "category_ids":this.category_ids,
         "full_description": this.productDescription,
         "price":parseInt(this.productPrice),

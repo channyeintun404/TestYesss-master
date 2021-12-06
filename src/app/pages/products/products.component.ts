@@ -41,6 +41,9 @@ export class ProductsComponent implements OnInit {
   list: Boolean = false;
   companyId: string;
 
+    // Check is product available or not
+    isProductAvailable: boolean = false;
+
 
   constructor(private route: ActivatedRoute,
     private productsService: ProductsService,
@@ -65,10 +68,10 @@ export class ProductsComponent implements OnInit {
   // Get List of Products
   getProductList() {    
     // this.products = this.productsService.productList();
-    this.productsService.getProducts(this.cid,13).then((resp: any) => {
+    this.productsService.getProducts(this.cid,this.companyId).then((resp: any) => {
       console.log(resp);
       this.products = resp
-      // this.products = this.original_products;
+      this.original_products = this.products;
       
       //filter data
       if(this.priceRange_upper!=null){
@@ -144,6 +147,21 @@ export class ProductsComponent implements OnInit {
     this.modalController.dismiss({
       'dismissed': true
     })
+  }
+
+  
+  // Get Search Result
+  getProducts(ev: any) {
+    // set val to the value of the searchbar
+    const val = ev.target.value;
+
+    // if the value is an empty string don't filter the product
+    if (val && val.trim() != '') {
+      this.isProductAvailable = true;
+      this.products = this.original_products.filter((products)=>{
+        return products.name.toLowerCase().indexOf(val.toLowerCase()) > -1;
+      })
+    }
   }
 
 }
