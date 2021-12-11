@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 import axios from 'axios';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-product-edit',
@@ -80,8 +81,9 @@ export class ProductEditComponent implements OnInit {
   variantColorNameArray: any[];
   variantColorPositionArray: any[];
   variantColorStatusArray: any[];
+  full_description: any;
 
-
+  // editorForm: FormGroup
   constructor(public modalController: ModalController,    
     private optionsService : OptionsService,
     private productService : ProductsService,
@@ -93,7 +95,9 @@ export class ProductEditComponent implements OnInit {
 
     this.getProductById();
     this.getProductOptions();
-    // this.getProductColorOptions();
+    // this.editorForm = new FormGroup({
+    //   'editor': new FormControl(null)
+    // })
 
   // Checkout steps   
   this.steps = [
@@ -190,6 +194,7 @@ getProductById(){
     this.product_amount = res['amount']
     this.list_price = res['list_price']
     this.base_price = res['base_price']
+    this.full_description = res['full_description']
     this.status = res['status']
     for (const image of Object.values(res['image_pairs'])){
       // console.log(image['detailed']['http_image_path'])

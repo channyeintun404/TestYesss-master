@@ -66,6 +66,7 @@
    };
    discussions: any[];
    discussionLength: number;
+   full_description: any;
    constructor(public modalController: ModalController,
      public storageService: StorageService,
      private optionsService : OptionsService,
@@ -148,6 +149,7 @@
        console.log(res);
        this.name = res['product']
        this.price = res['price'] 
+       this.full_description = res['full_description']
      })
    }
    //getproductOption

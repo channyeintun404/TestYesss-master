@@ -19,7 +19,11 @@
         </ion-buttons>
 
         <!-- Title of page -->
-        <ion-title>Products</ion-title>
+        <ion-title *ngIf="name != null else other_content">Products for {{name}}</ion-title>
+        <ng-template #other_content>
+            <ion-title>Products for All</ion-title>
+        </ng-template>
+        
 
         <!-- Product Filter Option -->
         <ion-buttons slot="end">

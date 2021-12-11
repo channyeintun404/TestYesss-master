@@ -57,7 +57,7 @@
       <!-- Full Name -->
       <ion-row>
         <ion-col size="3">
-          <ion-item class="item-background-color">Product Name:</ion-item>
+          <ion-item class="item-background-color" color="tertiary">Product Name:</ion-item>
         </ion-col>
         <ion-col>
           <ion-item class="item-background-color">
@@ -68,7 +68,7 @@
         <!-- Address 1 -->
         <ion-row>
           <ion-col size="3">
-            <ion-item class="item-background-color"> Code:</ion-item>
+            <ion-item class="item-background-color" color="secondary"> Code:</ion-item>
           </ion-col>
           <ion-col>
             <ion-item class="item-background-color">
@@ -79,7 +79,7 @@
         <!-- Address 2 -->
         <ion-row>
           <ion-col size="3">
-            <ion-item class="item-background-color"> Price:</ion-item>
+            <ion-item class="item-background-color" color="success"> Price:</ion-item>
           </ion-col>
           <ion-col>
             <ion-item class="item-background-color">
@@ -92,7 +92,7 @@
         
         <ion-row>
           <ion-col size="3">
-            <ion-item class="item-background-color"> In Stock:</ion-item>
+            <ion-item class="item-background-color" color="warning"> In Stock:</ion-item>
           </ion-col>
           <ion-col>
             <ion-item class="item-background-color">
@@ -100,31 +100,56 @@
             </ion-item>
           </ion-col>
         </ion-row>
-
+      <!-- Base Price -->
       <ion-row>
-
+        <ion-col size="3">
+          <ion-item class="item-background-color" color="primary"> Base Price:</ion-item>
+        </ion-col>
         <ion-col>
-          <!-- City -->
           <ion-item class="item-background-color">
             <ion-input type="text" placeholder="Base Price" name="bprice" [(ngModel)]="base_price"></ion-input>
           </ion-item>
         </ion-col>
+      </ion-row>
+      <!-- List Price -->
+      <ion-row>
+        <ion-col size="3">
+          <ion-item class="item-background-color" color="danger"> List Price:</ion-item>
+        </ion-col>
         <ion-col>
-          <!-- State -->
           <ion-item  id="txt" class="item-background-color">
             <ion-input type="text" placeholder="List Price" name="lprice" [(ngModel)]="list_price"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
-
-      <!-- Zip Code -->
-      <ion-row>
-        <ion-col size="3">
-          <ion-item class="item-background-color"> Description:</ion-item>
+      <!-- Editor Form -->
+      <!-- <ion-row>
+        <ion-col>
+          <form [formGroup]="editorForm">
+            <div class="form-group">
+              <ion-label>Description</ion-label>
+              <label for="editor"><h3>Description</h3></label>
+              <quill-editor></quill-editor>
+            </div>
+          </form>
+          <ion-item [formGroup]="editorForm">
+            <ion-label for="editor">Description</ion-label>
+            <quill-editor></quill-editor>
+          </ion-item>
         </ion-col>
+      </ion-row>
+       -->
+      <!-- Zip Code -->
+      <ion-row class="select-heading">
+        <ion-text style="margin-left: 15px;">Full Description</ion-text>
+      </ion-row>
+      <ion-row>
+        <!-- <ion-col size="3">
+          <ion-item class="item-background-color" color="danger"> Description:</ion-item>
+        </ion-col> -->
         <ion-col>
           <ion-item class="item-background-color">
-            <ion-textarea rows={6} placeholder="Description" name="des" [(ngModel)]="description"></ion-textarea>
+            <ion-textarea rows="6" cols="20" placeholder="Description" name="des" [(ngModel)]="full_description"></ion-textarea>
         </ion-item>
         </ion-col>
       </ion-row>

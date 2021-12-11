@@ -16,7 +16,9 @@ import { CheckoutComponent } from '../checkout/checkout.component';
 import { ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { throwError } from 'rxjs';
-
+import { CategoryService } from '../../services/category.service';
+// import { name } from '@cloudinary/base/actions/namedTransformation';
+import { Category } from 'src/app/models/category.model';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -43,26 +45,27 @@ export class ProductsComponent implements OnInit {
 
     // Check is product available or not
     isProductAvailable: boolean = false;
+    categories: Category[];
+  name: any;
 
 
   constructor(private route: ActivatedRoute,
     private productsService: ProductsService,
-    public modalController: ModalController, 
+    public modalController: ModalController,
+    private categoryService: CategoryService, 
     private cookieService: CookieService) {
       
      }
 
-  ngOnInit() {      
+  ngOnInit() {     
     this.companyId =  this.cookieService.get('companyId'); 
         this.route.params.subscribe(params => {
           this.cid = params['cid'];
           this.priceRange_lower = params['lower'];
           this.priceRange_upper = params['upper']
           });
-          // this.route.paramMap.subscribe(params=>{
-          //   this.cid1=this.route.snapshot.paramMap.get('cid')})
-          //   console.log(this.cid1)
     this.getProductList();
+    this.getCategories();
   }
 
   // Get List of Products
@@ -135,7 +138,7 @@ export class ProductsComponent implements OnInit {
   }
 
   refreshPage(event){
-    this.getProductList()
+    this.getProductList();
     this.priceRange_upper=null;
     setTimeout(() => {
       console.log('Async operation has ended');
@@ -149,6 +152,13 @@ export class ProductsComponent implements OnInit {
     })
   }
 
+  getCategories() {
+    this.categoryService.getCategoryById(this.cid).then((resp: any) => {
+      console.log(resp);
+      this.name = resp['category']
+      // console.log(resp['category'])
+    });
+  }
   
   // Get Search Result
   getProducts(ev: any) {

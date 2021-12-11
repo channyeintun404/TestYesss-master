@@ -46,16 +46,15 @@
   </ion-grid>
 
   <!-- Content of Checkout Steps -->
-
   <!-- Billing Section -->
   <div id="billing" *ngIf="steps[0].isSelected">
-
     <form class="ion-padding">
+      <ion-text *ngIf="error!=null"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-text>
       <!-- Full Name -->
       <ion-row>
         <ion-col>
           <ion-item class="item-background-color">
-            <ion-input type="text" placeholder="Product Name" name="pname" [(ngModel)]="productName" ></ion-input>
+            <ion-input type="text" placeholder="Product Name" name="pname" [(ngModel)]="productName" required></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>

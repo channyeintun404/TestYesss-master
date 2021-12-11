@@ -124,6 +124,7 @@ const MEDIA_FOLDER_NAME = 'my_media';
   imagepairdetailed: any[]=[];
   refresh: boolean=false;
   companyId: any;
+  error: string;
    
    constructor(public modalController: ModalController,
     private categoryService: CategoryService,
@@ -208,12 +209,21 @@ const MEDIA_FOLDER_NAME = 'my_media';
    next() {
      // If current section is billing then next payment section will be visible
      if (this.steps[0].isSelected) {
-       this.steps[0].isSelected = false;
-       this.steps[1].isSelected = true;
-       this.checks[0].isSelected = true;
-       this.checks[1].isSelected = true;
-       this.createProduct();
-       this.refresh=true;
+       if(this.productName==""){
+         this.error = "Please Enter Product Name!!"
+       }else if(this.productPrice=="") {
+         this.error = "Please Enter Price!!"
+       }else if(this.product_amount=""){
+         this.error = "Please Enter Instock!!"
+       }else{
+        this.createProduct();
+        this.steps[0].isSelected = false;
+        this.steps[1].isSelected = true;
+        this.checks[0].isSelected = true;
+        this.checks[1].isSelected = true;
+        this.refresh=true;
+       }
+       
      }
      // If current section is Billing then next section confirm will be visible 
      else if (this.steps[1].isSelected) {
@@ -330,7 +340,9 @@ level3ClickOption(categoriesByLevel3_id){
        }).then((resp: any) => {
        
         this.newProductId= resp
-        // console.log("new id "+this.newProductId);
+        // if(this.productName==null){
+        //   this.error = "Please Enter Name of Product!!"
+        // }
         this.createProductSizeOptions();
         this.createProductColorOptions();
       })
