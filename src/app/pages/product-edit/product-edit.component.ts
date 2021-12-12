@@ -566,7 +566,8 @@ this.productsService.updateProduct(this.id, {
   "amount": this.product_amount,
   "list_price":this.list_price,
   "base_price": this.base_price,
-  "status" : this.status
+  "status" : this.status,
+  "full_description":this.full_description
  })
  
 }

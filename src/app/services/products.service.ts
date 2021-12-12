@@ -64,7 +64,7 @@ export class ProductsService extends AppService {
     });
   }
 
-  getProducts(cid, companyId) {
+  getProducts(cid, companyId:any="") {
     return new Promise((resolve) => {
       let cid_qp = cid ? '&cid=' + cid : '';
       this.getByQueryString('items_per_page=0' + cid_qp + '&subcats=Y&company_id='+companyId).subscribe(res => {

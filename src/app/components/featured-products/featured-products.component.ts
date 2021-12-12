@@ -3,6 +3,8 @@ import { Product } from '../../models/product.model';
 import { ProductsService } from '../../services/products.service';
 import { ModalController } from '@ionic/angular';
 import { ProductDetailsComponent } from '../../pages/product-details/product-details.component';
+import { CookieService } from 'ngx-cookie-service';
+
 
 @Component({
   selector: 'app-featured-products',
@@ -12,6 +14,7 @@ import { ProductDetailsComponent } from '../../pages/product-details/product-det
 export class FeaturedProductsComponent implements OnInit {
 
   products: Product[];
+  companyId: string;
 
   // Slider Options
   slideOpts = {
@@ -21,14 +24,19 @@ export class FeaturedProductsComponent implements OnInit {
   };
 
   constructor(private productsService: ProductsService,
-    private modalController: ModalController) { }
+    private modalController: ModalController, 
+    private cookieService: CookieService) { }
 
   ngOnInit() {
+    this.companyId =  this.cookieService.get('companyId'); 
     this.getProductList();
   }
 
   getProductList() {
-    this.products = this.productsService.productList();
+    this.productsService.getProducts("",this.companyId).then((resp: any) => {
+      console.log(resp);
+      this.products = resp
+    });
   }
 
   async goToProductDetails(product) {
