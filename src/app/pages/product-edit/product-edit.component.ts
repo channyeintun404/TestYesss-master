@@ -300,17 +300,6 @@ getOptionsColorById(option_id){
         console.log("variant are "+this.variantColorNameArray)
       }  
 
-    // console.log("this getopiton res"+JSON.stringify(resp));
-    // this.options.push({
-    //     option_id : parseInt( res['option_id']),
-    //     option_name:  res['option_name'],
-    //     product_id:parseInt( res['product_id']),
-    //     variant_id:this.variantIdArray,
-    //     position: this.variantPositionArray,
-    //     status:this.variantStatusArray,
-    //     variant_name:this.variantnameArray
-    // })
-
     for(var i =0; i<this.variantColorNameArray.length; i++){
       this.variants_color.push({
         "id":this.variantColorIdArray[i],
@@ -324,9 +313,26 @@ getOptionsColorById(option_id){
     // console.log("variants name are "+JSON.stringify(this.variantnameArray))
   })
 }  
+  // add and create option
+  createSizeOption(){
+    if(this.variants_size==null){
+      this.createProductSizeOptions()
+    }else{
+      this.updateSizeOption();
+    }
+  }
+  //  add and create color_option
+  createColorOption(){
+    if(this.variants_color==null){
+      this.createProductColorOptions()
+    }else{
+      this.updateColorOption();
+    }
+  }
+
 
       //add and update option
-       createSizeOption(){
+       updateSizeOption(){
         if(this.optionSizeName!=""){
         this.variantSizeNameArray.push(this.optionSizeName)
         this.variantSizePositionArray.push(this.optionSizePostion)
@@ -368,7 +374,7 @@ getOptionsColorById(option_id){
         this.getProductOptions();
       }
 
-      createColorOption(){
+      updateColorOption(){
         if(this.optionColorName!=""){
         this.variantColorNameArray.push(this.optionColorName)
         this.variantColorPositionArray.push(this.optionColorPostion)
@@ -455,11 +461,18 @@ for(var i=0;i<this.variants_size.length;i++){
 
   // console.log( Object.assign({},Object.assign({},this.variantnameArray)))
   
-  
-  this.optionsService.updateOptions(this.optionSizeId,{
-    "variants": variantsarray
-  })
-
+  if(variantsarray.length==0){
+    this.optionsService.updateOptions(this.optionSizeId,{
+      "variants":  {
+        "1828": {
+        }
+    }
+    })
+  }else{
+    this.optionsService.updateOptions(this.optionSizeId,{
+      "variants": variantsarray
+    })
+  }
 }
 
 updateOptionColor(position){
@@ -506,10 +519,23 @@ updateOptionColor(position){
     // console.log( Object.assign({},Object.assign({},this.variantnameArray)))
     
     
-    this.optionsService.updateOptions(this.optionColorId,{
-      "variants": variantsarray
-    })
-  
+    // this.optionsService.updateOptions(this.optionColorId,{
+    //   "variants": variantsarray
+    // })
+    
+    if(variantsarray.length==0){
+      this.optionsService.updateOptions(this.optionColorId,{
+        "variants":  {
+          "1820": {
+          }
+      }
+      })
+    }else{
+      this.optionsService.updateOptions(this.optionColorId,{
+        "variants": variantsarray
+      })
+    }
+
   }
 
 
@@ -600,15 +626,6 @@ saveChangesProductImage(){
       this.mainImagesURl=this.imagesUrlArray[this.imagesUrlArray.length-1];
     
     }
-    // const imageurlarray=[]
-    // imageurlarray.push({
-    //   "image_path":this.imagesUrlArray[i],
-    //   "http_image_path":this.imagesUrlArray[i],
-    //   "https_image_path":this.imagesUrlArray[i]
-    // })
-
-    // const result = imageurlarray.reduce((obj, cur) => ({...obj, [cur.sid]: cur}), {})
-    // console.log("result"+JSON.stringify(result))
     this.imagepairdetailed.push({
       "id":i,
       "detailed":{
@@ -651,8 +668,71 @@ saveChangesProductImage(){
     },
     "image_pairs":this.imagepairdetailed
    })       
-
+   
   }
+
+
+  createProductSizeOptions(){
+    this.optionsService.createProductOptions({
+      "product_id": this.id,
+      "option_name": "Size",
+      "option_type": "S",
+      "variants": {
+        "12": {
+          "variant_id": "12",
+          "option_id": "3",
+          "position": this.optionSizePostion,
+          "modifier": "0.000",
+          "modifier_type": "A",
+          "weight_modifier": "0.000",
+          "weight_modifier_type": "A",
+          "point_modifier": "0.000",
+          "point_modifier_type": "A",
+          "variant_name": this.optionSizeName,
+          "status": this.optionSizeStatus,
+          "image_pair": []
+        } }
+
+
+    }).then((resp: any) => {       
+    console.log("add option id"+resp['option_id'])
+    this.optionSizeId = resp['option_id']
+    this.getOptionsSizeById(this.optionSizeId)
+    // this.createProductOptions1();
+    })
+  }
+  createProductColorOptions(){
+    this.optionsService.createProductOptions({
+      "product_id": this.id,
+      "option_name": "Color",
+      "option_type": "S",
+      "variants": {
+        "12": {
+          "variant_id": "12",
+          "option_id": "3",
+          "position": "10",
+          "modifier": "0.000",
+          "modifier_type": "A",
+          "weight_modifier": "0.000",
+          "weight_modifier_type": "A",
+          "point_modifier": "0.000",
+          "point_modifier_type": "A",
+          "variant_name": "white",
+          "image_pair": []
+        }}
+
+
+    }).then((resp: any) => {       
+    console.log("add option id"+resp['option_id'])
+    this.optionColorId = resp['option_id']
+    this.getOptionsColorById(this.optionColorId)
+    })
+  }
+
+
+
+
+
 
 deleteimage(image){
   console.log(image)

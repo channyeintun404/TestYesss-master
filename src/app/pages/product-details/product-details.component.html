@@ -128,13 +128,17 @@
     <ion-col></ion-col>
   </ion-row>
   <ion-row class="select-heading">
-    <ion-text style="margin-left: 15px;">Comments and Reviews</ion-text>
+    <ion-col>
+      <ion-text style="margin-left: 15px;">Comments and Reviews</ion-text>
+    </ion-col>
+    <ion-col size="2">
+      <ion-icon name="arrow-forward" size="small"  (click)="goToReviewDetailsPage()"></ion-icon>
+    </ion-col>
   </ion-row>
   <ion-row class="ion-padding" style="margin-top: -10px;">
-    <ion-col *ngIf="discussionLength!=0; else other_content"><a (click)="goToReviewDetailsPage()">
+    <ion-col *ngIf="discussionLength!=0; else other_content">
         <ion-text *ngIf="discussionLength==1" color="warning">{{discussionLength}}Review</ion-text>
-        <ion-text *ngIf="discussionLength>1">{{discussionLength}}Reviews</ion-text>
-      </a>
+        <ion-text *ngIf="discussionLength>1" color="primary">{{discussionLength}}Reviews</ion-text>
     </ion-col>
     <ion-col>
       <ng-template #other_content>
@@ -143,16 +147,17 @@
     </ion-col>
   </ion-row>
   <ion-row class="select-heading">
-    <ion-text style="margin-left: 15px;">Product Inquiry Reply</ion-text>
-  </ion-row>
-  <ion-row style="margin-top: 10px; margin-bottom: 10px;">
-    <ion-col size="8">
-      <a (click)="goToProductMessage()" style="border: 1px solid #036dcc; background-color: #036dcc; padding: 10px; border-radius: 3px; color: #fff; margin-left: 10px;">Communication</a>
+    <ion-col>
+      <ion-text style="margin-left: 15px;">Product Inquiry Reply</ion-text>
     </ion-col>
-    <ion-col size="4"></ion-col>
-    <!-- <ion-col size="2">
-        <a style="border: 1px solid #036dcc; background-color: #036dcc; padding: 10px; border-radius: 3px; color: #fff;">Add</a>
-      </ion-col> -->
+  </ion-row>
+  <ion-row style="margin-top: 10px; margin-bottom: 10px; margin-left: 15px;">
+    <ion-col size="10">
+      <ion-text>Communication</ion-text>
+    </ion-col>
+    <ion-col size="2">
+      <ion-icon name="arrow-forward" size="small"  (click)="goToProductMessage()"></ion-icon>
+    </ion-col>
   </ion-row>
 </ion-content>
 

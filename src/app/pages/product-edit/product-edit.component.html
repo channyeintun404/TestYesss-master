@@ -56,8 +56,8 @@
     <form class="ion-padding">
       <!-- Full Name -->
       <ion-row>
-        <ion-col size="3">
-          <ion-item class="item-background-color" color="tertiary">Product Name:</ion-item>
+        <ion-col size="4">
+          <ion-item class="item-background-color"><b>Product Name</b></ion-item>
         </ion-col>
         <ion-col>
           <ion-item class="item-background-color">
@@ -67,8 +67,8 @@
       </ion-row>
         <!-- Address 1 -->
         <ion-row>
-          <ion-col size="3">
-            <ion-item class="item-background-color" color="secondary"> Code:</ion-item>
+          <ion-col size="4">
+            <ion-item class="item-background-color"><b> Code</b></ion-item>
           </ion-col>
           <ion-col>
             <ion-item class="item-background-color">
@@ -78,8 +78,8 @@
         </ion-row>
         <!-- Address 2 -->
         <ion-row>
-          <ion-col size="3">
-            <ion-item class="item-background-color" color="success"> Price:</ion-item>
+          <ion-col size="4">
+            <ion-item class="item-background-color"><b>Price</b></ion-item>
           </ion-col>
           <ion-col>
             <ion-item class="item-background-color">
@@ -91,8 +91,8 @@
         <!-- Address 1 -->
         
         <ion-row>
-          <ion-col size="3">
-            <ion-item class="item-background-color" color="warning"> In Stock:</ion-item>
+          <ion-col size="4">
+            <ion-item class="item-background-color"><b>In Stock</b></ion-item>
           </ion-col>
           <ion-col>
             <ion-item class="item-background-color">
@@ -102,8 +102,8 @@
         </ion-row>
       <!-- Base Price -->
       <ion-row>
-        <ion-col size="3">
-          <ion-item class="item-background-color" color="primary"> Base Price:</ion-item>
+        <ion-col size="4">
+          <ion-item class="item-background-color"><b>Base Price</b></ion-item>
         </ion-col>
         <ion-col>
           <ion-item class="item-background-color">
@@ -113,8 +113,8 @@
       </ion-row>
       <!-- List Price -->
       <ion-row>
-        <ion-col size="3">
-          <ion-item class="item-background-color" color="danger"> List Price:</ion-item>
+        <ion-col size="4">
+          <ion-item class="item-background-color"><b>List Price</b></ion-item>
         </ion-col>
         <ion-col>
           <ion-item  id="txt" class="item-background-color">
@@ -122,23 +122,6 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <!-- Editor Form -->
-      <!-- <ion-row>
-        <ion-col>
-          <form [formGroup]="editorForm">
-            <div class="form-group">
-              <ion-label>Description</ion-label>
-              <label for="editor"><h3>Description</h3></label>
-              <quill-editor></quill-editor>
-            </div>
-          </form>
-          <ion-item [formGroup]="editorForm">
-            <ion-label for="editor">Description</ion-label>
-            <quill-editor></quill-editor>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-       -->
       <!-- Zip Code -->
       <ion-row class="select-heading">
         <ion-text style="margin-left: 15px;">Full Description</ion-text>
@@ -205,19 +188,14 @@
 
     <ion-grid>
       <ion-row *ngFor="let image of imagesUrlArray;let last = last;">
-          <ion-col size="8">
-            <img style="width: 50px; height: 50px;" [src]="image"/>
+          <ion-col size="9">
+            <img style="width: 150px; height: 150px;" [src]="image"/>
           </ion-col > 
-          <ion-col size="4">
-
-            <ion-text (click)="addingImage()" class="txt-add">Add</ion-text>
+          <ion-col size="3">
             <ion-text (click)="deleteimage(image)" class="txt-delete">Delete</ion-text>
-
-            <!-- <ion-icon ios="ios-add-circle" md="md-add-circle" (click)="addingImage()" style="margin-right: 13px;" color="secondary"></ion-icon>
-            <ion-icon  name="ios-trash"  (click)="deleteimage(image)" style="color: red;"></ion-icon> -->
           </ion-col> 
      </ion-row>
-     <ion-row>
+     <ion-row style="margin-bottom: 20px;">
       <ion-col size="9">
         <input type="file" (change)= "onFileSelected($event)" accept="image/*">
       </ion-col >       
@@ -231,7 +209,12 @@
     </ion-grid>
     <!-- Available Size -->
     <ion-row class="select-heading">
-      <ion-text style="margin-left: 15px;">Available Sizes</ion-text>
+      <ion-col size="8">
+        <ion-text style="margin-left: 15px; margin-top: 20px;">Available Sizes</ion-text>
+      </ion-col>
+      <ion-col size="4">
+        <ion-text (click)="openAddSizeRow()" class="txt-add" >Add Size</ion-text>
+      </ion-col>
      </ion-row>
      <ion-row>
       <ion-col></ion-col>
@@ -262,7 +245,6 @@
             </ion-select>
           </td>
           <td>
-            <ion-text (click)="openAddSizeRow()" class="txt-add">Add</ion-text>
             <ion-text (click)="updateOptionSize()" class="txt-edit">Edit</ion-text>
             <ion-text (click)="updateOptionSize(variant_size.position)" class="txt-delete">Delete</ion-text>
           </td>
@@ -288,11 +270,19 @@
           </td>
         </tr>
     </table>
-
+    <div>
+        <ion-text *ngIf="variants_size==null" style="margin-left: 30%;" color="warning">No Data Available</ion-text>
+    </div>
+    <br>
     <ion-row class="select-heading">
-      <ion-text style="margin-left: 15px;">Available Colors</ion-text>
-     </ion-row>
-     <ion-row>
+      <ion-col size="8">
+        <ion-text style="margin-left: 15px;">Available Colors</ion-text>
+      </ion-col>
+      <ion-col size="4">
+        <ion-text (click)="openAddColorRow()" class="txt-add">Add Color</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row>
       <ion-col></ion-col>
     </ion-row>
     <table>
@@ -321,7 +311,6 @@
             </ion-select>
           </td>
           <td>
-            <ion-text (click)="openAddColorRow()" class="txt-add">Add</ion-text>
             <ion-text (click)="updateOptionColor()" class="txt-edit">Edit</ion-text>
             <ion-text (click)="updateOptionColor(variant_color.position)" class="txt-delete">Delete</ion-text>
           </td>
@@ -347,7 +336,7 @@
           </td>
         </tr>
     </table>
-    
+    <ion-text *ngIf="variants_color==null" style="margin-left: 30%;" color="warning">No Data Available</ion-text>
   </div>
   <div id="complete-section" *ngIf="steps[2].isSelected" style="height: 70%">
     <ion-grid class="ion-padding" style="height: 100%">

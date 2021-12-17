@@ -30,11 +30,17 @@ export class AccountComponent implements OnInit {
     this.router.navigate([`${tabPath}`]);
   }
   
-
-  Logout(event: Event, tabPath: string){
-    this.cookieService.deleteAll();
-    event.stopImmediatePropagation();
-    console.log( event, tabPath );
-    this.router.navigate([`${tabPath}`]);
+  Logout() {
+    if(confirm("Are you sure want to logout!!")) {
+      this.cookieService.deleteAll();
+      this.router.navigate([`${'./'}`]);
+    }
   }
+
+  // Logout(event: Event, tabPath: string){
+  //   this.cookieService.deleteAll();
+  //   event.stopImmediatePropagation();
+  //   console.log( event, tabPath );
+  //   this.router.navigate([`${tabPath}`]);
+  // }
 }
