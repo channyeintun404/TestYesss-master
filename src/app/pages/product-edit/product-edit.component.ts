@@ -190,10 +190,11 @@ getProductById(){
     console.log(res);
     this.name = res['product']
     this.price = res['price']
+    this.price = parseInt(this.price.toFixed())
     this.product_code = res['product_code']    
     this.product_amount = res['amount']
     this.list_price = res['list_price']
-    this.base_price = res['base_price']
+    this.list_price = parseInt(this.list_price.toFixed())
     this.full_description = res['full_description']
     this.status = res['status']
     for (const image of Object.values(res['image_pairs'])){
@@ -591,7 +592,6 @@ this.productsService.updateProduct(this.id, {
   "product_code":this.product_code,  
   "amount": this.product_amount,
   "list_price":this.list_price,
-  "base_price": this.base_price,
   "status" : this.status,
   "full_description":this.full_description
  })

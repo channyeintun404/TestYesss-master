@@ -110,7 +110,7 @@ const MEDIA_FOLDER_NAME = 'my_media';
    productName: string=""; 
    productPrice: string="";
    productCode: string="";
-   product_amount: string="";
+   product_amount: string="1";
    productDescription: string="";
    category_ids: string;
    categoriesByLevel1_id : string="";
@@ -212,10 +212,10 @@ const MEDIA_FOLDER_NAME = 'my_media';
        if(this.productName==""){
          this.error = "Please Enter Product Name!!"
        }else if(this.productPrice=="") {
-         this.error = "Please Enter Price!!"
-       }else if(this.product_amount=""){
-         this.error = "Please Enter Instock!!"
-       }else{
+         this.error = "Please Enter Product-Price!!"
+       }else if(this.list_price==""){
+        this.error = "Please Enter List-Price!!"
+      }else{
         this.createProduct();
         this.steps[0].isSelected = false;
         this.steps[1].isSelected = true;
@@ -327,7 +327,6 @@ level3ClickOption(categoriesByLevel3_id){
         "category_ids":this.category_ids,
         "full_description": this.productDescription,
         "price":parseInt(this.productPrice),
-        "base_price":parseInt(this.base_price),
         "list_price":parseInt(this.list_price),
         "status": this.status,
         "company_id": this.companyId,        

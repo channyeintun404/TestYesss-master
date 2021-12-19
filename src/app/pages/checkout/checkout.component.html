@@ -49,17 +49,23 @@
   <!-- Billing Section -->
   <div id="billing" *ngIf="steps[0].isSelected">
     <form class="ion-padding">
-      <ion-text *ngIf="error!=null"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-text>
       <!-- Full Name -->
       <ion-row>
+        <ion-col size="4">
+          <ion-item class="item-background-color"><b>Product Name</b></ion-item>
+        </ion-col>
         <ion-col>
           <ion-item class="item-background-color">
             <ion-input type="text" placeholder="Product Name" name="pname" [(ngModel)]="productName" required></ion-input>
           </ion-item>
+          <ion-text *ngIf="error.includes('Name')"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-text>
         </ion-col>
       </ion-row>
       <!-- Address 1 -->
       <ion-row>
+        <ion-col size="4">
+          <ion-item class="item-background-color"><b> Code</b></ion-item>
+        </ion-col>
         <ion-col>
           <ion-item class="item-background-color">
             <ion-input type="text" placeholder="Product Code" name="pcode" [(ngModel)]="productCode"></ion-input>
@@ -68,32 +74,37 @@
       </ion-row>
       <!-- Address 2 -->
       <ion-row>
+        <ion-col size="4">
+          <ion-item class="item-background-color"><b>Price</b></ion-item>
+        </ion-col>
         <ion-col>
           <ion-item class="item-background-color">
             <ion-input type="text" placeholder="Price" name="price" [(ngModel)]="productPrice"></ion-input>
           </ion-item>
+          <ion-text *ngIf="error.includes('Product-Price')"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-text>
         </ion-col>
       </ion-row>
       <!-- in stock -->
       <ion-row>
+        <ion-col size="4">
+          <ion-item class="item-background-color"><b>In Stock</b></ion-item>
+        </ion-col>
         <ion-col>
           <ion-item class="item-background-color">
             <ion-input type="text" placeholder="In stock" name="product_amount" [(ngModel)]="product_amount"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
+
       <ion-row>
-        <ion-col>
-          <!-- City -->
-          <ion-item class="item-background-color">
-            <ion-input type="text" placeholder="Base Price" name="bprice" [(ngModel)]="base_price"></ion-input>
-          </ion-item>
+        <ion-col size="4">
+          <ion-item class="item-background-color"><b>List Price</b></ion-item>
         </ion-col>
         <ion-col>
-          <!-- State -->
           <ion-item class="item-background-color">
             <ion-input type="text" placeholder="List Price" name="lprice" [(ngModel)]="list_price"></ion-input>
           </ion-item>
+          <ion-text *ngIf="error.includes('List-Price')"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-text>
         </ion-col>
       </ion-row>
 
