@@ -333,233 +333,6 @@ getOptionsColorById(option_id){
   })
 }  
 
-
-  // add and create option
-  createSizeOption(){
-    if(this.variants_size==null){
-      this.createProductSizeOptions()
-    }else{
-      this.updateSizeOption();
-    }
-  }
-  //  add and create color_option
-  createColorOption(){
-    if(this.variants_color==null){
-      this.createProductColorOptions()
-    }else{
-      this.updateColorOption();
-    }
-  }
-
-
-      //add and update option
-       updateSizeOption(){
-        if(this.optionSizeName!=""){
-        this.variantSizeNameArray.push(this.optionSizeName)
-        this.variantSizePositionArray.push(this.optionSizePostion)
-        this.variantSizeStatusArray.push(this.optionSizeStatus)
-      }
-
-        // console.log(this.variantnameArray)
-        // this.variantSize=[];
-        const variantSizeArray =[];
-        for(var i =0; i<this.variantSizeNameArray.length; i++){
-          variantSizeArray.push({
-            "id":i,
-            "variant_name":this.variantSizeNameArray[i],
-            "position":this.variantSizePositionArray[i],
-            "status": this.variantSizeStatusArray[i]
-          })
-        }
-        console.log("*****",variantSizeArray)
-        // console.log("******"+JSON.stringify(this.variant))
-        const convertArrayToObject = (array, key) => {
-          const initialValue = {};
-          return array.reduce((obj, item) => {
-            return {
-              ...obj,
-              [item[key]]: item,
-            };
-          }, initialValue);
-        };
-        console.log(convertArrayToObject( variantSizeArray,'id'))
-
-        // console.log( Object.assign({},Object.assign({},this.variantnameArray)))
-        this.optionsService.updateOptions(this.optionSizeId,{
-          "variants": variantSizeArray
-        })
-        this.addOptionSize=false
-        this.optionSizeName=""
-        this.optionSizePostion=""
-        this.optionSizeStatus=""
-        this.getProductOptions();
-      }
-
-      updateColorOption(){
-        if(this.optionColorName!=""){
-        this.variantColorNameArray.push(this.optionColorName)
-        this.variantColorPositionArray.push(this.optionColorPostion)
-        this.variantColorStatusArray.push(this.optionColorStatus)
-      }
-
-        // console.log(this.variantnameArray)
-        // this.variantSize=[];
-        const variantColorArray =[];
-        for(var i =0; i<this.variantColorNameArray.length; i++){
-          variantColorArray.push({
-            "id":i,
-            "variant_name":this.variantColorNameArray[i],
-            "position":this.variantColorPositionArray[i],
-            "status": this.variantColorStatusArray[i]
-          })
-        }
-        console.log("*****",variantColorArray)
-        // console.log("******"+JSON.stringify(this.variant))
-        const convertArrayToObject = (array, key) => {
-          const initialValue = {};
-          return array.reduce((obj, item) => {
-            return {
-              ...obj,
-              [item[key]]: item,
-            };
-          }, initialValue);
-        };
-        console.log(convertArrayToObject( variantColorArray,'id'))
-
-        // console.log( Object.assign({},Object.assign({},this.variantnameArray)))
-        this.optionsService.updateOptions(this.optionColorId,{
-          "variants": variantColorArray
-        })
-        this.addOptionColor=false
-        this.optionColorName=""
-        this.optionColorPostion=""
-        this.optionColorStatus=""
-        this.getProductOptions();
-      }
-
-
-//update option
-updateOptionSize(position){
-// delete function
-for(var i=0;i<this.variants_size.length;i++){
-  if(this.variants_size[i].position==position)   
-  this.variants_size.splice(i,1)
-}
-
-  console.log(this.variants_size)
-  // this.variant=[];
-  const namearray=[];
-  const positionarray=[];
-  const statusarray=[];
-  for(var i =0; i<this.variants_size.length; i++){
-    namearray.push(this.variants_size[i].variant_name);
-    positionarray.push(this.variants_size[i].position);
-    statusarray.push(this.variants_size[i].status);
-  }
-  console.log(namearray)
-
-  const variantsarray=[]
-  for(var i =0; i<this.variants_size.length; i++){
-    variantsarray.push({
-      "id":i,
-      "variant_name":namearray[i],
-      "position":positionarray[i],
-      "status": statusarray[i]
-    })
-  }
-  console.log(variantsarray)
-  // console.log("******"+JSON.stringify(this.variant))
-  const convertArrayToObject = (array, key) => {
-    const initialValue = {};
-    return array.reduce((obj, item) => {
-      return {
-        ...obj,
-        [item[key]]: item,
-      };
-    }, initialValue);
-  };
-  console.log(convertArrayToObject( variantsarray,'id'))
-
-  // console.log( Object.assign({},Object.assign({},this.variantnameArray)))
-  
-  if(variantsarray.length==0){
-    this.optionsService.updateOptions(this.optionSizeId,{
-      "variants":  {
-        "1828": {
-        }
-    }
-    })
-  }else{
-    this.optionsService.updateOptions(this.optionSizeId,{
-      "variants": variantsarray
-    })
-  }
-}
-
-updateOptionColor(position){
-  // delete function
-  for(var i=0;i<this.variants_color.length;i++){
-    if(this.variants_color[i].position==position)   
-    this.variants_color.splice(i,1)
-  }
-  
-    console.log(this.variants_color)
-    // this.variant=[];
-    const namearray=[];
-    const positionarray=[];
-    const statusarray=[];
-    for(var i =0; i<this.variants_color.length; i++){
-      namearray.push(this.variants_color[i].variant_name);
-      positionarray.push(this.variants_color[i].position);
-      statusarray.push(this.variants_color[i].status);
-    }
-    console.log(namearray)
-  
-    const variantsarray=[]
-    for(var i =0; i<this.variants_color.length; i++){
-      variantsarray.push({
-        "id":i,
-        "variant_name":namearray[i],
-        "position":positionarray[i],
-        "status": statusarray[i]
-      })
-    }
-    console.log(variantsarray)
-    // console.log("******"+JSON.stringify(this.variant))
-    const convertArrayToObject = (array, key) => {
-      const initialValue = {};
-      return array.reduce((obj, item) => {
-        return {
-          ...obj,
-          [item[key]]: item,
-        };
-      }, initialValue);
-    };
-    console.log(convertArrayToObject( variantsarray,'id'))
-  
-    // console.log( Object.assign({},Object.assign({},this.variantnameArray)))
-    
-    
-    // this.optionsService.updateOptions(this.optionColorId,{
-    //   "variants": variantsarray
-    // })
-    
-    if(variantsarray.length==0){
-      this.optionsService.updateOptions(this.optionColorId,{
-        "variants":  {
-          "1820": {
-          }
-      }
-      })
-    }else{
-      this.optionsService.updateOptions(this.optionColorId,{
-        "variants": variantsarray
-      })
-    }
-
-  }
-
-
 onFileSelected(event){
 
   this.selectedFile = <File> event.target.files[0];
@@ -615,7 +388,9 @@ closeAddOption(){
 }
 openAddVariantRow(option_name){
   this.show_option_name = option_name
-  console.log(option_name)
+  this.variantName="";
+  this.variantPostion="";
+  this.variantStatus="";
   // this.addVariant=true;
 }
 closeVariant(){
@@ -719,95 +494,71 @@ saveChangesProductImage(){
       "variants": { }
     }).then((resp: any) => {       
    console.log("complete add option")
-    })
-    this.addOption=false;
+   this.addOption=false;
     this.option_name="";
     this.option_position="";
     this.getProductOptions();
-  }
-  createVariant(option_name){
-    console.log(option_name)
-    this.optionsService.createProductOptions({
-      "product_id": this.id,
-      "option_name": option_name,
-      "option_type": "S",
-      "variants": {
-        "12": {
-          "variant_id": "12",
-          "option_id": "3",
-          "position": this.variantPostion,
-          "modifier": "0.000",
-          "modifier_type": "A",
-          "weight_modifier": "0.000",
-          "weight_modifier_type": "A",
-          "point_modifier": "0.000",
-          "point_modifier_type": "A",
-          "variant_name": this.variantName,
-          "status": this.variantStatus,
-          "image_pair": []
-        } }
-    }).then((resp: any) => {       
-     console.log(resp)
-    //  this.variant_id = resp['option_id']
-    //  this.getVariant(this.variant_id)
+    })
+   }
+
+  updateVariant(option_name,option_id,variant_id,name,position,stauts,isdelete){
+    console.log(option_name)    
+    const variantsArray =[];
+    this.optionsService.getOptionsById(option_id).then((res: any) => {
+      console.log(res)
+      for (const variant of Object.values(res['variants'])){
+        if(variant_id==variant["variant_id"]){
+          if(isdelete==1){
+            // this.getProductOptions();
+          }else{
+            variantsArray.push({
+              "id":variant_id,
+              "variant_name":name,
+              "position":position,
+              "status":stauts
+            })
+          }
+         
+        }else{
+          variantsArray.push({
+            "id":variant["variant_id"],
+            "variant_name":variant["variant_name"],
+            "position":variant["position"],
+            "status": variant["status"]
+          })
+        }       
+      }
+      if(variant_id==""){
+        variantsArray.push({
+          "id":"166",
+          "variant_name":this.variantName,
+          "position":this.variantPostion,
+          "status":this.variantStatus
+        })
+      }
+      const convertArrayToObject = (array, key) => {
+        const initialValue = {};
+        return array.reduce((obj, item) => {
+          return {
+            ...obj,
+            [item[key]]: item,
+          };
+        }, initialValue);
+      };
+      console.log(convertArrayToObject( variantsArray,'id'))
+  
+      // console.log( Object.assign({},Object.assign({},this.variantnameArray)))
+      this.optionsService.updateOptions(option_id,{
+        "variants": variantsArray
       })
-  }
-  createProductSizeOptions(){
-    this.optionsService.createProductOptions({
-      "product_id": this.id,
-      "option_name": "Size",
-      "option_type": "S",
-      "variants": {
-        "12": {
-          "variant_id": "12",
-          "option_id": "3",
-          "position": this.optionSizePostion,
-          "modifier": "0.000",
-          "modifier_type": "A",
-          "weight_modifier": "0.000",
-          "weight_modifier_type": "A",
-          "point_modifier": "0.000",
-          "point_modifier_type": "A",
-          "variant_name": this.optionSizeName,
-          "status": this.optionSizeStatus,
-          "image_pair": []
-        } }
-
-
-    }).then((resp: any) => {       
-    console.log("add option id"+resp['option_id'])
-    this.optionSizeId = resp['option_id']
-    this.getOptionsSizeById(this.optionSizeId)
-    // this.createProductOptions1();
+      this.getProductOptions();
     })
+    // this.variantName="";
+    // this.variantPostion="";
+    // this.variantStatus="";
+    this.show_option_name="";   
   }
-  createProductColorOptions(){
-    this.optionsService.createProductOptions({
-      "product_id": this.id,
-      "option_name": "Color",
-      "option_type": "S",
-      "variants": {
-        "12": {
-          "variant_id": "12",
-          "option_id": "3",
-          "position": "10",
-          "modifier": "0.000",
-          "modifier_type": "A",
-          "weight_modifier": "0.000",
-          "weight_modifier_type": "A",
-          "point_modifier": "0.000",
-          "point_modifier_type": "A",
-          "variant_name": "white",
-          "image_pair": []
-        }}
 
-
-    }).then((resp: any) => {       
-    console.log("add option id"+resp['option_id'])
-    this.optionColorId = resp['option_id']
-    this.getOptionsColorById(this.optionColorId)
-    })
-  }
 deleteimage(image){
   console.log(image)
   for(var i=0;i<this.imagesUrlArray.length;i++){

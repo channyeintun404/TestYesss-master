@@ -4,7 +4,7 @@
     <button (click)="getAllShipment()">Test</button>
     Welcome to Shippings Page!!!
   </ion-text> -->
-  <ion-row class="header-row">
+  <!-- <ion-row class="header-row">
     <ion-col size="1">
       Shipment_Id 
     </ion-col >
@@ -25,15 +25,11 @@
     <ion-col size="2">
       Status
     </ion-col>
-    <!-- <ion-col size="2">
-      Last_Name 
-    </ion-col > -->
-  </ion-row>
-  <ion-row *ngFor="let shipment of shipments" class="shipment-row">
-    <!-- <ion-input type="text" hidden="true" [(ngModel)]="shipment.shipment_id"></ion-input> -->
+    
+  </ion-row> -->
+  <!-- <ion-row *ngFor="let shipment of shipments" class="shipment-row">
     <ion-col size="1">
       <a (click)="goShipmentDetailPage(shipment.shipment_id)">#{{shipment.shipment_id}}</a>
-      <!-- <a [routerLink]="['/shipment-details',shipment.shipment_id]" routeDirection="Root">#{{shipment.shipment_id}}</a> -->
     </ion-col >
     <ion-col size="1">
       <a [routerLink]="['/order-details',shipment.order_id]" routeDirection="Root">#{{shipment.order_id}}</a>
@@ -61,6 +57,73 @@
         <ion-select-option value="S">Shiped</ion-select-option>
       </ion-select>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
+
+
+    <!-- List of orders -->
+    <ion-card *ngFor="let shipment of shipments">
+      <ion-card-header>
+        <ion-row>
+  
+          <!-- Shipment Id -->
+          <ion-col>
+            <ion-card-title>
+              <ion-text>
+                Shipment Id: 
+                <a (click)="goShipmentDetailPage(shipment.shipment_id)">#{{shipment.shipment_id}}</a>
+              </ion-text>
+            </ion-card-title>
+          </ion-col>
+          <!-- Shipment Date -->
+          <ion-col class="col-right">
+            <ion-text style="font-weight: bold;">Shipment Date: </ion-text>   {{shipment.shipment_timestamp * 1000 | date:'MM/dd/yyyy'}}
+          </ion-col>  
+        </ion-row>
+  
+        <!-- Order Tracking Number -->
+        <ion-row>
+          <ion-col>
+            <ion-text>
+              <ion-text style="font-weight: bold;">
+                Order Id: 
+                </ion-text>                
+              <a style="text-decoration: none;" [routerLink]="['/order-details',shipment.order_id]" routeDirection="Root">#{{shipment.order_id}}</a>
+            </ion-text>
+          </ion-col>
+          <ion-col> <ion-text style="font-weight: bold;">Order Date: </ion-text> {{shipment.order_timestamp * 1000 | date:'MM/dd/yyyy'}}</ion-col>
+        </ion-row>
+  
+        <!-- Order Quantity & Price -->
+        <ion-row>
+          <ion-col>
+            <ion-text style="font-weight: bold;">Customer Name: </ion-text>               
+            {{shipment.s_firstname}} {{shipment.s_lastname}}</ion-col>          
+        </ion-row>
+
+        <ion-row style="margin-top: -10px;">
+          <ion-col size="2" style="margin-top: 10px;">
+            <ion-text style="font-weight: bold;">Status: </ion-text>
+          </ion-col>
+          <ion-col size="4" >            
+            <ion-select style="float: left;" [(ngModel)]="shipment.status"[ngModelOptions]="{standalone: true}" (cancel)="onCancel()" (ionChange)="updateshipemnt(shipment.status, shipment.shipment_id)"data-live-search="true" value="shipment.status">
+              <ion-select-option value="A">Picked</ion-select-option>
+              <ion-select-option value="P">Pick up</ion-select-option>
+              <ion-select-option value="S">Shiped</ion-select-option>
+            </ion-select>
+          </ion-col>
+          <ion-col size="3" style="margin-top: 10px;">
+            <ion-text style="font-weight: bold;">Setting ⚙️: </ion-text>
+          </ion-col>
+          <ion-col size="3">
+            <ion-select style="float: left;" interface="popover"#settingList (ionChange)='changeSetting($event.target.value, shipment.shipment_id)' class="select-placeholder">
+              <ion-select-option value="V" class="settinglist">View</ion-select-option>
+              <ion-select-option value="P" class="settinglist">Print Slip</ion-select-option>
+              <ion-select-option value="D" class="settinglist">Delete</ion-select-option>
+            </ion-select>
+          </ion-col>
+        </ion-row>
+        
+      </ion-card-header>
+    </ion-card>
 
 </ion-content>

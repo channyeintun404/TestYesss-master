@@ -38,19 +38,19 @@
 
         <!-- Order Date -->
         <ion-col class="col-right">
-          <ion-text>{{item.date * 1000 | date:'MM/dd/yyyy'}}</ion-text>
+          <ion-text><ion-text style="font-weight: bold;">Order Date: </ion-text> {{item.date * 1000 | date:'MM/dd/yyyy'}}</ion-text>
         </ion-col>
       </ion-row>
 
       <!-- Order Tracking Number -->
       <ion-row>
-        <ion-col>Tracking Number: {{item.trackingNumber}}</ion-col>
+        <ion-col><ion-text style="font-weight: bold;">Tracking Number: </ion-text> {{item.trackingNumber}}</ion-col>
       </ion-row>
 
       <!-- Order Quantity & Price -->
       <ion-row>
-        <ion-col>Quantity: {{item.quantity}}</ion-col>
-        <ion-col>Total Price: ${{item.totalPrice}}</ion-col>
+        <ion-col><ion-text style="font-weight: bold;">Quantity: </ion-text> {{item.quantity}}</ion-col>
+        <ion-col> <ion-text style="font-weight: bold;">Total Price: </ion-text> ${{item.totalPrice}}</ion-col>
       </ion-row>
 
       <ion-button color="color1" size="small" [routerLink]="['/order-details',item.id]" routeDirection="Root">Details</ion-button>
