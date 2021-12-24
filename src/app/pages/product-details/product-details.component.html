@@ -27,13 +27,6 @@
 
     <!-- Title -->
     <ion-title>Product Details</ion-title>
-
-    <!-- Cart Page Button -->
-    <!-- <ion-buttons slot="end">
-      <ion-button color="white" (click)="gotoCartPage()">
-        <ion-icon name="cart"></ion-icon>
-      </ion-button>
-    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
@@ -46,14 +39,6 @@
   <ion-slides pager="true" [options]="slideOpts">
     <ion-slide *ngFor="let item of images">
       <img [src]="item" />
-
-      <!-- Wish Button or Product Like/Dislike Button Option -->
-      <!-- <ion-fab vertical="top" horizontal="end">
-        <ion-fab-button>
-          <ion-icon color="color1" name="heart-empty" *ngIf="!isWishlist"></ion-icon>
-          <ion-icon color="color1" name="heart" *ngIf="isWishlist"></ion-icon>
-        </ion-fab-button>
-      </ion-fab> -->
     </ion-slide>
   </ion-slides>
 
@@ -69,9 +54,18 @@
   </ion-row>
   <!-- <br> -->
   <!-- Product Description -->
-  <ion-row class="ion-padding">
-    <!-- <ion-text color="medium" [innerHTML]="description"></ion-text> -->
+  <!-- <ion-row class="ion-padding">
     <ion-text>{{full_description}}</ion-text>
+  </ion-row> -->
+
+  <ion-row>
+    <ion-col size="12">
+      <ion-item class="item-background-color" style="margin-left: 25px; margin-right: 25px;">
+        <ion-text style="text-align: center;">{{full_description}}</ion-text>
+      </ion-item>
+    </ion-col>
+    <!-- <ion-col size="7">
+    </ion-col> -->
   </ion-row>
 
   <!-- Selct Sizes -->
@@ -136,9 +130,11 @@
     </ion-col>
   </ion-row>
   <ion-row class="ion-padding" style="margin-top: -10px;">
-    <ion-col *ngIf="discussionLength!=0; else other_content">
+    <ion-col *ngIf="discussionLength!=0; else other_content" size="3">
+      <ion-item class="item-background-color">
         <ion-text *ngIf="discussionLength==1" color="warning">{{discussionLength}}Review</ion-text>
         <ion-text *ngIf="discussionLength>1" color="primary">{{discussionLength}}Reviews</ion-text>
+      </ion-item>
     </ion-col>
     <ion-col>
       <ng-template #other_content>
@@ -150,13 +146,15 @@
     <ion-col>
       <ion-text style="margin-left: 15px;">Product Inquiry Reply</ion-text>
     </ion-col>
-  </ion-row>
-  <ion-row style="margin-top: 10px; margin-bottom: 10px; margin-left: 15px;">
-    <ion-col size="10">
-      <ion-text>Communication</ion-text>
-    </ion-col>
     <ion-col size="2">
       <ion-icon name="arrow-forward" size="small"  (click)="goToProductMessage()"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-row style="margin-top: 10px; margin-bottom: 10px; margin-left: 15px;">
+    <ion-col size="4">
+      <ion-item class="item-background-color">
+        <ion-text>Communication</ion-text>
+      </ion-item>
     </ion-col>
   </ion-row>
 </ion-content>

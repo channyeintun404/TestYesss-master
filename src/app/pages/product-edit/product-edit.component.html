@@ -188,9 +188,12 @@
 
     <ion-grid>
       <ion-row *ngFor="let image of imagesUrlArray;let last = last;">
-          <ion-col size="9">
-            <img style="width: 150px; height: 150px;" [src]="image"/>
+          <ion-col size="5">
+            <ion-item class="item-background-color">
+              <img style="width: 150px; height: 150px;" [src]="image"/>
+            </ion-item>
           </ion-col > 
+          <ion-col size="4"></ion-col>
           <ion-col size="3">
             <ion-text (click)="deleteimage(image)" class="txt-delete">Delete</ion-text>
           </ion-col> 
@@ -207,6 +210,95 @@
       </ion-col>
    </ion-row>
     </ion-grid>
+    <ion-row>
+      <ion-col>
+        <a (click)="showAddOption()" style="border: 1px solid gainsboro; background-color: gainsboro; padding: 10px; border-radius: 3px;  margin-left: 10px;" color="primary">
+          <ion-icon name="add" color="primary" style="top: 15px;"></ion-icon>
+          <ion-text style="margin-left: 8px;">Add Option</ion-text>
+        </a>
+      </ion-col>
+    </ion-row>
+    <table *ngIf="addOption" style="margin-top: 15px;">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Position</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="option-row">
+          <td> 
+            <ion-input type="text" placeholder="Name" [(ngModel)]="option_name"> </ion-input>
+          </td>
+          <td>
+            <ion-input type="text" placeholder="Position" [(ngModel)]="option_position"></ion-input>
+          </td>
+          <td>
+            <ion-text (click)="createOption()" class="txt-done">Create</ion-text>
+            <ion-text (click)="closeAddOption()" class="txt-close">Cancel</ion-text>
+          </td>
+        </tr>
+      </tbody>
+      <tr></tr>
+    </table>
+    <div *ngFor="let option of option_array; let i=index">
+      <ion-row>
+        <ion-col size="8">
+          <ion-text>{{option.option_name}}</ion-text>
+        </ion-col>
+        <ion-col size="4" >
+          <ion-text (click)="openAddVariantRow(option.option_name)" class="txt-add" >Add Variant</ion-text>
+        </ion-col>
+      </ion-row>
+      <table>
+        <thead>
+          <tr>
+            <th>Pos</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+         <tr *ngFor="let variant of variants_array[i]">
+          <td>
+            <ion-input type="text"  [(ngModel)]="variant.variant_name"></ion-input>
+          </td>
+          <td>
+            <ion-input type="text"  [(ngModel)]="variant.position"></ion-input>
+          </td>
+          <td>
+            <ion-select [(ngModel)]="variant.status" [ngModelOptions]="{standalone: true}" value="status">
+              <ion-select-option value="A">Active</ion-select-option>
+              <ion-select-option value="D">Disable</ion-select-option>
+              <ion-select-option value="H">Hidden</ion-select-option>
+            </ion-select>
+          </td>
+         </tr>
+        </tbody>
+          <tr class="option-row" *ngIf="show_option_name==option.option_name">
+            <td> 
+              <ion-input type="text" placeholder="pos" [(ngModel)]="variantPostion" name="variantPostion"></ion-input>
+            </td>
+            <td>
+              <ion-input type="text" placeholder="size" [(ngModel)]="variantName"></ion-input>
+            </td>
+            <td>
+              <ion-select [(ngModel)]="variantStatus" [ngModelOptions]="{standalone: true}" >
+                <ion-select-option value="A">Active</ion-select-option>
+                <ion-select-option value="D">Disable</ion-select-option>
+                <ion-select-option value="H">Hidden</ion-select-option> 
+              </ion-select>
+            </td>
+            <td>
+              <ion-text (click)="createVariant(option.option_name)" class="txt-done">Create</ion-text>
+              <ion-text (click)="closeVariant()" class="txt-close">Cancel</ion-text>
+            </td>
+          </tr>
+      </table>
+    </div>
+    
     <!-- Available Size -->
     <ion-row class="select-heading">
       <ion-col size="8">

@@ -82,6 +82,16 @@ export class ProductEditComponent implements OnInit {
   variantColorPositionArray: any[];
   variantColorStatusArray: any[];
   full_description: any;
+  option_position: any;
+  option_name: any;
+  option_array: unknown[];
+  addVariant: boolean;
+  variantName: any;
+  variantPostion: any;
+  variantStatus: any;
+  show_option_name= "";
+  variant_id: any;
+  variants_array: any[];
 
   // editorForm: FormGroup
   constructor(public modalController: ModalController,    
@@ -209,10 +219,12 @@ getProductById(){
 getProductOptions(){
   this.optionsService.getProductsOptions(this.id).then((resp: any) => {
 console.log(Object.values(resp))
+    this.option_array = Object.values(resp)
+    this.variants_array = [];
     for (const variants of Object.values(resp)) {
       // console.log(variants['option_id']) 
       this.optionIdArray.push(variants['option_id'])
-           
+      this.variants_array.push(Object.values(variants['variants']))
     }
     console.log(this.optionIdArray)
     this.optionSizeId = this.optionIdArray[0]
@@ -223,18 +235,24 @@ console.log(Object.values(resp))
   })
   
 }
-// getProductColorOptions(){
-    
-//   this.optionsService.getProductsOptions(this.id).then((resp: any) => {
-// console.log(Object.values(resp))
-//     for (const variant of Object.values(resp)) {
-//       console.log(variant['option_id']) 
-//       this.optionColorId=variant['option_id']
-//       this.getOptionsColorById(this.optionColorId);     
-//     }
-   
-//   })
-  
+// getVariant(variants){
+//   console.log(Object.values(variants))
+//   const variant_array = [];
+//   this.variants_array = [];
+//   variant_array.push(Object.values(variants));
+//   for (const variant of Object.values(variants)) {
+//     // console.log(variant['option_name']) 
+//     // variant_array.push(variant['option_name'])
+//     variant_array.push({
+//       "id":variant["option_id"],
+//       "variant_name":variant["variant_name"],
+//       "position":variant["position"],
+//       "status": variant["status"]
+//     })
+//     // this.variants_array.push(variant_array)
+//   }
+//   // return variant_array;
+//   console.log(variant_array)
 // }
 getOptionsSizeById(option_id){
   this.optionsService.getOptionsById(option_id).then((res: any) => {
@@ -314,6 +332,8 @@ getOptionsColorById(option_id){
     // console.log("variants name are "+JSON.stringify(this.variantnameArray))
   })
 }  
+
+
   // add and create option
   createSizeOption(){
     if(this.variants_size==null){
@@ -584,7 +604,26 @@ closeAddSizeRow(){
 closeAddColorRow(){
   this.addOptionColor=false;
 }
-
+// create option
+showAddOption(){
+  this.addOption=true;
+}
+closeAddOption(){
+  this.addOption=false;
+  this.option_name="";
+  this.option_position="";
+}
+openAddVariantRow(option_name){
+  this.show_option_name = option_name
+  console.log(option_name)
+  // this.addVariant=true;
+}
+closeVariant(){
+  this.show_option_name = "";
+  this.variantName = "";
+  this.variantPostion = "";
+  this.variantStatus ="";
+}
 saveChanges(){
 this.productsService.updateProduct(this.id, {        
   "product": this.name,
@@ -671,7 +710,48 @@ saveChangesProductImage(){
    
   }
 
-
+  createOption(){
+    this.optionsService.createProductOptions({
+      "product_id": this.id,
+      "option_name": this.option_name,
+      "position": this.option_position,
+      "option_type": "S",
+      "variants": { }
+    }).then((resp: any) => {       
+   console.log("complete add option")
+    })
+    this.addOption=false;
+    this.option_name="";
+    this.option_position="";
+    this.getProductOptions();
+  }
+  createVariant(option_name){
+    console.log(option_name)
+    this.optionsService.createProductOptions({
+      "product_id": this.id,
+      "option_name": option_name,
+      "option_type": "S",
+      "variants": {
+        "12": {
+          "variant_id": "12",
+          "option_id": "3",
+          "position": this.variantPostion,
+          "modifier": "0.000",
+          "modifier_type": "A",
+          "weight_modifier": "0.000",
+          "weight_modifier_type": "A",
+          "point_modifier": "0.000",
+          "point_modifier_type": "A",
+          "variant_name": this.variantName,
+          "status": this.variantStatus,
+          "image_pair": []
+        } }
+    }).then((resp: any) => {       
+     console.log(resp)
+    //  this.variant_id = resp['option_id']
+    //  this.getVariant(this.variant_id)
+      })
+  }
   createProductSizeOptions(){
     this.optionsService.createProductOptions({
       "product_id": this.id,
@@ -728,12 +808,6 @@ saveChangesProductImage(){
     this.getOptionsColorById(this.optionColorId)
     })
   }
-
-
-
-
-
-
 deleteimage(image){
   console.log(image)
   for(var i=0;i<this.imagesUrlArray.length;i++){
