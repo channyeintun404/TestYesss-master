@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { QuillModule} from 'ngx-quill'
 import { ProductEditComponent } from './product-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -9,8 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [ProductEditComponent],
   imports: [
     CommonModule,
-    ReactiveFormsModule,
-    QuillModule
+    ReactiveFormsModule
   ]
 })
 export class ProductEditModule { }

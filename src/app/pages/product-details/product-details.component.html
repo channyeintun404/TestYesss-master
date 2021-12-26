@@ -58,9 +58,9 @@
     <ion-text>{{full_description}}</ion-text>
   </ion-row> -->
 
-  <ion-row>
+  <ion-row style="margin-top: 10px; margin-bottom: 10px; margin-left: 15px;">
     <ion-col size="12">
-      <ion-item class="item-background-color" style="margin-left: 25px; margin-right: 25px;">
+      <ion-item class="item-background-color" style=" margin-right: 15px;">
         <ion-text style="text-align: center;">{{full_description}}</ion-text>
       </ion-item>
     </ion-col>
@@ -130,7 +130,7 @@
     </ion-col>
   </ion-row>
   <ion-row class="ion-padding" style="margin-top: -10px;">
-    <ion-col *ngIf="discussionLength!=0; else other_content" size="3">
+    <ion-col *ngIf="discussionLength!=0; else other_content" size="12">
       <ion-item class="item-background-color">
         <ion-text *ngIf="discussionLength==1" color="warning">{{discussionLength}}Review</ion-text>
         <ion-text *ngIf="discussionLength>1" color="primary">{{discussionLength}}Reviews</ion-text>
@@ -151,8 +151,8 @@
     </ion-col>
   </ion-row>
   <ion-row style="margin-top: 10px; margin-bottom: 10px; margin-left: 15px;">
-    <ion-col size="4">
-      <ion-item class="item-background-color">
+    <ion-col size="12">
+      <ion-item class="item-background-color" style=" margin-right: 15px;">
         <ion-text>Communication</ion-text>
       </ion-item>
     </ion-col>
