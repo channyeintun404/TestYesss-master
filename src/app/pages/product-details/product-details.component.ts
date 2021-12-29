@@ -67,6 +67,8 @@
    discussions: any[];
    discussionLength: number;
    full_description: any;
+   option_array: unknown[];
+   variants_array: any[];
    constructor(public modalController: ModalController,
      public storageService: StorageService,
      private optionsService : OptionsService,
@@ -156,9 +158,11 @@
    getProductOptions(){
      this.optionsService.getProductsOptions(this.id).then((resp: any) => {
    console.log(Object.values(resp))
+   this.option_array = Object.values(resp)   
+   this.variants_array = [];
        for (const variants of Object.values(resp)) {
          this.optionIdArray.push(variants['option_id'])
-              
+         this.variants_array.push(Object.values(variants['variants']))              
        }
        console.log(this.optionIdArray)
        this.optionSizeId = this.optionIdArray[0]
