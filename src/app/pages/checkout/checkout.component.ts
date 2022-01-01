@@ -5,7 +5,7 @@
  * @license   AppsPlaces
  */
 
- import { Component, OnInit,NgModule,ChangeDetectorRef } from '@angular/core';
+ import { Component, OnInit,NgModule,ChangeDetectorRef, Input } from '@angular/core';
  import { ModalController } from '@ionic/angular';
  import { Router } from '@angular/router';
  import {ProductsService} from '../../services/products.service'; 
@@ -125,6 +125,17 @@ const MEDIA_FOLDER_NAME = 'my_media';
   refresh: boolean=false;
   companyId: any;
   error: string;
+  addOption: boolean;
+  @Input() id: number;
+  option_name: any;
+  option_position: any;
+  option_array: unknown[];
+  variants_array: any[];
+  optionIdArray: any[];
+  show_option_name: any;
+  variantName: string;
+  variantPostion: string;
+  variantStatus: string;
    
    constructor(public modalController: ModalController,
     private categoryService: CategoryService,
@@ -281,16 +292,105 @@ level3ClickOption(categoriesByLevel3_id){
      this.router.navigate(['/tabs/orders']);
    }
 
-    // Go to product page
-//  async gotoProductsPage() { 
-//   this.createProduct();
-//   const modal = await this.modalController.create({
-//     component: ProductsComponent,
-    
-//   });
-//   this.dismiss();
-//   return await modal.present();
-// }
+
+   //getproductOption
+getProductOptions(){
+  this.optionsService.getProductsOptions(this.newProductId).then((resp: any) => {
+console.log(Object.values(resp))
+    this.option_array = Object.values(resp)
+    this.variants_array = [];
+    for (const variants of Object.values(resp)) {
+      // console.log(variants['option_id']) 
+      // this.optionIdArray.push(variants['option_id'])
+      this.variants_array.push(Object.values(variants['variants']))
+    }
+    console.log(this.optionIdArray)
+  })
+  
+}
+
+
+
+  // Create Option
+  createOption(){
+    this.optionsService.createProductOptions({
+      "product_id": this.newProductId,
+      "option_name": this.option_name,
+      "position": this.option_position,
+      "option_type": "S",
+      "variants": { }
+    }).then((resp: any) => {       
+   console.log("complete add option")
+   this.addOption=false;
+    this.option_name="";
+    this.option_position="";
+    this.getProductOptions();
+    })
+   }
+
+   updateVariant(option_name,option_id,variant_id,name,position,stauts,isdelete){
+    console.log(option_name)    
+    const variantsArray =[];
+    this.optionsService.getOptionsById(option_id).then((res: any) => {
+      console.log(res)
+      for (const variant of Object.values(res['variants'])){
+        if(variant_id==variant["variant_id"]){
+          if(isdelete==1){
+            // this.getProductOptions();
+          }else{
+            variantsArray.push({
+              "id":variant_id,
+              "variant_name":name,
+              "position":position,
+              "status":stauts
+            })
+          }
+         
+        }else{
+          variantsArray.push({
+            "id":variant["variant_id"],
+            "variant_name":variant["variant_name"],
+            "position":variant["position"],
+            "status": variant["status"]
+          })
+        }       
+      }
+      if(variant_id==""){
+        variantsArray.push({
+          "id":"166",
+          "variant_name":this.variantName,
+          "position":this.variantPostion,
+          "status":this.variantStatus
+        })
+      }
+      const convertArrayToObject = (array, key) => {
+        const initialValue = {};
+        return array.reduce((obj, item) => {
+          return {
+            ...obj,
+            [item[key]]: item,
+          };
+        }, initialValue);
+      };
+      if(variantsArray.length==0){
+        this.optionsService.updateOptions(option_id,{
+          "variants": {
+              "36": {}}
+        })
+        this.getProductOptions();
+      }else{
+        console.log(convertArrayToObject( variantsArray,'id'))
+        this.optionsService.updateOptions(option_id,{
+          "variants": variantsArray
+        })
+      }
+      this.getProductOptions();
+    })
+    // this.variantName="";
+    // this.variantPostion="";
+    // this.variantStatus="";
+    this.show_option_name="";   
+  }
 
 
   // Get list of categories
@@ -339,14 +439,15 @@ level3ClickOption(categoriesByLevel3_id){
        }).then((resp: any) => {
        
         this.newProductId= resp
-        // if(this.productName==null){
-        //   this.error = "Please Enter Name of Product!!"
-        // }
-        this.createProductSizeOptions();
-        this.createProductColorOptions();
+        // // if(this.productName==null){
+        // //   this.error = "Please Enter Name of Product!!"
+        // // }
+        // this.createProductSizeOptions();
+        // this.createProductColorOptions();
       })
       this.imagesArrayforView.push('1.jpg')
-      this.isOption=true      
+      this.isOption=true;
+      this.getProductOptions(); 
       }   
 
       saveChangesProduct(){
@@ -414,345 +515,10 @@ level3ClickOption(categoriesByLevel3_id){
         }
         
 
-      createProductSizeOptions(){
-        this.optionsService.createProductOptions({
-          "product_id": this.newProductId,
-          "option_name": "Size",
-          "option_type": "S",
-          "variants": {
-            "12": {
-              "variant_id": "12",
-              "option_id": "3",
-              "position": "10",
-              "modifier": "0.000",
-              "modifier_type": "A",
-              "weight_modifier": "0.000",
-              "weight_modifier_type": "A",
-              "point_modifier": "0.000",
-              "point_modifier_type": "A",
-              "variant_name": "XX",
-              "image_pair": []
-            } }
+     
 
-
-        }).then((resp: any) => {       
-        console.log("add option id"+resp['option_id'])
-        this.optionSizeId = resp['option_id']
-        this.getOptionsSizeById(this.optionSizeId)
-        // this.createProductOptions1();
-        })
-      }
-      createProductColorOptions(){
-        this.optionsService.createProductOptions({
-          "product_id": this.newProductId,
-          "option_name": "Color",
-          "option_type": "S",
-          "variants": {
-            "12": {
-              "variant_id": "12",
-              "option_id": "3",
-              "position": "10",
-              "modifier": "0.000",
-              "modifier_type": "A",
-              "weight_modifier": "0.000",
-              "weight_modifier_type": "A",
-              "point_modifier": "0.000",
-              "point_modifier_type": "A",
-              "variant_name": "white",
-              "image_pair": []
-            }}
-
-
-        }).then((resp: any) => {       
-        console.log("add option id"+resp['option_id'])
-        this.optionColorId = resp['option_id']
-        this.getOptionsColorById(this.optionColorId)
-        })
-      }
-
-      getOptionsSizeById(optionSizeId){
-        this.optionsService.getOptionsById(optionSizeId).then((res: any) => {
-          
-          this.options=[];
-          
-          this.variants_size=[]
-          this.variantSizeIdArray=[]
-          this.variantSizeNameArray=[]
-          this.variantSizePositionArray=[]
-          this.variantSizeStatusArray=[]
-          for (const variant of Object.values(res['variants'])) {
-              // imagesArr.push(img['detailed']['image_path']);
-              // console.log("variant are "+variant['variant_name'])
-
-              this.variantSizeNameArray.push(variant['variant_name'])
-              this.variantSizePositionArray.push(variant['position'])
-              this.variantSizeStatusArray.push(variant['status'])
-              this.variantSizeIdArray.push(variant['variant_id'])
-              console.log("variant are "+this.variantSizeNameArray)
-            }  
-
-          // console.log("this getopiton res"+JSON.stringify(resp));
-          this.options.push({
-              option_id : parseInt( res['option_id']),
-              option_name:  res['option_name'],
-              product_id:parseInt( res['product_id']),
-              variant_id:this.variantSizeIdArray,
-              position: this.variantSizePositionArray,
-              status:this.variantSizeStatusArray,
-              variant_name:this.variantSizeNameArray
-          })
-
-          for(var i =0; i<this.variantSizeNameArray.length; i++){
-            this.variants_size.push({
-              "id":this.variantSizeIdArray[i],
-              "variant_name":this.variantSizeNameArray[i],
-              "position":this.variantSizePositionArray[i],
-              "status": this.variantSizeStatusArray[i]
-            })  
-          }  
-          // console.log("this get opiton is "+JSON.stringify(this.options))
-          // console.log("variants name are "+JSON.stringify(this.variantnameArray))
-        })
-      }  
       
-      getOptionsColorById(optionColorId){
-        this.optionsService.getOptionsById(optionColorId).then((res: any) => {
-          
-          this.options=[];
-          
-          this.variants_color=[]
-          this.variantColorIdArray=[]
-          this.variantColorNameArray=[]
-          this.variantColorPositionArray=[]
-          this.variantColorStatusArray=[]
-          for (const variants of Object.values(res['variants'])) {
-              // imagesArr.push(img['detailed']['image_path']);
-              // console.log("variant are "+variant['variant_name'])
 
-              this.variantColorNameArray.push(variants['variant_name'])
-              this.variantColorPositionArray.push(variants['position'])
-              this.variantColorStatusArray.push(variants['status'])
-              this.variantColorIdArray.push(variants['variant_id'])
-              console.log("variant are "+this.variantColorNameArray)
-            }  
-
-          // console.log("this getopiton res"+JSON.stringify(resp));
-          // this.options.push({
-          //     option_id : parseInt( res['option_id']),
-          //     option_name:  res['option_name'],
-          //     product_id:parseInt( res['product_id']),
-          //     variant_id:this.variantColorIdArray,
-          //     position: this.variantColorPositionArray,
-          //     status:this.variantColorStatusArray,
-          //     variant_name:this.variantColorNameArray
-          // })
-
-          for(var i =0; i<this.variantColorNameArray.length; i++){
-            this.variants_color.push({
-              "id":this.variantColorIdArray[i],
-              "variant_name":this.variantColorNameArray[i],
-              "position":this.variantColorPositionArray[i],
-              "status": this.variantColorStatusArray[i]
-            })  
-          }  
-          // console.log("this get opiton is "+JSON.stringify(this.options))
-          // console.log("variants name are "+JSON.stringify(this.variantnameArray))
-        })
-      }  
-
-      //update option
-updateSizeOption(){
-  if(this.optionSizeName!=""){
-  this.variantSizeNameArray.push(this.optionSizeName)
-  this.variantSizePositionArray.push(this.optionSizePostion)
-  this.variantSizeStatusArray.push(this.optionSizeStatus)
-}
-  console.log(this.variants_size)
-  // this.variant=[];
-  const namearray=[];
-  const positionarray=[];
-  const statusarray=[];
-  for(var i =0; i<this.variants_size.length; i++){
-    namearray.push(this.variants_size[i].variant_name);
-    positionarray.push(this.variants_size[i].position);
-    statusarray.push(this.variants_size[i].status);
-  }
-  console.log(namearray)
-
-  const variantsarray=[]
-  for(var i =0; i<this.variants_size.length; i++){
-    variantsarray.push({
-      "id":i,
-      "variant_name":namearray[i],
-      "position":positionarray[i],
-      "status": statusarray[i]
-    })
-  }
-  console.log(variantsarray)
-  // console.log("******"+JSON.stringify(this.variant))
-  const convertArrayToObject = (array, key) => {
-    const initialValue = {};
-    return array.reduce((obj, item) => {
-      return {
-        ...obj,
-        [item[key]]: item,
-      };
-    }, initialValue);
-  };
-  console.log(convertArrayToObject( variantsarray,'id'))
-
-  // console.log( Object.assign({},Object.assign({},this.variantnameArray)))
-  this.optionsService.updateOptions(this.optionSizeId,{
-    "variants": variantsarray
-  })
-
-}
-
-updateColorOption(){
-  if(this.optionColorName!=""){
-  this.variantColorNameArray.push(this.optionColorName)
-  this.variantColorPositionArray.push(this.optionColorPostion)
-  this.variantColorStatusArray.push(this.optionColorStatus)
-}
-  console.log(this.variants_color)
-  // this.variant=[];
-  const namearray=[];
-  const positionarray=[];
-  const statusarray=[];
-  for(var i =0; i<this.variants_color.length; i++){
-    namearray.push(this.variants_color[i].variant_name);
-    positionarray.push(this.variants_color[i].position);
-    statusarray.push(this.variants_color[i].status);
-  }
-  console.log(namearray)
-
-  const variantsarray=[]
-  for(var i =0; i<this.variants_color.length; i++){
-    variantsarray.push({
-      "id":i,
-      "variant_name":namearray[i],
-      "position":positionarray[i],
-      "status": statusarray[i]
-    })
-  }
-  console.log(variantsarray)
-  // console.log("******"+JSON.stringify(this.variant))
-  const convertArrayToObject = (array, key) => {
-    const initialValue = {};
-    return array.reduce((obj, item) => {
-      return {
-        ...obj,
-        [item[key]]: item,
-      };
-    }, initialValue);
-  };
-  console.log(convertArrayToObject( variantsarray,'id'))
-
-  // console.log( Object.assign({},Object.assign({},this.variantnameArray)))
-  this.optionsService.updateOptions(this.optionColorId,{
-    "variants": variantsarray
-  })
-}
-
-
-      //add and update option for size
-      createSizeOption(){
-        if(this.optionSizeName!=""){
-        this.variantSizeNameArray.push(this.optionSizeName)
-        this.variantSizePositionArray.push(this.optionSizePostion)
-        this.variantSizeStatusArray.push(this.optionSizeStatus)
-      }
-
-      const namearray=[];
-      const positionarray=[];
-      const statusarray=[];
-      for(var i =0; i<this.variants_size.length; i++){
-        namearray.push(this.variants_size[i].variant_name);
-        positionarray.push(this.variants_size[i].position);
-        statusarray.push(this.variants_size[i].status);
-      }
-        // console.log(this.variantnameArray)
-        this.variantSizeArray=[];
-        for(var i =0; i<this.variantSizeNameArray.length; i++){
-          this.variantSizeArray.push({
-            "id":i,
-            "variant_name":this.variantSizeNameArray[i],
-            "position":this.variantSizePositionArray[i],
-            "status": this.variantSizeStatusArray[i]
-          })
-        }
-        console.log("******"+JSON.stringify(this.variantSizeArray))
-        const convertArrayToObject = (array, key) => {
-          const initialValue = {};
-          return array.reduce((obj, item) => {
-            return {
-              ...obj,
-              [item[key]]: item,
-            };
-          }, initialValue);
-        };
-        console.log(convertArrayToObject( this.variantSizeArray,'id'))
-
-        // console.log( Object.assign({},Object.assign({},this.variantnameArray)))
-        this.optionsService.updateOptions(this.optionSizeId,{
-          "variants": this.variantSizeArray
-        })
-        this.addOptionSize=false
-        this.optionSizeName=""
-        this.optionSizePostion=""
-        this.optionSizeStatus=""
-        this.getOptionsSizeById(this.optionSizeId);
-        this.getOptionsColorById(this.optionColorId);
-      }
-
-      createColorOption(){
-        if(this.optionColorName!=""){
-        this.variantColorNameArray.push(this.optionColorName)
-        this.variantColorPositionArray.push(this.optionColorPostion)
-        this.variantColorStatusArray.push(this.optionColorStatus)
-      }
-
-      const namearray=[];
-      const positionarray=[];
-      const statusarray=[];
-      for(var i =0; i<this.variants_color.length; i++){
-        namearray.push(this.variants_color[i].variant_name);
-        positionarray.push(this.variants_color[i].position);
-        statusarray.push(this.variants_color[i].status);
-      }
-        // console.log(this.variantnameArray)
-        this.variantColorArray=[];
-        for(var i =0; i<this.variantColorNameArray.length; i++){
-          this.variantColorArray.push({
-            "id":i,
-            "variant_name":this.variantColorNameArray[i],
-            "position":this.variantColorPositionArray[i],
-            "status": this.variantColorStatusArray[i]
-          })
-        }
-        console.log("******"+JSON.stringify(this.variantSizeArray))
-        const convertArrayToObject = (array, key) => {
-          const initialValue = {};
-          return array.reduce((obj, item) => {
-            return {
-              ...obj,
-              [item[key]]: item,
-            };
-          }, initialValue);
-        };
-        console.log(convertArrayToObject( this.variantColorArray,'id'))
-
-        // console.log( Object.assign({},Object.assign({},this.variantnameArray)))
-        this.optionsService.updateOptions(this.optionColorId,{
-          "variants": this.variantColorArray
-        })
-        this.addOptionColor=false
-        this.optionColorName=""
-        this.optionColorPostion=""
-        this.optionColorStatus=""
-         this.getOptionsColorById(this.optionColorId);
-         this.getOptionsSizeById(this.optionSizeId);
-      }
 
 
       //image
@@ -928,12 +694,35 @@ updateColorOption(){
         this.addOptionColor=false;
       }
 
-      //refresh of option size and color
-      resetPage(){
+      // create option
+      showAddOption(){
+      this.addOption=true;
+    }
+    closeAddOption(){
+      this.addOption=false;
+      this.option_name="";
+      this.option_position="";
+    }
 
-        this.getOptionsSizeById(this.optionSizeId);
-        this.getOptionsColorById(this.optionColorId);
-      }
+    openAddVariantRow(option_name){
+      this.show_option_name = option_name
+      this.variantName="";
+      this.variantPostion="";
+      this.variantStatus="";
+      // this.addVariant=true;
+    }
+    closeVariant(){
+      this.show_option_name = "";
+      this.variantName = "";
+      this.variantPostion = "";
+      this.variantStatus ="";
+    }
+      //refresh of option size and color
+      // resetPage(){
+
+      //   this.getOptionsSizeById(this.optionSizeId);
+      //   this.getOptionsColorById(this.optionColorId);
+      // }
 
    // Back to previous screen
    dismiss() {
