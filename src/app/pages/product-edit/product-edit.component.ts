@@ -70,6 +70,7 @@ export class ProductEditComponent implements OnInit {
   show_option_name= "";
   variant_id: any;
   variants_array: any[];
+  selectImage: string="No File Choosen";
 
   // editorForm: FormGroup
   constructor(public modalController: ModalController,    
@@ -212,9 +213,9 @@ console.log(Object.values(resp))
 
 onFileSelected(event){
 
-  this.selectedFile = <File> event.target.files[0];
-  
+  this.selectedFile = <File> event.target.files[0];  
   console.log(this.selectedFile)
+  this.selectImage = this.selectedFile.name
 }
 
 //upload images
@@ -232,7 +233,9 @@ onUpload(){
   }).then((res: any) => {
       console.log(res)
       // this.mainImagesURl= res.data.url
-      this.imagesUrlArray.push(res.data.url)        
+      this.imagesUrlArray.push(res.data.url) 
+      this.selectedFile=null;
+      this.selectImage="No File Choosen";     
     }).catch(function(err){
           console.error(err)
         });   
@@ -353,6 +356,7 @@ saveChangesProductImage(){
       "option_name": this.option_name,
       "position": this.option_position,
       "option_type": "S",
+      "company_id":"16",
       "variants": { }
     }).then((resp: any) => {       
    console.log("complete add option")

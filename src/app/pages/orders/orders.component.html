@@ -10,14 +10,14 @@
 
   <!-- Orders Options -->
   <!-- Options are - Delivered, Processing, Cancelled  -->
-  <div  scrollX="true"  class="ion-padding ion-text-center" style="width:100vw;margin: 30 px">
+  <div  scrollX="true"  class="ion-padding ion-text-center" style="width:100vw;">
     <!-- <ion-chip *ngFor="let item of options; let i = index" [ngClass]="{ionChip: item.isSelected}"
       (click)="changeOption(item, i)">
       <ion-label>{{item.title}}</ion-label>
     </ion-chip> -->
     <div>
-      <ion-row nowrap class="headerChip">
-        <div *ngFor="let item of statuses; let i = index" [ngClass]="{ionChip: item.isSelected}">
+      <ion-row nowrap class="headerChip" >
+        <div *ngFor="let item of statuses; let i = index" [ngClass]="{ionChip: item.isSelected}" style="height:25px;">
         <ion-chip  (click)="changeOption(item, i)">
               <ion-label >{{item.description}}</ion-label>
         </ion-chip>

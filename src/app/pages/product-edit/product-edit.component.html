@@ -187,29 +187,54 @@
     </ion-grid>
 
     <ion-grid>
-      <ion-row *ngFor="let image of imagesUrlArray;let last = last;">
+      <ion-row style="margin-bottom: 20px;">
+        <ion-col size="9">
+          <a onclick="document.getElementById('file').click();" style="border: 1px solid gainsboro; background-color: gainsboro; padding: 10px; border-radius: 3px;  margin-left: 10px;" color="primary">
+            <ion-icon name="add" color="primary" style="top: 15px;"></ion-icon>
+            <ion-text style="margin-left: 8px;">Add Image</ion-text>
+          </a>
+          <ion-label>{{selectImage}}</ion-label>
+          <!-- <input type="button" id="loadFileXml" value="loadXml" onclick="document.getElementById('file').click();" /> -->
+          <input type="file" style="display:none;" id="file" (change)= "onFileSelected($event)" accept="image/*" name="file"/>
+
+          <!-- <ion-label for="upload_img"> <ion-icon name="add" color="primary" style="top: 15px;"></ion-icon> </ion-label>
+          <input type="file" name="" id="upload_img" (change)= "onFileSelected($event)" accept="image/*"> -->
+        </ion-col >       
+        <ion-col size="3">
+          <ion-text (click)="onUpload()" class="txt-upload">Upload</ion-text>
+          <!-- <ion-icon name="cloud-upload" (click)="onUpload()" style="margin-right: 13px;" color="danger"></ion-icon>        -->
+        </ion-col>
+     </ion-row>
+     
+     <table  style="margin-top: 15px;">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let image of imagesUrlArray;let last = last;">
+          <tr>
+            <td><img [src]="image"/></td>
+            <td><ion-text (click)="deleteimage(image)" class="txt-delete">Delete</ion-text></td>
+          </tr>
+        </tbody>
+      </table>
+     
+      <!-- <ion-row *ngFor="let image of imagesUrlArray;let last = last;">
           <ion-col size="5">
-            <ion-item class="item-background-color">
-              <img style="width: 150px; height: 150px;" [src]="image"/>
+            <ion-item >
+              <img [src]="image"/>
             </ion-item>
           </ion-col > 
           <ion-col size="4"></ion-col>
           <ion-col size="3">
             <ion-text (click)="deleteimage(image)" class="txt-delete">Delete</ion-text>
           </ion-col> 
-     </ion-row>
-     <ion-row style="margin-bottom: 20px;">
-      <ion-col size="9">
-        <input type="file" (change)= "onFileSelected($event)" accept="image/*">
-      </ion-col >       
-      <ion-col size="3">
+     </ion-row> -->
 
-        <ion-text (click)="onUpload()" class="txt-upload">Upload</ion-text>
-
-        <!-- <ion-icon name="cloud-upload" (click)="onUpload()" style="margin-right: 13px;" color="danger"></ion-icon>        -->
-      </ion-col>
-   </ion-row>
     </ion-grid>
+    <br>
     <ion-row>
       <ion-col>
         <a (click)="showAddOption()" style="border: 1px solid gainsboro; background-color: gainsboro; padding: 10px; border-radius: 3px;  margin-left: 10px;" color="primary">
