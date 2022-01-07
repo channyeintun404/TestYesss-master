@@ -119,6 +119,7 @@ export class OrderDetailsPage implements OnInit {
   firstname: any;
   msg_hidden: boolean =false;
   total_hidden: boolean =false;
+  tracking_number: any;
  
    
 
@@ -330,7 +331,8 @@ export class OrderDetailsPage implements OnInit {
       "products": this.GetProductList,
       "shipping": this.currentShippingName,
       "shipping_id": this.currentShipping_id,
-      "user_id": this.users_id
+      "user_id": this.users_id,
+      "tracking_number": this.tracking_number
     }).then((resp: any) => {
       this.showBtn = false;
        console.log(resp['shipment_id'])

@@ -187,4 +187,38 @@
       </ion-card-content>
     </ion-card>
     
+    <ion-card>     
+      <ion-card-content>
+        <h3><b>Shippment Information</b></h3>
+        <ion-row class="ion-align-items-start">
+          <ion-col>
+            <ion-row>
+              <ion-col>
+                <ion-text>
+                  Shipping: {{shipment.shipment_id}} on {{shipment.shipment_timestamp * 1000| date:'MM/dd/yyyy'}}
+                </ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-text> by </ion-text> {{shipment.shipping}}
+              </ion-col>
+            </ion-row>
+            <ion-row style="margin-top: -10px;">
+              <ion-col size="2" style="margin-top: 10px;">
+                <ion-text style="font-weight: bold;">Status: </ion-text>
+              </ion-col>
+              <ion-col size="4" >            
+                <ion-select style="float: left;" [(ngModel)]="shipment.status"[ngModelOptions]="{standalone: true}" (cancel)="onCancel()" (ionChange)="updateshipemnt(shipment.status, shipment.shipment_id)"data-live-search="true" value="shipment.status">
+                  <ion-select-option value="A">Picked</ion-select-option>
+                  <ion-select-option value="P">Pick up</ion-select-option>
+                  <ion-select-option value="S">Shiped</ion-select-option>
+                </ion-select>
+              </ion-col>
+              <ion-col size="6"></ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+    </ion-card-content>
+    </ion-card>
 </ion-content>

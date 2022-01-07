@@ -14,7 +14,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { PagesService } from './services/pages.service';
-
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -29,7 +29,8 @@ export class AppComponent {
     private statusBar: StatusBar,
     private menuController: MenuController,
     private router: Router,
-    private pagesService: PagesService
+    private pagesService: PagesService,
+    private cookieService: CookieService
   ) {
     this.initializeApp();
   }
@@ -46,7 +47,10 @@ export class AppComponent {
 
   // Signout Button
   signout() {
-    this.router.navigate(['/onbroading']);
-    this.menuController.enable(false); // Make Sidemenu disable
+    if(confirm("Are you sure want to logout!!")) {
+      this.cookieService.deleteAll();
+      this.router.navigate(['/onbroading']);
+      this.menuController.enable(false);
+    }
   }
 }

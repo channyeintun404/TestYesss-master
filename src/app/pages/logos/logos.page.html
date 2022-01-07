@@ -4,27 +4,77 @@
   <ion-icon icon="arrow-round-back" (click)="back()"  class="icon"></ion-icon>
 </ion-buttons>
 <ion-buttons slot="end">
-  <ion-button   (click)="saveActivity()">Save</ion-button>
+  <ion-button (click)="saveActivity()">Save</ion-button>
 </ion-buttons>
 <ion-title>Logos</ion-title>
 </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <table  style="margin-top: 15px;">
+    <thead>
+      <tr>
+        <th>Logo for the customer area</th>
+        <th>Select an image</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <img [src]="company_logo1" style="width: 50%; height: 50%;"/>
+          <ion-input  type="text"  class="ion-txt" [(ngModel)]="alt_image1" name="alt"></ion-input>
+        </td>
+        <td>
+          <input type="file" (change)= "onFileSelected($event)" accept="image/*" style="margin-bottom: 28px;">
+          <ion-text (click)="onUpload()" class="txt-upload">Upload</ion-text>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-  <ion-row>
-    <ion-col >
-      <ion-label color="000">Logo for the customer area</ion-label>
-      <img [src]="company_logo1" style="width: 50%; height: 50%;" />
-      <ion-input  type="text"  style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;" [(ngModel)]="alt_image1" name="alt"></ion-input>
+  <table  style="margin-top: 15px;">
+    <thead>
+      <tr>
+        <th>Logo for invoices</th>
+        <th>Select an image</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <img [src]="company_logo2" style="width: 50%; height: 50%;"/>
+          <ion-input  type="text"  class="ion-txt" [(ngModel)]="alt_image2" name="alt"></ion-input>
+        </td>
+        <td>
+          <input type="file" (change)= "onFileSelected($event)" accept="image/*" style="margin-bottom: 28px;">
+          <ion-text (click)="onUpload()" class="txt-upload">Upload</ion-text>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- <ion-row style="margin-top: 15px;">
+    <ion-col size="6">
+      <ion-label color="000" class="th-label">Logo for the customer area</ion-label>
+      <img [src]="company_logo1" style="width: 70%; height: 70%; margin-top: 8px;" />
     </ion-col>
-    <ion-col >
-      <ion-label color="000">Select a image</ion-label>
-      <input type="file" (change)= "onFileSelected($event)" accept="image/*">
+    <ion-col size="6">
+      <ion-label color="000" class="th-label">Select a image</ion-label>
+      <input type="file" (change)= "onFileSelected($event)" accept="image/*" style="margin-top: 15px;">
+      <ion-text (click)="onUpload()" class="txt-upload">Upload</ion-text>
     </ion-col>
   </ion-row>
- 
   <ion-row>
+    <ion-col size="4">
+      <ion-input  type="text"  style="border-radius: 5px; border: 1px solid #c4c7c4d5; box-shadow: #f3f5f3d5;" [(ngModel)]="alt_image1" name="alt"></ion-input>
+    </ion-col>
+    <ion-col size="4"></ion-col>
+    <ion-col size="4"></ion-col>
+  </ion-row> -->
+  
+ 
+  <!-- <ion-row>
     <ion-col >
       <ion-label color="000">Logo for invoices</ion-label>
       <img [src]="company_logo2" style="width: 50%; height: 50%;" />
@@ -34,5 +84,6 @@
       <ion-label color="000">Select a image</ion-label>
       <input type="file" (change)= "onFileSelected($event)" accept="image/*">
     </ion-col>    
-  </ion-row>  
+  </ion-row> -->
+  
 </ion-content>

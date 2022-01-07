@@ -319,7 +319,21 @@
           </ion-item>
         </ion-col>
       </ion-row>
-
+      <div *ngIf="currentShipment == null">
+        <ion-row *ngIf="currentStatus=='K'||currentStatus=='J'||currentStatus=='A'">
+            <ion-col size="4">
+              <ion-item>
+                <ion-label>Tracking Number</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size="8">
+              <ion-item  id="txt" class="item-background-color">
+                <ion-input type="text"  name="tracking_number" [(ngModel)]="tracking_number"></ion-input>
+              </ion-item>
+            </ion-col>
+        </ion-row>
+      </div>
+      
       <ion-row *ngIf="showBtn">
         <ion-col size="3"></ion-col>
         <ion-col size="3"></ion-col>
