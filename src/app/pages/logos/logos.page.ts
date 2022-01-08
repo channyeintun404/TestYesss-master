@@ -47,19 +47,22 @@ export class LogosPage implements OnInit {
   }
 
   saveActivity(){
+    console.log("save logo")
+    console.log(this.imagesUrl)
     this.vendorsServices.updateVerdor(this.companyId,{
-      "logos": {
+      "logos":{
         "theme":{
+          "company_id": "16",
           "image":{
-            "alt":this.alt_image1,
-          }
-        },
-        "mail":{
-          "image":{
-            "alt":this.alt_image2
-          }
+              "absolute_path": this.imagesUrl,
+              "alt":this.alt_image1,
+              "http_image_path": this.imagesUrl,
+              "https_image_path": this.imagesUrl,
+              "image_path":this.imagesUrl
+          }        
         }
-      }
+        
+        }
      
     })
   }
