@@ -79,6 +79,17 @@
             <ion-text style="font-weight: bold;">Shipment Date: </ion-text>   {{shipment.shipment_timestamp * 1000 | date:'MM/dd/yyyy'}}
           </ion-col>  
         </ion-row>
+
+        <!-- Order Quantity & Price -->
+        <ion-row>
+          <ion-col size="11">
+            <ion-text style="font-weight: bold;">Customer Name: </ion-text>               
+            {{shipment.s_firstname}} {{shipment.s_lastname}}
+          </ion-col>
+          <ion-col size="1">
+            <ion-checkbox></ion-checkbox>
+          </ion-col>
+        </ion-row>
   
         <!-- Order Tracking Number -->
         <ion-row>
@@ -91,13 +102,6 @@
             </ion-text>
           </ion-col>
           <ion-col> <ion-text style="font-weight: bold;">Order Date: </ion-text> {{shipment.order_timestamp * 1000 | date:'MM/dd/yyyy'}}</ion-col>
-        </ion-row>
-  
-        <!-- Order Quantity & Price -->
-        <ion-row>
-          <ion-col>
-            <ion-text style="font-weight: bold;">Customer Name: </ion-text>               
-            {{shipment.s_firstname}} {{shipment.s_lastname}}</ion-col>          
         </ion-row>
 
         <ion-row style="margin-top: -10px;">

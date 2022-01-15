@@ -8,5 +8,25 @@
 </ion-header>
 
 <ion-content>
-  <p>Payment Methods, Bank Account Info</p>
+  <ion-card *ngFor="let payment of payments">
+    <ion-row>
+      <ion-col size="5" style="margin-top: 10px;">
+        <ion-text style="margin-left: 8px;">Payment: </ion-text>{{payment.payment}}
+      </ion-col>
+      <ion-col size="1" style="margin-top: 10px;">
+        <ion-text style="font-weight: bold;"> ⚙️ </ion-text>
+      </ion-col>
+      <ion-col size="2">
+        <ion-select style="float: left;" interface="popover"#settingList (ionChange)='changeSetting($event.target.value, shipment.shipment_id)' class="select-placeholder">
+          <ion-select-option value="V" class="settinglist">View</ion-select-option>
+        </ion-select>
+      </ion-col>
+      <ion-col size="4">            
+        <ion-select style="float: left;" [(ngModel)]="payment.status"[ngModelOptions]="{standalone: true}" (cancel)="onCancel()" (ionChange)="updateshipemnt(shipment.status, shipment.shipment_id)"data-live-search="true" value="shipment.status">
+          <ion-select-option value="A">Active</ion-select-option>
+          <ion-select-option value="P">Disable</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 </ion-content>

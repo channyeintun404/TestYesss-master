@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Option } from '../models/option.model';
+import { name } from '@cloudinary/base/actions/namedTransformation';
 @Injectable({
     providedIn: 'root'
   })
   export class VendorsService extends AppService {
 
     option : Option[]
+  plan: any[];
 
   
     constructor(protected http: HttpClient) {
@@ -44,6 +46,57 @@ import { Option } from '../models/option.model';
       })
     })
   }
-
+  vendorPlanLists(){
+    this.plan = [
+      {
+        id: 1,
+        name: "Platinum",
+        cost: "FREE/Month",
+        products: "50 products",
+        income: "Revenue up to Ks100000",
+        vendor: "",
+        transaction_fee: ""
+      },
+      {
+        id: 2,
+        name: "Diamond",
+        cost: "FREE/Month",
+        products: "150 products",
+        income: "Revenue up to Ks500000",
+        vendor: "Vendor microstore",
+        transaction_fee: "15%"
+      },
+      {
+        id: 3,
+        name: "Ruby",
+        cost: "FREE/Month",
+        products: "250 products",
+        income: "Revenue up to Ks700000",
+        vendor: "Vendor microstore",
+        transaction_fee: "7%"
+      },
+      {
+        id: 4,
+        name: "Exclusive Services",
+        cost: "KS5000/Month",
+        products: "100 products",
+        income: "Revenue up to Ks100000",
+        vendor: "Vendor microstore",
+        transaction_fee: "Ks2000"
+      },
+      {
+        id: 5,
+        name: "Premium Services",
+        cost: "KS10000/Month",
+        products: "150 products",
+        income: "Revenue up to Ks1500000",
+        vendor: "Vendor microstore",
+        transaction_fee: "Ks5000"
+      }
+    ];
+    return new Promise((resolve) => {
+      resolve(this.plan);
+     });
+  }
   }
   
