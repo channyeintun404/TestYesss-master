@@ -124,7 +124,7 @@ const MEDIA_FOLDER_NAME = 'my_media';
   imagepairdetailed: any[]=[];
   refresh: boolean=false;
   companyId: any;
-  error: string;
+  error: string="";
   addOption: boolean;
   @Input() id: number;
   option_name: any;
