@@ -70,7 +70,7 @@ export class ProductEditComponent implements OnInit {
   show_option_name= "";
   variant_id: any;
   variants_array: any[];
-  selectImage: string="No File Choosen";
+  selectImage: string="Please Select File!!";
 
   // editorForm: FormGroup
   constructor(public modalController: ModalController,    
@@ -235,7 +235,7 @@ onUpload(){
       // this.mainImagesURl= res.data.url
       this.imagesUrlArray.push(res.data.url) 
       this.selectedFile=null;
-      this.selectImage="No File Choosen";     
+      this.selectImage="Please Select File!!";     
     }).catch(function(err){
           console.error(err)
         });   

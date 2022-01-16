@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-card *ngFor="let accounting of accLists">
-    <ion-row>
+    <ion-row class="acc-row">
       <ion-col>
           <ion-text style="font-weight: bold;">Status:</ion-text> {{accounting.status}}
       </ion-col>
@@ -17,7 +17,7 @@
         <ion-text style="font-weight: bold;">Date: </ion-text> {{accounting.date}}
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row class="acc-row">
       <ion-col>
           <ion-text style="font-weight: bold;">Type:</ion-text> {{accounting.type}}
       </ion-col>
@@ -25,7 +25,7 @@
         <ion-text style="font-weight: bold;">Transaction Value: </ion-text> {{accounting.transaction_value}}
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row class="acc-row">
       <ion-col>
         <ion-text style="font-weight: bold;">Comment:</ion-text> {{accounting.comment}}
       </ion-col>
