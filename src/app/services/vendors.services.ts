@@ -64,7 +64,7 @@ import { name } from '@cloudinary/base/actions/namedTransformation';
         products: "150 products",
         income: "Revenue up to Ks500000",
         vendor: "Vendor microstore",
-        transaction_fee: "15%"
+        transaction_fee: "Transaction Fee:15%"
       },
       {
         id: 3,
@@ -73,7 +73,7 @@ import { name } from '@cloudinary/base/actions/namedTransformation';
         products: "250 products",
         income: "Revenue up to Ks700000",
         vendor: "Vendor microstore",
-        transaction_fee: "7%"
+        transaction_fee: "Transaction Fee:7%"
       },
       {
         id: 4,
@@ -82,7 +82,7 @@ import { name } from '@cloudinary/base/actions/namedTransformation';
         products: "100 products",
         income: "Revenue up to Ks100000",
         vendor: "Vendor microstore",
-        transaction_fee: "Ks2000"
+        transaction_fee: "Transaction Fee:Ks2000"
       },
       {
         id: 5,
@@ -91,7 +91,7 @@ import { name } from '@cloudinary/base/actions/namedTransformation';
         products: "150 products",
         income: "Revenue up to Ks1500000",
         vendor: "Vendor microstore",
-        transaction_fee: "Ks5000"
+        transaction_fee: "Transaction Fee:Ks5000"
       }
     ];
     return new Promise((resolve) => {

@@ -11,26 +11,36 @@
   <ion-card *ngFor="let plan of planLists">
     <ion-row>
       <ion-col>
-          <ion-text style="font-weight: bold;"><h3>{{plan.name}}</h3></ion-text>
-          <ion-text style="font-weight: bold;">{{plan.cost}}</ion-text>
-      </ion-col>
-      <!-- <ion-col>
-        <ion-text style="font-weight: bold;">{{plan.cost}}</ion-text>
-      </ion-col> -->
-    </ion-row>
-    <ion-row>
-      <ion-col>
-          <ion-text style="font-weight: bold;">{{plan.products}}</ion-text>
-          <ion-text style="font-weight: bold;">{{plan.income}}</ion-text>
-      </ion-col>
-      <!-- <ion-col>
-        <ion-text style="font-weight: bold;">{{plan.income}}</ion-text>
-      </ion-col> -->
-      <ion-col>
-        <ion-text style="font-weight: bold;">{{plan.vendor}}</ion-text>
-      </ion-col>
-      <ion-col>
-        <ion-text style="font-weight: bold;">{{plan.transaction_fee}}</ion-text>
+        <ion-row>
+          <ion-col>
+            <ion-text style="font-weight: bold;"><h3>{{plan.name}}</h3></ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text style="font-weight: bold;">{{plan.cost}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text style="font-weight: bold;">{{plan.products}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text style="font-weight: bold;">{{plan.income}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text style="font-weight: bold;">{{plan.vendor}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text style="font-weight: bold;">{{plan.transaction_fee}}</ion-text>
+          </ion-col>
+        </ion-row>
       </ion-col>
     </ion-row>
   </ion-card>
