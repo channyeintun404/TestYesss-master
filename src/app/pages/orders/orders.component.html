@@ -16,7 +16,7 @@
       <ion-label>{{item.title}}</ion-label>
     </ion-chip> -->
     <div>
-      <ion-row nowrap class="headerChip" >
+      <ion-row nowrap class="headerChip" style="margin-top: -16px; margin-bottom: 5px;">
         <div *ngFor="let item of statuses; let i = index" [ngClass]="{ionChip: item.isSelected}" style="height:25px;">
         <ion-chip  (click)="changeOption(item, i)">
               <ion-label >{{item.description}}</ion-label>

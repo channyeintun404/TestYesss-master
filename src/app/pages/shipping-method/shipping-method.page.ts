@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ShippingsService } from 'src/app/services/shippings.servicre';
 import { Shipping } from 'src/app/models/shipping.model';
+import { ShippingMethodDetailComponent } from '../shipping-method-detail/shipping-method-detail.component';
 @Component({
   selector: 'app-shipping-method',
   templateUrl: './shipping-method.page.html',
@@ -33,6 +34,26 @@ export class ShippingMethodPage implements OnInit {
       console.log(this.active_shipping);
     })
    }
+
+
+   async goShippingMethodDetail(id) {
+    console.log(id)
+    const modal = await this.modalController.create({
+      component: ShippingMethodDetailComponent,
+      componentProps: { id: id }
+    });
+    return await modal.present();
+  }
+
+   changeSetting(value, shipping_id){
+    console.log(shipping_id)
+   if(value=="V"){
+     this.goShippingMethodDetail(shipping_id);
+   }
+   this.getShippings();
+ }
+
+
   back(): void {
     this.location.back()
   }

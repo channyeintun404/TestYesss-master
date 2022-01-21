@@ -136,6 +136,18 @@
         </ion-item>
         </ion-col>
       </ion-row>
+      <!-- Features -->
+
+      <ion-row>
+        <ion-col>
+          <ion-item class="item-background-color">
+            <ion-label>Brand</ion-label>
+            <ion-select [(ngModel)]="select_brand" [ngModelOptions]="{standalone: true}" value="select_brand">
+              <ion-select-option *ngFor="let brand of brand_array" value={{brand}}>{{brand}}</ion-select-option>
+            </ion-select>
+          </ion-item>    
+        </ion-col>
+      </ion-row>
 
       <!-- Status -->
       <ion-row>

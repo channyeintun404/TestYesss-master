@@ -15,21 +15,19 @@ export class PaymentsService extends AppService {
         return new Promise((resolve)=>{
           this.getAllWithoutParams().subscribe(res=> {
             console.log(res)
-          //   for(const shipping of res["shippings"]){
-          //     this.shipping.push({
-          //       shipping_id :shipping["shipping_id"],
-          //       min_weight:shipping["min_weight"],
-          //       max_weight:shipping["max_weight"],   
-          //       position:shipping["position"],
-          //       status:shipping["status"],
-          //       shipping: shipping["shipping"],
-          //       delivery_time:shipping["delivery_time"],
-          //       usergroup_ids: shipping["usergroup_ids"],
-          //   });
-          // }
           resolve(res);
           },err=>{
               console.log("Payment List Error!!");
+            });
+        })
+      }
+      getPaymentById(id) {
+        return new Promise((resolve)=>{
+          this.get(id).subscribe(paymentsDetail=> {
+            console.log(paymentsDetail) 
+          resolve(paymentsDetail);
+          },err=>{
+              console.log("Payments List ERROR");
             });
         })
       }

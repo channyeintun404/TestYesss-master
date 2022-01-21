@@ -4,6 +4,7 @@ import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { PaymentsService } from 'src/app/services/payments.service';
+import { PaymentMethodDetailsComponent } from '../payment-method-details/payment-method-details.component';
 @Component({
   selector: 'app-payment-methods',
   templateUrl: './payment-methods.page.html',
@@ -35,6 +36,24 @@ export class PaymentMethodsPage implements OnInit {
       console.log(this.payments)
     })
   }
+
+  // Go to detail shipment page
+  async goPaymentMethodDetailPage(id) {
+    console.log(id)
+    const modal = await this.modalController.create({
+      component: PaymentMethodDetailsComponent,
+      componentProps: { id: id }
+    });
+    return await modal.present();
+  }
+
+  changeSetting(value, payment_id){
+    console.log(payment_id)
+   if(value=="V"){
+     this.goPaymentMethodDetailPage(payment_id);
+   }
+   this.getAllPayments();
+ }
   back(): void {
     this.location.back()
   }

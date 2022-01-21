@@ -25,7 +25,7 @@ export class AccountingService extends AppService {
             id: 2,
             status: "pending",
             date: "11/26/2021, 17:45",
-            type: "Payout",
+            type: "order#159 placed",
             transaction_value:"ks3500",
             comment: "Payout for the vendor plan: Exclusive Services"
           },
@@ -33,7 +33,7 @@ export class AccountingService extends AppService {
             id: 3,
             status: "completed",
             date: "11/27/2021, 13:57",
-            type: "Payout",
+            type: "order#157 placed",
             transaction_value:"ks1450",
             comment: "payment for 10 orders"
           }

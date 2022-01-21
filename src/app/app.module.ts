@@ -41,6 +41,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { ReviewDetailsComponent } from './review-details/review-details.component';
 import { MessageDetailsComponent } from './pages/message-details/message-details.component';
 import { ProductMessagesComponent } from './pages/product-messages/product-messages.component';
+import { PaymentMethodDetailsComponent } from './pages/payment-method-details/payment-method-details.component';
+import { ShippingMethodDetailComponent } from './pages/shipping-method-detail/shipping-method-detail.component';
 @NgModule({
   declarations: [AppComponent,
     ProductDetailsComponent,
@@ -50,7 +52,9 @@ import { ProductMessagesComponent } from './pages/product-messages/product-messa
     ShipmentDetailsComponent,
     ReviewDetailsComponent,
     MessageDetailsComponent,
-    ProductMessagesComponent],
+    ProductMessagesComponent,
+    PaymentMethodDetailsComponent,
+    ShippingMethodDetailComponent],
   entryComponents: [ProductDetailsComponent,
     ProductEditComponent,
     CartComponent,
@@ -58,7 +62,9 @@ import { ProductMessagesComponent } from './pages/product-messages/product-messa
     ShipmentDetailsComponent,
     ReviewDetailsComponent,
     MessageDetailsComponent,
-    ProductMessagesComponent],
+    ProductMessagesComponent,
+    PaymentMethodDetailsComponent,
+    ShippingMethodDetailComponent],
   imports: [AutoCompleteModule,BrowserModule,StoreModule.forRoot({ currentOrder: currentOrderReducer,
      currentProducts: currentProductsReducer,
      productList: productListReducer,

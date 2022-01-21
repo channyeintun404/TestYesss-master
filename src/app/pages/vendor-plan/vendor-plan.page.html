@@ -8,7 +8,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let plan of planLists">
+  <div *ngFor="let plan of planLists">
+  <ion-card [class]="plan.name === 'Ruby' ? 'current-color' : 'normal-color'">
     <ion-row>
       <ion-col>
         <ion-row>
@@ -44,4 +45,5 @@
       </ion-col>
     </ion-row>
   </ion-card>
+</div>
 </ion-content>

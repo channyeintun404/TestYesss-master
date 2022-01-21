@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 import axios from 'axios';
 import { FormControl, FormGroup } from '@angular/forms';
-
+import { FeaturesService } from 'src/app/services/features.service';
 @Component({
   selector: 'app-product-edit',
   templateUrl: './product-edit.component.html',
@@ -48,6 +48,7 @@ export class ProductEditComponent implements OnInit {
    optionId: any;
    variants : any[];
    optionIdArray: any[]=[];
+   featureIdArray: any[]=[];
 
    imagesUrlArray: any[]=[];
    addImage : boolean;
@@ -70,20 +71,27 @@ export class ProductEditComponent implements OnInit {
   show_option_name= "";
   variant_id: any;
   variants_array: any[];
+  brand_array: any[];
+  features_array: any[];
+  select_brand: string
   selectImage: string="Please Select File!!";
+  variant: any;
+  brand: any;
 
   // editorForm: FormGroup
   constructor(public modalController: ModalController,    
     private optionsService : OptionsService,
     private productService : ProductsService,
     private productsService: ProductsService
-    , private router: Router) { }
+    , private router: Router, private featuresService: FeaturesService) { }
     
 
   ngOnInit() {
 
     this.getProductById();
     this.getProductOptions();
+    this.getFeatures();
+    this.getFeaturesById();
     // this.editorForm = new FormGroup({
     //   'editor': new FormControl(null)
     // })
@@ -193,7 +201,17 @@ getProductById(){
     console.log(this.imagesUrlArray)
   })
 }
-
+getFeaturesById(){
+  this.featuresService.getFeaturesById().then(res=>{
+    console.log(res)
+    this.brand_array = [];
+    for (const feature of Object.values(res['variants'])) {
+      console.log(feature)
+      this.brand_array.push(feature['variant'])
+    }
+    console.log(this.brand_array)
+  })
+}
 //getproductOption
 getProductOptions(){
   this.optionsService.getProductsOptions(this.id).then((resp: any) => {
@@ -201,7 +219,7 @@ console.log(Object.values(resp))
     this.option_array = Object.values(resp)
     this.variants_array = [];
     for (const variants of Object.values(resp)) {
-      // console.log(variants['option_id']) 
+      console.log(variants['option_id']) 
       this.optionIdArray.push(variants['option_id'])
       this.variants_array.push(Object.values(variants['variants']))
     }
@@ -209,7 +227,21 @@ console.log(Object.values(resp))
   
 }
 
-
+//getproductOption
+getFeatures(){
+  this.featuresService.getAllFeatures().then((res: any) => {
+console.log(res)
+    // this.option_array = Object.values(resp)
+    this.features_array = [];
+    for (const features of Object.values(res['variants'])) {
+      console.log(features) 
+      this.featureIdArray.push(features['variant_id'])
+      this.features_array.push(features)
+    }
+    console.log(this.featureIdArray)
+  })
+  
+}
 
 onFileSelected(event){
 
@@ -272,8 +304,51 @@ this.productsService.updateProduct(this.id, {
   "amount": this.product_amount,
   "list_price":this.list_price,
   "status" : this.status,
-  "full_description":this.full_description
+  "full_description":this.full_description,
+  "product_features": {
+    18:{
+      "feature_id": "18",
+      "value": "",
+      "value_int": null,
+      "variant_id": "92",
+      "feature_type": "E",
+      "description": "Brand",
+      "prefix": "",
+      "suffix": "",
+      "variant": this.select_brand,
+      "parent_id": "0",
+      "display_on_header": "Y",
+      "display_on_catalog": "N",
+      "display_on_product": "N",
+      "features_hash": "10-92",
+      "variants": {
+          "92": {
+              "value": "",
+              "value_int": null,
+              "variant_id": "92",
+              "variant": this.select_brand,
+              "image_pairs": {
+                  "pair_id": "881",
+                  "image_id": "1012",
+                  "detailed_id": "0",
+                  "position": "0",
+                  "icon": {
+                      "image_path": "http://yesss.com.mm/images/feature_variant/1/250px-Acer_2011.svg.png",
+                      "alt": "",
+                      "image_x": "250",
+                      "image_y": "60",
+                      "http_image_path": "http://yesss.com.mm/images/feature_variant/1/250px-Acer_2011.svg.png",
+                      "https_image_path": "https://yesss.com.mm/images/feature_variant/1/250px-Acer_2011.svg.png",
+                      "absolute_path": "/var/www/html/images/feature_variant/1/250px-Acer_2011.svg.png",
+                      "relative_path": "feature_variant/1/250px-Acer_2011.svg.png"
+                  }
+              }
+          }
+      }
+  },
+  }
  })
+console.log(this.select_brand)
  
 }
 
