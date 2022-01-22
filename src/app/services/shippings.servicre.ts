@@ -38,13 +38,13 @@ export class ShippingsService extends AppService {
         })
       }
       
-      getShippingById(id) {
+      getShippingMethodById(id) {
         return new Promise((resolve)=>{
-          this.get(id).subscribe(shippingdetail=> {
-            console.log(shippingdetail) 
-          resolve(shippingdetail);
+          this.get(id).subscribe(shippingmethoddetail=> {
+            console.log(shippingmethoddetail) 
+          resolve(shippingmethoddetail);
           },err=>{
-              console.log("shippingdetail List ERROR");
+              console.log("shippingmethoddetail List ERROR");
             });
         })
       }

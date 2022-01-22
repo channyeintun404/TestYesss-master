@@ -6,7 +6,51 @@
     </ion-buttons>
 
     <!-- Title -->
-    <ion-title>Shipping Method: {{shipping_id}}</ion-title>
+    <ion-title>Shipping Method: {{shipping_method.shipping_id}}</ion-title>
     
   </ion-toolbar>
 </ion-header>
+<ion-content>
+  <form class="ion-padding" style="margin-left: 10px; padding: 35px;">
+    <ion-row>
+      <ion-col size="4">
+        <ion-item class="item-background-color"><b>Name</b></ion-item>
+      </ion-col>
+      <ion-col>
+         <ion-item class="item-background-color">{{shipping_method.shipping}}</ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <ion-item class="item-background-color"><b>Description</b></ion-item>
+      </ion-col>
+      <ion-col>
+         <ion-item class="item-background-color">{{shipping_method.description}}</ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <ion-item class="item-background-color"><b>Delivery Time</b></ion-item>
+      </ion-col>
+      <ion-col>
+         <ion-item class="item-background-color">{{shipping_method.delivery_time}}</ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <ion-item class="item-background-color"><b>Weight Limit</b></ion-item>
+      </ion-col>
+      <ion-col>
+         <ion-item class="item-background-color">{{shipping_method.max_weight}} - {{shipping_method.min_weight}}</ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <ion-item class="item-background-color"><b>Status</b></ion-item>
+      </ion-col>
+      <ion-col>
+         <ion-item class="item-background-color">{{shipping_method.status}}</ion-item>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>
