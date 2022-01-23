@@ -43,6 +43,7 @@ import { MessageDetailsComponent } from './pages/message-details/message-details
 import { ProductMessagesComponent } from './pages/product-messages/product-messages.component';
 import { PaymentMethodDetailsComponent } from './pages/payment-method-details/payment-method-details.component';
 import { ShippingMethodDetailComponent } from './pages/shipping-method-detail/shipping-method-detail.component';
+import { AddBrandComponent } from './pages/add-brand/add-brand.component';
 @NgModule({
   declarations: [AppComponent,
     ProductDetailsComponent,
@@ -54,7 +55,8 @@ import { ShippingMethodDetailComponent } from './pages/shipping-method-detail/sh
     MessageDetailsComponent,
     ProductMessagesComponent,
     PaymentMethodDetailsComponent,
-    ShippingMethodDetailComponent],
+    ShippingMethodDetailComponent,
+    AddBrandComponent],
   entryComponents: [ProductDetailsComponent,
     ProductEditComponent,
     CartComponent,
@@ -64,7 +66,8 @@ import { ShippingMethodDetailComponent } from './pages/shipping-method-detail/sh
     MessageDetailsComponent,
     ProductMessagesComponent,
     PaymentMethodDetailsComponent,
-    ShippingMethodDetailComponent],
+    ShippingMethodDetailComponent,
+    AddBrandComponent],
   imports: [AutoCompleteModule,BrowserModule,StoreModule.forRoot({ currentOrder: currentOrderReducer,
      currentProducts: currentProductsReducer,
      productList: productListReducer,

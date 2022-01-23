@@ -137,15 +137,23 @@
         </ion-col>
       </ion-row>
       <!-- Features -->
-
       <ion-row>
         <ion-col>
           <ion-item class="item-background-color">
             <ion-label>Brand</ion-label>
-            <ion-select [(ngModel)]="select_brand" [ngModelOptions]="{standalone: true}" value="select_brand">
-              <ion-select-option *ngFor="let brand of brand_array" value={{brand}}>{{brand}}</ion-select-option>
+            <ion-select [(ngModel)]="select_brand_id" [ngModelOptions]="{standalone: true}" value="select_brand_id">
+              <ion-select-option *ngFor="let brand of brand_array" value={{brand.variant_id}}>{{brand.variant}}</ion-select-option>
             </ion-select>
           </ion-item>    
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="margin: 10px;">
+        <ion-col>
+          <a (click)="goToAddBrand()" style="border: 1px solid gainsboro; background-color: gainsboro; padding: 10px; border-radius: 3px;" color="primary">
+            <ion-icon name="add" color="primary" style="top: 15px;"></ion-icon>
+            <ion-text style="margin-left: 8px;">Add Brand</ion-text>
+          </a>
         </ion-col>
       </ion-row>
 

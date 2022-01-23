@@ -8,6 +8,7 @@ import { Variant } from 'src/app/models/variants.model';
 import { Router } from '@angular/router';
 
 import { ProductDetailsComponent } from '../product-details/product-details.component';
+import { AddBrandComponent } from '../add-brand/add-brand.component';
 import axios from 'axios';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FeaturesService } from 'src/app/services/features.service';
@@ -73,7 +74,7 @@ export class ProductEditComponent implements OnInit {
   variants_array: any[];
   brand_array: any[];
   features_array: any[];
-  select_brand: string
+  select_brand_id: any
   selectImage: string="Please Select File!!";
   variant: any;
   brand: any;
@@ -88,13 +89,9 @@ export class ProductEditComponent implements OnInit {
 
   ngOnInit() {
 
+    this.getFeatures();
     this.getProductById();
     this.getProductOptions();
-    this.getFeatures();
-    this.getFeaturesById();
-    // this.editorForm = new FormGroup({
-    //   'editor': new FormControl(null)
-    // })
 
   // Checkout steps   
   this.steps = [
@@ -185,6 +182,8 @@ getProductById(){
 
   this.productsService.getProductById(this.id).then( res=>{
     console.log(res);
+    this.select_brand_id =  res['product_features']['18']['variant_id']
+    console.log( this.select_brand_id);
     this.name = res['product']
     this.price = res['price']
     this.price = parseInt(this.price.toFixed())
@@ -200,17 +199,21 @@ getProductById(){
     }
     console.log(this.imagesUrlArray)
   })
+ 
 }
-getFeaturesById(){
-  this.featuresService.getFeaturesById().then(res=>{
-    console.log(res)
+
+//getproductfeature
+getFeatures(){
+  this.featuresService.getAllFeatures().then((res: any) => {
+console.log(res)
+    // this.option_array = Object.values(resp)
     this.brand_array = [];
     for (const feature of Object.values(res['variants'])) {
-      console.log(feature)
-      this.brand_array.push(feature['variant'])
+      this.brand_array.push(feature)
     }
     console.log(this.brand_array)
   })
+  
 }
 //getproductOption
 getProductOptions(){
@@ -227,21 +230,7 @@ console.log(Object.values(resp))
   
 }
 
-//getproductOption
-getFeatures(){
-  this.featuresService.getAllFeatures().then((res: any) => {
-console.log(res)
-    // this.option_array = Object.values(resp)
-    this.features_array = [];
-    for (const features of Object.values(res['variants'])) {
-      console.log(features) 
-      this.featureIdArray.push(features['variant_id'])
-      this.features_array.push(features)
-    }
-    console.log(this.featureIdArray)
-  })
-  
-}
+
 
 onFileSelected(event){
 
@@ -310,45 +299,22 @@ this.productsService.updateProduct(this.id, {
       "feature_id": "18",
       "value": "",
       "value_int": null,
-      "variant_id": "92",
+      "variant_id": this.select_brand_id,
       "feature_type": "E",
       "description": "Brand",
       "prefix": "",
       "suffix": "",
-      "variant": this.select_brand,
+      "variant": "",
       "parent_id": "0",
       "display_on_header": "Y",
       "display_on_catalog": "N",
       "display_on_product": "N",
       "features_hash": "10-92",
-      "variants": {
-          "92": {
-              "value": "",
-              "value_int": null,
-              "variant_id": "92",
-              "variant": this.select_brand,
-              "image_pairs": {
-                  "pair_id": "881",
-                  "image_id": "1012",
-                  "detailed_id": "0",
-                  "position": "0",
-                  "icon": {
-                      "image_path": "http://yesss.com.mm/images/feature_variant/1/250px-Acer_2011.svg.png",
-                      "alt": "",
-                      "image_x": "250",
-                      "image_y": "60",
-                      "http_image_path": "http://yesss.com.mm/images/feature_variant/1/250px-Acer_2011.svg.png",
-                      "https_image_path": "https://yesss.com.mm/images/feature_variant/1/250px-Acer_2011.svg.png",
-                      "absolute_path": "/var/www/html/images/feature_variant/1/250px-Acer_2011.svg.png",
-                      "relative_path": "feature_variant/1/250px-Acer_2011.svg.png"
-                  }
-              }
-          }
-      }
+      "variants": ""
   },
   }
  })
-console.log(this.select_brand)
+console.log(this.select_brand_id)
  
 }
 
@@ -545,5 +511,13 @@ backsecondpage(){
   this.checks[0].isSelected = true;
   this.checks[1].isSelected = true;
   this.checks[2].isSelected = false;
+}
+
+// Go to product details page
+async goToAddBrand(product) {
+  const modal = await this.modalController.create({
+    component: AddBrandComponent
+  });
+  return await modal.present();
 }
 }
