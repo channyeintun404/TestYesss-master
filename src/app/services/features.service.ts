@@ -23,7 +23,13 @@ import { Option } from '../models/option.model';
          });
       });
     }
-
+    updateOptions(id: number,data:any){
+      return new Promise((resolve)=>{
+        this.edit(id,data).subscribe(res=>{
+          console.log(res);
+        })
+      })
+    }
     getFeaturesById() {
       return new Promise((resolve) => {
         this.getOptionByQueryString('features/18').subscribe(res => {

@@ -214,15 +214,10 @@
             <ion-text style="margin-left: 8px;">Add Image</ion-text>
           </a>
           <ion-label>{{selectImage}}</ion-label>
-          <!-- <input type="button" id="loadFileXml" value="loadXml" onclick="document.getElementById('file').click();" /> -->
           <input type="file" style="display:none;" id="file" (change)= "onFileSelected($event)" accept="image/*" name="file"/>
-
-          <!-- <ion-label for="upload_img"> <ion-icon name="add" color="primary" style="top: 15px;"></ion-icon> </ion-label>
-          <input type="file" name="" id="upload_img" (change)= "onFileSelected($event)" accept="image/*"> -->
         </ion-col >       
         <ion-col size="3">
           <ion-text (click)="onUpload()" class="txt-upload">Upload</ion-text>
-          <!-- <ion-icon name="cloud-upload" (click)="onUpload()" style="margin-right: 13px;" color="danger"></ion-icon>        -->
         </ion-col>
      </ion-row>
      

@@ -408,6 +408,7 @@ saveChangesProductImage(){
     })
    }
 
+   
   updateVariant(option_name,option_id,variant_id,name,position,stauts,isdelete){
     console.log(option_name)    
     const variantsArray =[];
