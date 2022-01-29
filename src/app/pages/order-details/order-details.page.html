@@ -99,7 +99,8 @@
         <ion-select-option value="6">Edit Order</ion-select-option>
         <ion-select-option value="7">Copy</ion-select-option>
       </ion-select>
-      <ion-button color="primary" (click)="saveChanges()">Save Changes</ion-button>
+      <ion-text (click)="saveChanges()" class="save">Save Changes</ion-text>
+      <!-- <ion-button color="primary" (click)="saveChanges()">Save Changes</ion-button> -->
     </ion-buttons>
   </ion-toolbar>
   <div *ngIf="isLoaded">

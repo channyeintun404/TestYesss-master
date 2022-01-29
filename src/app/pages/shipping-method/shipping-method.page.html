@@ -32,21 +32,21 @@
       </ion-row>
       
       <ion-row>
-        <ion-col size="2" style="margin-top: 10px;">
+        <!-- <ion-col size="2" style="margin-top: 10px;">
           <ion-text style="font-weight: bold;">User group: </ion-text>
-        </ion-col>
-        <ion-col size="4" >            
-          <ion-select style="float: left;" [(ngModel)]="shipping.usergroup"[ngModelOptions]="{standalone: true}" (cancel)="onCancel()" (ionChange)="updateshipemnt(shipment.status, shipment.shipment_id)"data-live-search="true" value="shipment.status">
+        </ion-col> -->
+        <ion-col size="6" style="margin-left: -20px;">
+          <ion-select style="float: left; font-weight: bold;" placeholder="User group:" [(ngModel)]="shipping.usergroup"[ngModelOptions]="{standalone: true}" (cancel)="onCancel()" (ionChange)="updateshipemnt(shipment.status, shipment.shipment_id)"data-live-search="true" value="shipment.status">
             <ion-select-option value="A">Picked</ion-select-option>
             <ion-select-option value="P">Pick up</ion-select-option>
             <ion-select-option value="S">Shiped</ion-select-option>
           </ion-select>
         </ion-col>
-        <ion-col size="3" style="margin-top: 10px;">
+        <!-- <ion-col size="3" style="margin-top: 10px;">
           <ion-text style="font-weight: bold;">Setting ⚙️: </ion-text>
-        </ion-col>
-        <ion-col size="3">
-          <ion-select style="float: left;" interface="popover"#settingList (ionChange)='changeSetting($event.target.value, shipping.shipping_id)' class="select-placeholder">
+        </ion-col> -->
+        <ion-col size="6">
+          <ion-select style="float: left;" interface="popover" placeholder="⚙️" #settingList (ionChange)='changeSetting($event.target.value, shipping.shipping_id)' class="select-placeholder">
             <ion-select-option value="V" class="settinglist">View</ion-select-option>
           </ion-select>
         </ion-col>

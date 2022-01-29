@@ -115,11 +115,11 @@
               <ion-select-option value="S">Shiped</ion-select-option>
             </ion-select>
           </ion-col>
-          <ion-col size="3" style="margin-top: 10px;">
+          <!-- <ion-col size="3" style="margin-top: 10px;">
             <ion-text style="font-weight: bold;">Setting ⚙️: </ion-text>
-          </ion-col>
-          <ion-col size="3">
-            <ion-select style="float: left;" interface="popover"#settingList (ionChange)='changeSetting($event.target.value, shipment.shipment_id)' class="select-placeholder">
+          </ion-col> -->
+          <ion-col size="6">
+            <ion-select style="float: left;" interface="popover" placeholder="⚙️" #settingList (ionChange)='changeSetting($event.target.value, shipment.shipment_id)' class="select-placeholder">
               <ion-select-option value="V" class="settinglist">View</ion-select-option>
               <ion-select-option value="P" class="settinglist">Print Slip</ion-select-option>
               <ion-select-option value="D" class="settinglist">Delete</ion-select-option>

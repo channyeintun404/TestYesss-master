@@ -72,35 +72,37 @@
     <ion-text >Available Options</ion-text>
   </ion-row>
   <div *ngFor="let option of option_array; let i=index">
-    <ion-row style="margin-left: 30px; margin-top: 7px;">
-      <ion-text>{{option.option_name}}</ion-text>
+    <ion-row>
+      <ion-text class="name">{{option.option_name}}</ion-text>
     </ion-row>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Pos</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody *ngFor="let variant of variants_array[i]">
-       <tr>
-        <td>
-          {{variant.variant_name}}
-        </td>
-        <td>
-          {{variant.position}}
-        </td>
-        <td>
-          {{variant.status}}
-        </td>
-       </tr>
-      </tbody>
-       
-    </table>
+    <ion-row>
+      <ion-col>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Pos</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let variant of variants_array[i]">
+           <tr>
+            <td>
+              {{variant.variant_name}}
+            </td>
+            <td>
+              {{variant.position}}
+            </td>
+            <td>
+              {{variant.status}}
+            </td>
+           </tr>
+          </tbody>
+           
+        </table>
+      </ion-col>
+    </ion-row>
   </div>
-
- 
   <ion-row>
     <ion-col></ion-col>
   </ion-row>

@@ -14,6 +14,7 @@ export class ShippingMethodDetailComponent implements OnInit {
   ngOnInit() {
     this.getShippingMethodById(this.id);
   }
+  // ckeditorContent;
   getShippingMethodById(id){
     this.shippingsService.getShippingMethodById(id).then(res=>{
       this.shipping_method = res;
