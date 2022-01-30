@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationsService } from '../../services/notifications.service';
 import { CartComponent } from '../cart/cart.component';
 import { ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notification',
@@ -20,15 +21,30 @@ export class NotificationComponent implements OnInit {
   notifications: any = [];
 
   constructor(private notificationsService: NotificationsService,
-    private modalController: ModalController) { }
+    private modalController: ModalController, private router: Router) { }
 
   ngOnInit() {
-    this.getNotification();
+    this.getAllNotification();
   }
 
   // Get list of notification
-  getNotification() {
-    this.notifications = this.notificationsService.getNotifications();
+  // getNotification() {
+  //   this.notifications = this.notificationsService.getNotifications();
+  // }
+
+  getAllNotification(){
+    this.notificationsService.getAllNotification().then(res=>{
+      this.notifications=[];
+      
+      Object.values(res).forEach(element => {
+           this.notifications.push(element)
+      });
+      console.log(this.notifications);
+    })
+  }
+
+  godestionation(id){
+    this.router.navigate([`/order-details/`+id]);
   }
 
   // Go to cart page

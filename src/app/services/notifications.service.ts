@@ -4,53 +4,107 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class NotificationsService {
+  notification: any;
 
   constructor() { }
 
-  getNotifications() {
-    return [
+  // getNotifications() {
+  //   return [
+  //     {
+  //       title: "Contrary to popular belief",
+  //       message: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+  //       date: "15/20",
+  //       status: false,
+  //     },
+  //     {
+  //       title: "Contrary to popular belief",
+  //       message: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+  //       date: "15/20",
+  //       status: false
+  //     },
+  //     {
+  //       title: "Contrary to popular belief",
+  //       message: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+  //       date: "15/20",
+  //       status: true
+  //     },
+  //     {
+  //       title: "Contrary to popular belief",
+  //       message: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+  //       date: "15/20",
+  //       status: true
+  //     },
+  //     {
+  //       title: "Contrary to popular belief",
+  //       message: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+  //       date: "15/20",
+  //       status: true
+  //     },
+  //     {
+  //       title: "Contrary to popular belief",
+  //       message: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+  //       date: "15/20",
+  //       status: true
+  //     },
+  //     {
+  //       title: "Contrary to popular belief",
+  //       message: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+  //       date: "15/20",
+  //       status: true
+  //     }
+  //   ]
+  // }
+
+
+  getAllNotification(){
+    this.notification = [
       {
-        title: "Contrary to popular belief",
-        message: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-        date: "15/20",
-        status: false,
+        id: 1,
+        name: "new order is received",
+        active: "true",
+        type: "order",
+        item_id:"160",
+        description: "new order",
+        date: "01/01/2022"
       },
       {
-        title: "Contrary to popular belief",
-        message: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-        date: "15/20",
-        status: false
+        id: 2,
+        name: "new order is received",
+        active: "true",
+        type: "order",
+        item_id:"159",
+        description: "order notification",
+        date: "03/01/2022"
       },
       {
-        title: "Contrary to popular belief",
-        message: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-        date: "15/20",
-        status: true
-      },
-      {
-        title: "Contrary to popular belief",
-        message: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-        date: "15/20",
-        status: true
-      },
-      {
-        title: "Contrary to popular belief",
-        message: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-        date: "15/20",
-        status: true
-      },
-      {
-        title: "Contrary to popular belief",
-        message: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-        date: "15/20",
-        status: true
-      },
-      {
-        title: "Contrary to popular belief",
-        message: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-        date: "15/20",
-        status: true
+        id: 3,
+        name: "new order is received",
+        active: "true",
+        type: "order",
+        item_id:"156",
+        description: "",
+        date: "06/01/2022"
+      },        {
+        id: 4,
+        name: "new order is received",
+        active: "true",
+        type: "order",
+        item_id:"157",
+        description: "",
+        date: "08/01/2022"
+      },        {
+        id: 5,
+        name: "new order is received",
+        active: "true",
+        type: "order",
+        item_id:"156",
+        description: "",
+        date: "08/01/2022"
       }
-    ]
+    ];
+    return new Promise((resolve) => {
+      resolve(this.notification);
+     });
   }
+
 }

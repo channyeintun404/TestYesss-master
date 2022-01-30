@@ -33,7 +33,7 @@
 <!-- Contents -->
 <ion-content id="notifications">
   <div *ngFor="let item of notifications">
-    <ion-item [class.unread]="!item.status" lines="none">
+    <ion-item (click)="godestionation(item.item_id)" [class.unread]="!item.status" lines="none">
 
       <!-- Image of user -->
       <ion-avatar slot="start">
@@ -43,9 +43,11 @@
       <!-- Contents of message -->
       <ion-label class="ion-text-wrap">
         <ion-text color="dark">
-          <h2> {{ item.title }}</h2>
+          <h2> {{ item.name }}</h2>
         </ion-text>
         <p>{{item.message}}</p>
+        <p>{{item.description}}</p>        
+        <p>Order Id #{{item.item_id}}</p>
       </ion-label>
 
       <!-- Date -->
