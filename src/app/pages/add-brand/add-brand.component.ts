@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FeaturesService } from 'src/app/services/features.service';
+import axios from 'axios';
 @Component({
   selector: 'app-add-brand',
   templateUrl: './add-brand.component.html',
@@ -9,7 +10,9 @@ import { FeaturesService } from 'src/app/services/features.service';
 export class AddBrandComponent implements OnInit {
   name: any;
   brand_array: any[];
-
+  selectedFile: any;
+  selectImage: string="Please Select File!!";
+  imagesUrl: any;
   constructor(private modalController: ModalController,
               private featuresService:FeaturesService) { }
 
@@ -49,9 +52,9 @@ export class AddBrandComponent implements OnInit {
         })
       }
       features_array.push({
-        "variant_id":"110",
+        "variant_id":"1",
         "variant": this.name,
-        "description": "<p><strong>Abbey Road Studios</strong> is a recording studio located at 3 Abbey Road, St John's Wood, City of Westminster, London, England. It was established in November 1931 by the Gramophone Company, a predecessor of British music company EMI, its present owner. Abbey Road Studios is most notable as being the venue in the 1960s for innovative recording techniques adopted by The Beatles, Pink Floyd, The Hollies, Badfinger and others.<br>\r\n</p>",
+        "description": "",
         "page_title": "",
         "meta_keywords": "",
         "meta_description": "",
@@ -59,7 +62,9 @@ export class AddBrandComponent implements OnInit {
         "feature_id": "18",
         "url": "",
         "position": "99",
-        "image_pair": {}
+        "image_pair": {
+          "http_image_path": this.imagesUrl
+        }
       })
       console.log(features_array)
       const convertArrayToObject = (array, key) => {
@@ -73,11 +78,46 @@ export class AddBrandComponent implements OnInit {
       };
       console.log(convertArrayToObject(features_array,'variant_id'))
       this.featuresService.updateOptions(18,{
+        "feature_code": "brand",
+        "company_id": "16",
+        "feature_type": "E",
+        "description": "",
         "variants": features_array
       })
       // this.getFeatures();
     })
   }
+
+  onFileSelected(event){
+
+    this.selectedFile = <File> event.target.files[0];  
+    console.log(this.selectedFile)
+    this.selectImage = this.selectedFile.name
+  }
+  
+  //upload images
+  onUpload(){
+    const fd = new FormData();
+    fd.append('file',this.selectedFile)
+    fd.append("upload_preset", "my-preset"); 
+  
+    axios({
+      url:'https://api.cloudinary.com/v1_1/u1textile/image/upload',
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },data:fd
+    }).then((res: any) => {
+        console.log(res)
+        // this.mainImagesURl= res.data.url
+        this.imagesUrl = res.data.url
+        this.selectedFile=null;
+        this.selectImage="Please Select File!!";     
+      }).catch(function(err){
+            console.error(err)
+          }); 
+  }   
+
   dismiss() {
     this.modalController.dismiss({
       'dismissed': true
