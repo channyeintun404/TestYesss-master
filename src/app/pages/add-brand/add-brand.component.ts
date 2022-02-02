@@ -62,8 +62,29 @@ export class AddBrandComponent implements OnInit {
         "feature_id": "18",
         "url": "",
         "position": "99",
+        // "image_pair": {
+        //   "image_path": this.imagesUrl,
+        //   "image_x": "711",
+        //   "image_y": "950",
+        //   "http_image_path": this.imagesUrl,
+        //   "https_image_path": this.imagesUrl
+        // }
+        // "image_pair": this.imagesUrl,
         "image_pair": {
-          "http_image_path": this.imagesUrl
+          "image_id": "0",
+          "position": "0",
+          "detailed": {
+              "object_type": "product",
+              "type": "M",
+              "image_path": this.imagesUrl,
+              "alt": "",
+              "image_x": "711",
+              "image_y": "950",
+              "http_image_path": this.imagesUrl,
+              "https_image_path": this.imagesUrl,
+              "absolute_path": this.imagesUrl,
+              "relative_path": this.imagesUrl
+          }
         }
       })
       console.log(features_array)

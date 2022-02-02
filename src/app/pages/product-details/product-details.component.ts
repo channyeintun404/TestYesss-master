@@ -141,7 +141,11 @@
     return await modal.present();
   }
 
-  
+  clickTab(event: Event, tabPath: string) {
+    event.stopImmediatePropagation();
+    console.log( event, tabPath );
+    this.router.navigate([`${tabPath}`]);
+  }
 
    // get product by id
    getProductById(){

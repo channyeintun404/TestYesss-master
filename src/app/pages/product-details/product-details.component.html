@@ -132,7 +132,7 @@
       <ion-text style="margin-left: 15px;">Product Inquiry Reply</ion-text>
     </ion-col>
     <ion-col size="2">
-      <ion-icon name="arrow-forward" size="small"  (click)="goToProductMessage()"></ion-icon>
+      <ion-icon name="arrow-forward" size="small"  (click)="clickTab($event, 'message')" [routerLink]="['message']" tab="orders-tab3"></ion-icon>
     </ion-col>
   </ion-row>
   <ion-row style="margin-top: 10px; margin-bottom: 10px; margin-left: 15px;">

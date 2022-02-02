@@ -321,7 +321,7 @@ export class OrderDetailsPage implements OnInit {
   }
   createShipment(){
     console.log(this.users_id)
-    this.shippingService.getShippingById(this.currentShipping_id).then(res=>{
+    this.shippingService.getShippingMethodById(this.currentShipping_id).then(res=>{
       console.log(res['shipping'])
       this.currentShippingName = res['shipping'];
     })
