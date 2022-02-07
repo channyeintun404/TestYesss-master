@@ -43,6 +43,7 @@
     "@ngx-translate/core": "^10.0.2",
     "@ngx-translate/http-loader": "^3.0.1",
     "axios": "^0.21.1",
+    "cordova": "^11.0.0",
     "cordova-ios": "5.1.1",
     "core-js": "^2.5.4",
     "ion-autocomplete": "^0.4.0",
@@ -51,8 +52,10 @@
     "ngx-cookie-service": "^12.0.3",
     "ngx-swiper-wrapper": "^10.0.0",
     "rxjs": "^6.5.5",
+    "to": "^0.2.9",
     "ts-md5": "^1.2.9",
     "tslib": "^1.9.0",
+    "update": "^0.7.4",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
@@ -106,9 +109,13 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-ionic-webview": {
+        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
+      },
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-camera": {},
+      "cordova-plugin-camera": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
       "cordova-plugin-file": {},
       "cordova-sqlite-storage": {},
       "cordova-plugin-filepath": {},

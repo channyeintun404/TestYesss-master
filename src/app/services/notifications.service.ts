@@ -61,7 +61,7 @@ export class NotificationsService {
       {
         id: 1,
         name: "new order is received",
-        active: "true",
+        active: "false",
         type: "order",
         item_id:"160",
         description: "new order",
@@ -79,7 +79,7 @@ export class NotificationsService {
       {
         id: 3,
         name: "new order is received",
-        active: "true",
+        active: "false",
         type: "order",
         item_id:"156",
         description: "",
@@ -92,13 +92,32 @@ export class NotificationsService {
         item_id:"157",
         description: "",
         date: "08/01/2022"
-      },        {
+      },  
+      {
         id: 5,
         name: "new order is received",
-        active: "true",
+        active: "false",
         type: "order",
         item_id:"156",
         description: "",
+        date: "08/01/2022"
+      },
+      {
+        id: 6,
+        name: "new inquiry message in order",
+        active: "true",
+        type: "order",
+        item_id:"156",
+        description: " can i message to you?",
+        date: "08/01/2022"
+      },
+      {
+        id: 6,
+        name: "new inquiry message in order",
+        active: "true",
+        type: "order",
+        item_id:"156",
+        description: "i received my order",
         date: "08/01/2022"
       }
     ];
