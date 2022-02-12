@@ -216,10 +216,10 @@
 
     <ion-grid>
       <ion-row *ngFor="let image of imagesArrayforView;let last = last;">
-        <ion-col size="9">
+        <ion-col size="8">
           <input type="file" (change)= "onFileSelected($event)" accept="image/*">
         </ion-col >       
-        <ion-col size="3" *ngIf="last">
+        <ion-col size="4" *ngIf="last">
           <ion-text (click)="onUpload()" class="txt-upload" >Upload</ion-text>
           <ion-text *ngIf="addImage" (click)="openAddImageRow()" class="txt-addimg">Add</ion-text>
           <!-- <ion-icon name="cloud-upload" (click)="onUpload()" style="margin-right: 13px;" color="danger"></ion-icon> -->
@@ -267,7 +267,7 @@
           <ion-text>{{option.option_name}}</ion-text>
         </ion-col>
         <ion-col size="4" >
-          <ion-text (click)="openAddVariantRow(option.option_name)" class="txt-add" >Add Variant</ion-text>
+          <ion-text (click)="openAddVariantRow(option.option_name)" class="txt-add" >Add More</ion-text>
         </ion-col>
       </ion-row>
       <table>

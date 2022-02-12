@@ -33,7 +33,7 @@
 <!-- Contents -->
 <ion-content id="notifications">
   <div *ngFor="let item of notifications">
-    <ion-item (click)="godestionation(item.item_id)" [class.unread]="!item.status" lines="none">
+    <ion-item (click)="godestionation(item.item_id)" [class]="item.active  ? 'active-color' : 'normal-color'"  [class.unread]="!item.status" lines="none">
 
       <!-- Image of user -->
       <ion-avatar slot="start">

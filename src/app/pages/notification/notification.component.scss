@@ -1,5 +1,12 @@
-#notifications {
-    .unread {
-        --background: var(--ion-color-light);
-    }
+
+
+.active-color{
+    border: solid;
+    border-color: darkblue;
+    background: red;
+
+    background-color: rebeccapurple;
+}
+.item_bg{
+    background: red;
 }

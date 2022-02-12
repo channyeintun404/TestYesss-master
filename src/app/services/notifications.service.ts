@@ -61,7 +61,7 @@ export class NotificationsService {
       {
         id: 1,
         name: "new order is received",
-        active: "false",
+        active: false,
         type: "order",
         item_id:"160",
         description: "new order",
@@ -70,7 +70,7 @@ export class NotificationsService {
       {
         id: 2,
         name: "new order is received",
-        active: "true",
+        active:true,
         type: "order",
         item_id:"159",
         description: "order notification",
@@ -79,7 +79,7 @@ export class NotificationsService {
       {
         id: 3,
         name: "new order is received",
-        active: "false",
+        active: false,
         type: "order",
         item_id:"156",
         description: "",
@@ -87,7 +87,7 @@ export class NotificationsService {
       },        {
         id: 4,
         name: "new order is received",
-        active: "true",
+        active: true,
         type: "order",
         item_id:"157",
         description: "",
@@ -96,7 +96,7 @@ export class NotificationsService {
       {
         id: 5,
         name: "new order is received",
-        active: "false",
+        active: false,
         type: "order",
         item_id:"156",
         description: "",
@@ -105,7 +105,7 @@ export class NotificationsService {
       {
         id: 6,
         name: "new inquiry message in order",
-        active: "true",
+        active: true,
         type: "order",
         item_id:"156",
         description: " can i message to you?",
@@ -114,7 +114,7 @@ export class NotificationsService {
       {
         id: 6,
         name: "new inquiry message in order",
-        active: "true",
+        active: true,
         type: "order",
         item_id:"156",
         description: "i received my order",

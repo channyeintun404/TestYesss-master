@@ -305,11 +305,8 @@ console.log(Object.values(resp))
       this.variants_array.push(Object.values(variants['variants']))
     }
     console.log(this.optionIdArray)
-  })
-  
+  })  
 }
-
-
 
   // Create Option
   createOption(){
@@ -717,12 +714,10 @@ console.log(Object.values(resp))
       this.variantPostion = "";
       this.variantStatus ="";
     }
-      //refresh of option size and color
-      // resetPage(){
-
-      //   this.getOptionsSizeById(this.optionSizeId);
-      //   this.getOptionsColorById(this.optionColorId);
-      // }
+      //refresh of option
+      resetPage(){
+        this.getProductOptions();
+      }
 
    // Back to previous screen
    dismiss() {
