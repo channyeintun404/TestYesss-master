@@ -10,6 +10,7 @@ import { NotificationsService } from '../../services/notifications.service';
 import { CartComponent } from '../cart/cart.component';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-notification',
@@ -19,9 +20,11 @@ import { Router } from '@angular/router';
 export class NotificationComponent implements OnInit {
 
   notifications: any = [];
+  noti_count: any =0;
 
   constructor(private notificationsService: NotificationsService,
-    private modalController: ModalController, private router: Router) { }
+    private modalController: ModalController, private router: Router,
+    private cookieService: CookieService) { }
 
   ngOnInit() {
     this.getAllNotification();
@@ -43,8 +46,16 @@ export class NotificationComponent implements OnInit {
     })
   }
 
-  godestionation(id){
-    this.router.navigate([`/order-details/`+id]);
+  godestionation(item_id, id){    
+    this.notifications.forEach(element => {
+      if(element.id==id){
+        element.active = false;
+        this.noti_count = this.noti_count+1;        
+      } 
+    });
+    this.cookieService.delete('noti_count');
+    this.cookieService.set('noti_count',this.noti_count);
+    this.router.navigate([`/order-details/`+item_id]);
   }
 
   // Go to cart page

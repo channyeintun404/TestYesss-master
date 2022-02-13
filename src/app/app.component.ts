@@ -15,6 +15,7 @@ import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { PagesService } from './services/pages.service';
 import { CookieService } from 'ngx-cookie-service';
+import { NotificationsService } from './services/notifications.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -22,6 +23,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AppComponent {
   public appPages = [];
+  noti_count: any=0;
 
   constructor(
     private platform: Platform,
@@ -30,7 +32,8 @@ export class AppComponent {
     private menuController: MenuController,
     private router: Router,
     private pagesService: PagesService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private notificationsService: NotificationsService,
   ) {
     this.initializeApp();
   }
@@ -43,6 +46,7 @@ export class AppComponent {
       // Get Menus For Side Menu
       this.appPages = this.pagesService.getPages();
     });
+    this.getAllNotification();
   }
 
   // Signout Button
@@ -52,5 +56,19 @@ export class AppComponent {
       this.router.navigate(['/onbroading']);
       this.menuController.enable(false);
     }
+  }
+
+  getAllNotification(){
+    this.notificationsService.getAllNotification().then(res=>{
+      Object.values(res).forEach(element => {
+           //this.notifications.push(element)
+           if(element.active){
+            this.noti_count = this.noti_count+1;
+           }
+           
+      });
+    console.log("noti count form app"+this.noti_count)
+    this.cookieService.set('noti_count',this.noti_count);
+    })
   }
 }
