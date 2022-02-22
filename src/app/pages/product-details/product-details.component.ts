@@ -145,6 +145,7 @@
     event.stopImmediatePropagation();
     console.log( event, tabPath );
     this.router.navigate([`${tabPath}`]);
+    this.dismiss();
   }
 
    // get product by id

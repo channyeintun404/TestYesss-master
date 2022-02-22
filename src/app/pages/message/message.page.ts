@@ -17,7 +17,7 @@ export class MessagePage implements OnInit {
   date: any;
   message: any;
   customer_id: any;
-  show_msg_list:any=[]
+  show_msg_list:any=[];
   unique_customer_email: any[];
   unique_customer_phone: any[];
   constructor(public modalController: ModalController,
@@ -51,10 +51,7 @@ export class MessagePage implements OnInit {
         for (const message of this.unique_customername){
           this.show_msg_list.push(false)
         }
-        console.log(this.msgLists)
-        console.log(customerIdList)
-        console.log(this.unique_customer_email)
-        console.log(this.unique_customer_phone)
+
       })
     }
   

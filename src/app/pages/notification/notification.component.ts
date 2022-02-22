@@ -11,6 +11,7 @@ import { CartComponent } from '../cart/cart.component';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { ReviewDetailsComponent } from 'src/app/review-details/review-details.component';
 
 @Component({
   selector: 'app-notification',
@@ -46,7 +47,7 @@ export class NotificationComponent implements OnInit {
     })
   }
 
-  godestionation(item_id, id){    
+  godestionation(item_id, id,type){    
     this.notifications.forEach(element => {
       if(element.id==id){
         element.active = false;
@@ -55,14 +56,33 @@ export class NotificationComponent implements OnInit {
     });
     this.cookieService.delete('noti_count');
     this.cookieService.set('noti_count',this.noti_count);
-    this.router.navigate([`/order-details/`+item_id]);
+    if(type=="order"){
+      this.router.navigate([`/order-details/`+item_id]);
+    }else if(type=="product"){
+      this.goToReviewDetailsPage(item_id);
+    }else if(type=="productInquery"){
+      this.router.navigate([`/message`]);
+    }
+   
   }
 
-  // Go to cart page
+  // Go to review page
   async gotoCartPage() {
     const modal = await this.modalController.create({
       component: CartComponent
     });
     return await modal.present();
+  }  async goToReviewDetailsPage(pid) {
+    // this.dismiss();  
+    const modal = await this.modalController.create({
+      component: ReviewDetailsComponent,
+      componentProps:  { 
+        id: pid
+      }
+    });
+    // console.log(this.products)
+    return await modal.present();
   }
+
+
 }
