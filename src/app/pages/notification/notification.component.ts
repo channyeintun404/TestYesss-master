@@ -12,20 +12,24 @@ import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { ReviewDetailsComponent } from 'src/app/review-details/review-details.component';
-
+import { ShipmentDetailsComponent } from '../shipment-details/shipment-details.component';
+import { ShipmentsService } from 'src/app/services/shipments.service';
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.scss'],
 })
 export class NotificationComponent implements OnInit {
-
+  orderid: string;
+  currentShipment: any;
+  currentShipmentId: any;
   notifications: any = [];
   noti_count: any =0;
-
+  
   constructor(private notificationsService: NotificationsService,
     private modalController: ModalController, private router: Router,
-    private cookieService: CookieService) { }
+    private cookieService: CookieService,
+    private shipmentsService: ShipmentsService) { }
 
   ngOnInit() {
     this.getAllNotification();
@@ -62,17 +66,22 @@ export class NotificationComponent implements OnInit {
       this.goToReviewDetailsPage(item_id);
     }else if(type=="productInquery"){
       this.router.navigate([`/message`]);
+    }else if(type=="shipment"){
+      this.goShipmentDetailPage(item_id);
     }
    
   }
 
+
   // Go to review page
   async gotoCartPage() {
+    // this.checkShipment();
     const modal = await this.modalController.create({
       component: CartComponent
     });
     return await modal.present();
-  }  async goToReviewDetailsPage(pid) {
+  }  
+  async goToReviewDetailsPage(pid) {
     // this.dismiss();  
     const modal = await this.modalController.create({
       component: ReviewDetailsComponent,
@@ -81,6 +90,14 @@ export class NotificationComponent implements OnInit {
       }
     });
     // console.log(this.products)
+    return await modal.present();
+  }
+  async goShipmentDetailPage(id) {
+    console.log(id)
+    const modal = await this.modalController.create({
+      component: ShipmentDetailsComponent,
+      componentProps: { id: id }
+    });
     return await modal.present();
   }
 

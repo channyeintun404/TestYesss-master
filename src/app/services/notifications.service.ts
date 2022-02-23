@@ -165,6 +165,36 @@ export class NotificationsService {
         description: "good product",
         date: "18/02/2022"
       }
+      ,
+      {
+        id: 12,
+        name: "new shipment is received",
+        active: true,
+        type: "shipment",
+        item_id:"47",
+        description: "shipment notification",
+        date: "23/02/2022"
+      }
+      ,
+      {
+        id: 13,
+        name: "new shipment is received",
+        active: true,
+        type: "shipment",
+        item_id:"46",
+        description: "new shipment notification",
+        date: "23/02/2022"
+      }
+      ,
+      {
+        id: 14,
+        name: "new shipment is received",
+        active: true,
+        type: "shipment",
+        item_id:"45",
+        description: "notification for shipment",
+        date: "24/02/2022"
+      }
     ];
     return new Promise((resolve) => {
       resolve(this.notification);
