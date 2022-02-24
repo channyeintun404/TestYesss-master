@@ -32,36 +32,40 @@
         <ion-label>
           <ion-icon name="md-person" color="color2"></ion-icon>
         </ion-label>
-        <ion-input type="text" placeholder="Name" name="name"></ion-input>
+        <ion-input type="text" placeholder="Name" name="name" [(ngModel)]="firstname"></ion-input>       
       </ion-item>
+      <ion-label *ngIf="error.includes('Name')"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-label>
 
       <!-- Email -->
       <ion-item class="ion-padding-top">
         <ion-label>
           <ion-icon name="md-mail" color="color2"></ion-icon>
         </ion-label>
-        <ion-input type="email" placeholder="Email" name="email"></ion-input>
+        <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="email"></ion-input>
       </ion-item>
+      <ion-text *ngIf="error.includes('Email')"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-text>
 
       <!-- Phone Number -->
       <ion-item class="ion-padding-top">
         <ion-label>
           <ion-icon name="call" color="color2"></ion-icon>
         </ion-label>
-        <ion-input type="number" placeholder="Phone Number" name="phone"></ion-input>
+        <ion-input type="number" placeholder="Phone Number" name="phone" [(ngModel)]="phone"></ion-input>
       </ion-item>
+      <ion-text *ngIf="error.includes('PhoneNumber')"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-text>
 
       <!-- Password -->
       <ion-item class="ion-padding-top">
         <ion-label>
           <ion-icon name="md-eye" color="color2"></ion-icon>
         </ion-label>
-        <ion-input type="password" placeholder="Password" name="password"></ion-input>
+        <ion-input type="password" placeholder="Password" name="password"  [(ngModel)]="password"></ion-input>
       </ion-item>
+      <ion-text *ngIf="error.includes('Password')"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-text>
 
       <!-- SignUp Button -->
       <div class="buttons ion-padding-top">
-        <ion-button expand="block" color="color1" routerLink="/tabs/tab1" routerDirection="root">
+        <ion-button expand="block" color="color1" (click)="register()">
           <ion-text><strong>SIGN UP</strong></ion-text>
         </ion-button>
 

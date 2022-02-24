@@ -14,6 +14,16 @@ import { Option } from '../models/option.model';
       super(http);
       this.setModel('users');
     }
+
+    createUser(data:any){
+      console.log(data);
+      return new Promise((resolve)=>{
+        this.create(data).subscribe(res=>{
+          // console.log("add res "+JSON.stringify(res));
+          resolve(res);
+        })
+      })
+    } 
   
     getUserById(id){
       return new Promise((resolve)=> {
