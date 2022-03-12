@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
+import { VendorsService } from 'src/app/services/vendors.services';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import { StatesService } from 'src/app/services/states.services';
 
 @Component({
   selector: 'app-signup',
@@ -15,77 +17,102 @@ export class SignupComponent implements OnInit {
   firstname: string;
   phone : number;
   password : string;
+  company : string;
+  address : string;
+  city: string;
+  state : string;
+  new_company_id : number;
   error: string="";
+  statesLists: any[];
   
   constructor(
     private usersService: UsersService,
+    private vendorsService: VendorsService,
     private cookieService: CookieService,
+    private statesService: StatesService,
     private router: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getAllState();
+  }
 
   register(){
 
-    if(this.firstname==null){
+    if(this.firstname==null|| this.firstname ==""){
       this.error = "Please Enter Name!!"
-    }else if(this.email==null) {
-      this.error = "Please Enter Email!!"
-    }else if(this.phone==null){
-     this.error = "Please Enter PhoneNumber!!"
-    }else if(this.password==null){
-      this.error = "Please Enter Password!!"
-    }else{
-      console.log("Good")
     }
-    // this.usersService.createUser({        
-    //   "email": this.email,        
-    //   "user_type": "V",
-    //   "company_id": 0,
-    //   "status": "A",
-    //   "firstname":this.firstname,      
-    //   "phone":this.phone,
-    //   "password":this.password
-    //  }).then((resp: any) => {
-     
-    //   this.newUserId= resp["user_id"];
-    //   console.log(this.newUserId);
-    //   this.cookieService.set('userId',this.newUserId);
-    //   this.router.navigate([`${"/tabs/tab1"}`]);
-    // })
+    else if(this.company==null || this.company=="") {
+      this.error = "Please Enter Company!!"
+    }
+    else if(this.email==null || this.email=="") {
+      this.error = "Please Enter Email!!"
+    }
+    else if(this.phone==null){
+     this.error = "Please Enter PhoneNumber!!"
+    }
+    else if(this.address==null || this.address=="") {
+      this.error = "Please Enter Address!!"
+    }
+    else if(this.city==null || this.city=="") {
+      this.error = "Please Enter City!!"
+    }
+    else if(this.state==null || this.state=="") {
+      this.error = "Please Choose State!!"
+    }
+    else if(this.password==null || this.password==""){
+      this.error = "Please Enter Password!!"
+    }
+    else{ 
+        this.createVendor();
+    }   
+  }
+  
+  createVendor(){
+    this.vendorsService.createVendor({
+      "company": this.company,        
+      "storefront": "api",
+      "email": this.email,
+      "phone": this.phone,
+      "address":this.address,      
+      "city":this.city,
+      "country":"Myanmar",
+      "state" : this.state,
+      "zipcode": "1"
+    }).then((resp: any) => {
+      this.new_company_id = resp["store_id"];
+      this.createVendorAccount(this.new_company_id);     
+    })
   }
 
-     //Create Product
-    //  createProduct(){
-    //   //  console.log("image url is "+ this.mainImagesURl)
-    //   this.productService.createProduct(
-    //     {        
-    //       "product": this.productName,        
-    //       "product_code": this.productCode,
-    //       "amount": this.product_amount,
-    //       "category_ids":this.category_ids,
-    //       "full_description": this.productDescription,
-    //       "price":parseInt(this.productPrice),
-    //       "list_price":parseInt(this.list_price),
-    //       "status": this.status,
-    //       "company_id": this.companyId,        
-    //       "main_category": 275,
-    //       "discountPrice": 50000,
-    //       "details_layout": "default",
-    //       "min_qty":0,
-    //       "quantity": 1,
-    //       "isWishlist": true
-    //      }).then((resp: any) => {
-         
-    //       this.newProductId= resp
-    //       // // if(this.productName==null){
-    //       // //   this.error = "Please Enter Name of Product!!"
-    //       // // }
-    //       // this.createProductSizeOptions();
-    //       // this.createProductColorOptions();
-    //     })
-    //     this.imagesArrayforView.push('1.jpg')
-    //     this.isOption=true;
-    //     this.getProductOptions(); 
-    //     }   
+  createVendorAccount(company_id){
+    this.usersService.createUser({        
+      "email": this.email,        
+      "user_type": "V",
+      "company_id": company_id,
+      "status": "A",
+      "firstname":this.firstname,      
+      "phone":this.phone,
+      "password":this.password,
+      "company" : this.company,
+      "company_name" : this.company
+     }).then((resp: any) => {
+     
+      this.newUserId= resp["user_id"];
+      console.log(this.newUserId);
+      this.cookieService.deleteAll();
+      this.cookieService.set('userId',this.newUserId);
+      this.router.navigate([`${"/tabs/tab1"}`]);
+    })
+  }
 
+  getAllState(){
+    this.statesService.getAllState().then(res=>{
+      console.log(res)
+      this.statesLists = []
+      for(const state of Object.values(res)){
+        this.statesLists.push(state);
+      }
+      
+    })
+  }
 }

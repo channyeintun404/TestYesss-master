@@ -9,6 +9,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-onboarding',
   templateUrl: './onboarding.component.html',
@@ -29,9 +30,11 @@ export class OnboardingComponent implements OnInit {
   };
 
 
-  constructor(private menuController: MenuController,) { }
+  constructor(private menuController: MenuController,
+    private cookieService: CookieService) { }
 
   ngOnInit() { 
     this.menuController.enable(false);
+    this.cookieService.deleteAll();
   }
 }

@@ -44,6 +44,8 @@ import { ProductMessagesComponent } from './pages/product-messages/product-messa
 import { PaymentMethodDetailsComponent } from './pages/payment-method-details/payment-method-details.component';
 import { ShippingMethodDetailComponent } from './pages/shipping-method-detail/shipping-method-detail.component';
 import { AddBrandComponent } from './pages/add-brand/add-brand.component';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+
 @NgModule({
   declarations: [AppComponent,
     ProductDetailsComponent,
@@ -89,7 +91,8 @@ import { AddBrandComponent } from './pages/add-brand/add-brand.component';
     Media,
     StreamingMedia,
     PhotoViewer,
-    CookieService
+    CookieService,
+    NativeStorage
   ],
   bootstrap: [AppComponent]
 })

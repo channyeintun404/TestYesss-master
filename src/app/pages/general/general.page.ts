@@ -34,6 +34,7 @@ export class GeneralPage implements OnInit {
   ngOnInit() {
     this.companyId =  this.cookieService.get('companyId');
     this.getVendorsById(this.companyId);
+    console.log(this.companyId);
   }
   getVendorsById(id){
     this.vendorsServices.getVendorById(id).then(res=>{

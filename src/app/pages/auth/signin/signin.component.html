@@ -24,11 +24,24 @@
   </div>
 
   <div class="section_two ion-padding">
-    <img class="ion-padding" src="assets/images/yes_supplier_store.jpg" />
+    <img class="ion-padding" src="assets/images/yes_supplier_store.png" />
+
+
 
     <!-- SignIn Form -->
     <form class="ion-padding">
       <ion-text *ngIf="error!=null"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-text>
+   
+      <ion-chip *ngIf="login_username!=null" (click)="goLogin()">
+        <ion-avatar>
+          <ion-icon style="font-size: 20px;" name="md-person" color="color2"></ion-icon>
+        </ion-avatar>
+        <ion-label>{{login_username}}</ion-label>
+      </ion-chip><br><br>    
+    
+        <a *ngIf="!show_login" style="text-align: center;" (click)="showLogin()"> login another account?</a>
+
+      <div>
       <!-- Email -->
       <ion-item>
         <ion-label>
@@ -40,9 +53,14 @@
       <!-- Password -->
       <ion-item class="ion-padding-top">
         <ion-label>
-          <ion-icon name="md-eye" color="color2"></ion-icon>
+          <ion-icon name="md-eye" color="color2"></ion-icon>         
         </ion-label>
         <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="password"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Remember Password?</ion-label>
+        <ion-checkbox [(ngModel)]="rem_password" [ngModelOptions]="{standalone: true}"></ion-checkbox>
       </ion-item>
 
       <!-- Forget Password Button -->
@@ -51,28 +69,30 @@
         Forget Password?
       </ion-button>
 
-
       <!-- SignIn Buttons -->
       <div class="buttons">
-        <ion-button expand="block" color="color1"  (click)="checkLogin()">
+        <ion-button expand="block" color="color1"  (click)="checkLogin(email,password)">
           <ion-text><strong>SIGN IN</strong></ion-text>
         </ion-button>
 
-        <p>Or via social media</p>
+        <a href="">Forgot Password?</a><br>
+        <ion-button fill="clear" color="color2" routerLink="/signup" routerDirection="root">
+          <span>Don't have an account? <b>Sign Up</b></span>
+        </ion-button>
 
-        <a href="" target="_blank" class="btn-social btn-facebook"><i class="fab fa-facebook-f"></i></a>
+        <!-- <a href="" target="_blank" class="btn-social btn-facebook"><i class="fab fa-facebook-f"></i></a>
         <a href="" target="_blank" class="btn-social btn-google-plus"><i class="fab fa-google-plus-g"></i></a>
         <a href="" target="_blank" class="btn-social btn-instagram"><i class="fab fa-instagram"></i></a>
-        <a href="" target="_blank" class="btn-social btn-twitter"><i class="fab fa-twitter"></i></a>
-
+        <a href="" target="_blank" class="btn-social btn-twitter"><i class="fab fa-twitter"></i></a> -->
+      </div>
       </div>
     </form>
   </div>
 
   <!-- SignUp Buttons -->
-  <div class="section_three">
+  <!-- <div class="section_three">
     <ion-button fill="clear" color="color2" routerLink="/signup" routerDirection="root">
       <span>Don't have an account? <b>Sign Up</b></span>
     </ion-button>
-  </div>
+  </div> -->
 </ion-content>

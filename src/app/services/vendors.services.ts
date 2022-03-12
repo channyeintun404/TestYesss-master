@@ -17,7 +17,14 @@ import { name } from '@cloudinary/base/actions/namedTransformation';
       this.setModel('vendors');
     }
   
-
+    createVendor(data:any){
+      console.log(data);
+      return new Promise((resolve)=>{
+        this.create(data).subscribe(res=>{
+          resolve(res);
+        })
+      })
+    } 
   getUserByEmailAndPassword(email,pass) {
     return new Promise((resolve)=>{
       this.getOptionByQueryString('login&user_login='+email+'&password='+pass).subscribe(res=> {
