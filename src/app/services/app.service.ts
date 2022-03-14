@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 export class AppService {
 
   providedIn : 'root'
-  protected baseURL: string = 'http://www.yesss.com.mm/api.php';
+  protected baseURL: string = 'http://13.250.124.7/api.php';
   protected model: string;
   private apiURL: string;
   private httpOptions = {
@@ -49,11 +49,11 @@ export class AppService {
   }
 
   public getOptionByQueryString(queryString: string) {
-    return this.http.get("http://www.yesss.com.mm/api.php?_d=" + queryString, this.httpOptions);
+    return this.http.get("http://13.250.124.7/api.php?_d=" + queryString, this.httpOptions);
   }
 
   public createOptions(data: any): Observable<any> {
-    return this.http.post("http://www.yesss.com.mm/api.php?_d=options", data, this.httpOptions);
+    return this.http.post("http://13.250.124.7/api.php?_d=options", data, this.httpOptions);
   }
 
   public getByQueryString(queryString: string) {

@@ -53,7 +53,7 @@ export class AppComponent {
   signout() {
     if(confirm("Are you sure want to logout!!")) {
       this.cookieService.deleteAll();
-      this.router.navigate(['/onbroading']);
+      this.router.navigate(['/signin']);
       this.menuController.enable(false);
     }
   }

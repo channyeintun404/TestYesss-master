@@ -46,8 +46,9 @@ export class AccountComponent implements OnInit {
   
   Logout() {
     if(confirm("Are you sure want to logout!!")) {
-      this.cookieService.deleteAll();
-      this.router.navigate([`${'./'}`]);
+      // this.cookieService.deleteAll();
+      console.log(this.cookieService.get('companyId'))
+      this.router.navigate([`${'./signin'}`]);
     }
   }
 

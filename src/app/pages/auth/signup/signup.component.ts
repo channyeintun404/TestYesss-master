@@ -32,7 +32,8 @@ export class SignupComponent implements OnInit {
     private statesService: StatesService,
     private router: Router) { }
 
-  ngOnInit() {
+  ngOnInit() {    
+    this.cookieService.deleteAll();
     this.getAllState();
   }
 
@@ -99,7 +100,6 @@ export class SignupComponent implements OnInit {
      
       this.newUserId= resp["user_id"];
       console.log(this.newUserId);
-      this.cookieService.deleteAll();
       this.cookieService.set('userId',this.newUserId);
       this.router.navigate([`${"/tabs/tab1"}`]);
     })

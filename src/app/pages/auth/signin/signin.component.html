@@ -41,7 +41,7 @@
     
         <a *ngIf="!show_login" style="text-align: center;" (click)="showLogin()"> login another account?</a>
 
-      <div>
+      <div *ngIf="show_login">
       <!-- Email -->
       <ion-item>
         <ion-label>

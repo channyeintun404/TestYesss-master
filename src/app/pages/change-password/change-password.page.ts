@@ -64,7 +64,7 @@ export class ChangePasswordPage implements OnInit {
     // Logout
     Logout(){
       this.cookieService.deleteAll();
-      this.router.navigate([`${"./"}`]);
+      this.router.navigate([`${"./signin"}`]);
     }
 
     back() {
