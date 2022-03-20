@@ -20,10 +20,17 @@ export class SignupComponent implements OnInit {
   company : string;
   address : string;
   city: string;
-  state : string;
+  state_code : string;
+  ctiy_code : string;  
+  township : string;
   new_company_id : number;
   error: string="";
   statesLists: any[];
+  city_Lists: any[];
+  townships_Lists: any[];
+  showcity: boolean = false;
+  showtownship: boolean = false;
+  password_type :string ="password";
   
   constructor(
     private usersService: UsersService,
@@ -32,9 +39,12 @@ export class SignupComponent implements OnInit {
     private statesService: StatesService,
     private router: Router) { }
 
-  ngOnInit() {    
+  ngOnInit() {  
     this.cookieService.deleteAll();
     this.getAllState();
+    this.getAllCity();
+    this.getAllTownship();
+    
   }
 
   register(){
@@ -57,7 +67,7 @@ export class SignupComponent implements OnInit {
     else if(this.city==null || this.city=="") {
       this.error = "Please Enter City!!"
     }
-    else if(this.state==null || this.state=="") {
+    else if(this.state_code==null || this.state_code=="") {
       this.error = "Please Choose State!!"
     }
     else if(this.password==null || this.password==""){
@@ -75,10 +85,10 @@ export class SignupComponent implements OnInit {
       "email": this.email,
       "phone": this.phone,
       "address":this.address,      
-      "city":this.city,
+      "city":this.ctiy_code,
       "country":"Myanmar",
-      "state" : this.state,
-      "zipcode": "1"
+      "state" : this.state_code,
+      "zipcode": this.township
     }).then((resp: any) => {
       this.new_company_id = resp["store_id"];
       this.createVendorAccount(this.new_company_id);     
@@ -115,4 +125,44 @@ export class SignupComponent implements OnInit {
       
     })
   }
+
+  getAllCity(){
+    this.statesService.getAllCity().then(res=>{
+      console.log(res)
+      this.city_Lists = []
+      for(const city of Object.values(res)){
+        this.city_Lists.push(city);
+      }
+      
+    })
+  }
+
+  getAllTownship(){
+    this.statesService.getAllTownship().then(res=>{
+      console.log(res)
+      this.townships_Lists = []
+      for(const township of Object.values(res)){
+        this.townships_Lists.push(township);
+      }
+      
+    })
+  }
+
+  ClickState(){
+    this.showcity = true
+  }
+
+  ClickCity(){
+    this.showtownship= true;
+  }
+
+  showPassword(){
+    if(this.password_type=="password"){
+      this.password_type = "text"
+    }
+    else{
+      this.password_type ="password"
+    }
+  }
+  
 }

@@ -24,6 +24,7 @@ export class SigninComponent implements OnInit {
   login_password: string;
   login_username: string;
   show_login: boolean;
+  password_type: string;
 
   constructor(private cookieService: CookieService,
     private router: Router,
@@ -32,6 +33,7 @@ export class SigninComponent implements OnInit {
     private nativeStorage: NativeStorage) { }
 
   ngOnInit() {
+    this.password_type="password";
     this.getRember();    
     console.log(this.show_login);
   }
@@ -109,6 +111,16 @@ export class SigninComponent implements OnInit {
     event.stopImmediatePropagation();
     console.log( event, tabPath );
     this.router.navigate([`${tabPath}`]);
+  }
+  
+
+  showPassword(){
+    if(this.password_type=="password"){
+      this.password_type = "text"
+    }
+    else{
+      this.password_type ="password"
+    }
   }
 
 }

@@ -52,10 +52,12 @@
 
       <!-- Password -->
       <ion-item class="ion-padding-top">
-        <ion-label>
+        <ion-text (click)="showPassword()">
           <ion-icon name="md-eye" color="color2"></ion-icon>         
-        </ion-label>
-        <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="password"></ion-input>
+        </ion-text>
+        <!-- <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="password"></ion-input> -->
+        <ion-input [type]="password_type == 'password' ? 'password' : 'text'" placeholder="Password" name="password"  [(ngModel)]="password"></ion-input>
+
       </ion-item>
 
       <ion-item>

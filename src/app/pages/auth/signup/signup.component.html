@@ -86,7 +86,7 @@
    <!-- State -->
       <ion-item>
         <ion-label>Choose State</ion-label>
-        <ion-select [(ngModel)]="state"  [ngModelOptions]="{standalone: true}">
+        <ion-select [(ngModel)]="state_code"  [ngModelOptions]="{standalone: true}" (ionChange)="ClickState()" data-live-search="true">
         <div *ngFor="let state of statesLists">
           <ion-select-option [value]="state.code">{{state.province}}</ion-select-option>
         </div>
@@ -94,12 +94,37 @@
       </ion-item>
       <ion-label *ngIf="error.includes('State')"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-label>
 
+      <!-- City -->
+      <ion-item  *ngIf="showcity">
+        <ion-label>Choose City</ion-label>
+        <ion-select [(ngModel)]="city_code"  [ngModelOptions]="{standalone: true}" (ionChange)="ClickCity()" data-live-search="true">
+        <div *ngFor="let city of city_Lists">
+          <ion-select-option *ngIf="state_code==city.statecode" [value]="city.citycode">{{city.city}}</ion-select-option>
+        </div>
+        </ion-select>
+      </ion-item>
+      <ion-label *ngIf="error.includes('City')"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-label>
+
+
+     <!-- City -->
+      <ion-item  *ngIf="showtownship">
+        <ion-label>Choose Township</ion-label>
+        <ion-select [(ngModel)]="township"  [ngModelOptions]="{standalone: true}" >
+        <div *ngFor="let township of townships_Lists">
+          <ion-select-option *ngIf="city_code==township.citycode" [value]="township.name">{{township.name}}</ion-select-option>
+        </div>
+        </ion-select>
+      </ion-item>
+      <!-- <ion-label *ngIf="error.includes('State')"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-label> -->
+
+
       <!-- Password -->
-      <ion-item>
-        <ion-label>
-          <ion-icon name="md-eye" color="color2"></ion-icon>
-        </ion-label>
-        <ion-input type="password" placeholder="Password" name="password"  [(ngModel)]="password"></ion-input>
+      <ion-item >
+        <ion-text color="color2" (click)="showPassword()">
+          <ion-icon name="md-eye" ></ion-icon>
+        </ion-text>
+        <ion-input [type]="password_type == 'password' ? 'password' : 'text'" placeholder="Password" name="password"  [(ngModel)]="password"></ion-input>
+
       </ion-item>
       <ion-text *ngIf="error.includes('Password')"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-text>
 
