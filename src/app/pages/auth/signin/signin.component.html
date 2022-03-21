@@ -65,19 +65,13 @@
         <ion-checkbox [(ngModel)]="rem_password" [ngModelOptions]="{standalone: true}"></ion-checkbox>
       </ion-item>
 
-      <!-- Forget Password Button -->
-      <ion-button style="position: absolute;" expand="block" color="color2" fill="clear" slot="end" routerLink="/forget-password"
-        routerDirection="root">
-        Forget Password?
-      </ion-button>
-
       <!-- SignIn Buttons -->
       <div class="buttons">
         <ion-button expand="block" color="color1"  (click)="checkLogin(email,password)">
           <ion-text><strong>SIGN IN</strong></ion-text>
         </ion-button>
 
-        <a href="">Forgot Password?</a><br>
+        <a href="/forget-password">Forgot Password?</a><br>
         <ion-button fill="clear" color="color2" routerLink="/signup" routerDirection="root">
           <span>Don't have an account? <b>Sign Up</b></span>
         </ion-button>

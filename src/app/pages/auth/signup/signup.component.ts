@@ -21,7 +21,7 @@ export class SignupComponent implements OnInit {
   address : string;
   city: string;
   state_code : string;
-  ctiy_code : string;  
+  city_code : string;  
   township : string;
   new_company_id : number;
   error: string="";
@@ -64,11 +64,11 @@ export class SignupComponent implements OnInit {
     else if(this.address==null || this.address=="") {
       this.error = "Please Enter Address!!"
     }
-    else if(this.city==null || this.city=="") {
-      this.error = "Please Enter City!!"
-    }
     else if(this.state_code==null || this.state_code=="") {
       this.error = "Please Choose State!!"
+    } 
+    else if(this.city_code==null || this.city=="") {
+      this.error = "Please Enter City!!"
     }
     else if(this.password==null || this.password==""){
       this.error = "Please Enter Password!!"
@@ -85,7 +85,7 @@ export class SignupComponent implements OnInit {
       "email": this.email,
       "phone": this.phone,
       "address":this.address,      
-      "city":this.ctiy_code,
+      "city":this.city_code,
       "country":"Myanmar",
       "state" : this.state_code,
       "zipcode": this.township
@@ -111,6 +111,11 @@ export class SignupComponent implements OnInit {
       this.newUserId= resp["user_id"];
       console.log(this.newUserId);
       this.cookieService.set('userId',this.newUserId);
+      this.cookieService.set('companyId',company_id);
+      this.cookieService.set('company',this.company);
+      this.cookieService.set('password',this.password);
+      this.cookieService.set('email',this.email);           
+      this.cookieService.set('vendorName',this.company);
       this.router.navigate([`${"/tabs/tab1"}`]);
     })
   }

@@ -73,19 +73,9 @@
       </ion-item>
       <ion-label *ngIf="error.includes('Address')"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-label>
 
-
-        <!-- city -->
-      <ion-item>
-        <ion-label>
-          <!-- <ion-icon> <img class="ion-padding" src="assets/icon/company.png" /></ion-icon> -->
-        </ion-label>
-        <ion-input type="text" placeholder="City" name="city" [(ngModel)]="city"></ion-input>       
-      </ion-item>
-      <ion-label *ngIf="error.includes('City')"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-label>
-
    <!-- State -->
       <ion-item>
-        <ion-label>Choose State</ion-label>
+        <ion-label>State</ion-label>
         <ion-select [(ngModel)]="state_code"  [ngModelOptions]="{standalone: true}" (ionChange)="ClickState()" data-live-search="true">
         <div *ngFor="let state of statesLists">
           <ion-select-option [value]="state.code">{{state.province}}</ion-select-option>
@@ -96,7 +86,7 @@
 
       <!-- City -->
       <ion-item  *ngIf="showcity">
-        <ion-label>Choose City</ion-label>
+        <ion-label>City</ion-label>
         <ion-select [(ngModel)]="city_code"  [ngModelOptions]="{standalone: true}" (ionChange)="ClickCity()" data-live-search="true">
         <div *ngFor="let city of city_Lists">
           <ion-select-option *ngIf="state_code==city.statecode" [value]="city.citycode">{{city.city}}</ion-select-option>
@@ -108,7 +98,7 @@
 
      <!-- City -->
       <ion-item  *ngIf="showtownship">
-        <ion-label>Choose Township</ion-label>
+        <ion-label>Township</ion-label>
         <ion-select [(ngModel)]="township"  [ngModelOptions]="{standalone: true}" >
         <div *ngFor="let township of townships_Lists">
           <ion-select-option *ngIf="city_code==township.citycode" [value]="township.name">{{township.name}}</ion-select-option>
