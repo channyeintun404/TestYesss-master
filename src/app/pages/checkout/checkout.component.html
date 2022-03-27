@@ -356,7 +356,17 @@
 
     <!-- Go To Products Page Button Option  -->
     <!-- This Option will be visible on Step 3 -->
-    <ion-button *ngIf="steps[2].isSelected" color="color1" expand="block" (click)="gotoProductsPage()">Go Back To Products
-    </ion-button>
+
+    <ion-row *ngIf="steps[2].isSelected">
+     
+      <ion-col size="6">
+        <ion-text (click)="cancelCreation()" class="txt-close-product">Cancel</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text (click)="gotoProductsPage()" class="txt-done-product">Finish</ion-text>
+      </ion-col>
+      
+    </ion-row>
+          
   </ion-toolbar>
 </ion-footer>

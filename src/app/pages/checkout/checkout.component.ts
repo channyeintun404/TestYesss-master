@@ -719,6 +719,15 @@ console.log(Object.values(resp))
         this.getProductOptions();
       }
 
+
+      cancelCreation(){
+        if(confirm("Are you sure want to cancel!!")) {
+          this.productService.deleteProduct(this.newProductId).then((res)=>{
+            this.gotoProductsPage()
+          })
+        }   
+      }
+
    // Back to previous screen
    dismiss() {
      this.modalController.dismiss({

@@ -21,8 +21,16 @@ export class ProductsService extends AppService {
     console.log(data);
     return new Promise((resolve)=>{
       this.create(data).subscribe(res=>{
-        // console.log("add res "+JSON.stringify(res));
         resolve(res["product_id"]);
+      })
+    })
+  }
+
+
+  deleteProduct(id){
+    return new Promise((resolve)=>{
+      this.delete(id).subscribe(res=>{
+        resolve(res);
       })
     })
   }
