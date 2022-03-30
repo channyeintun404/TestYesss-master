@@ -103,7 +103,7 @@ ion-item {
     font-size: 12px;
     padding: 5px;
     color:#f0f0f0;
-    margin-left: 15%;
+    float: right;
 }
 .txt-edit{
     border: 1px liquid gray;
@@ -127,6 +127,17 @@ ion-item {
     color:#f0f0f0;
     margin-left: 5px;
     margin-top: -10px;
+}
+
+.txt-delete-option{
+    border: 1px liquid gray;
+    background-color: darkred;
+    border-radius: 3px;
+    width: 100;
+    height: 100;
+    font-size: 12px;
+    padding: 5px;
+    color:#f0f0f0;
 }
 .txt-done{
     border: 1px liquid gray;

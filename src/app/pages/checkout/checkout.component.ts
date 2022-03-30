@@ -728,6 +728,24 @@ console.log(Object.values(resp))
         }   
       }
 
+      back(){
+        if(this.steps[2].isSelected){
+          this.steps[0].isSelected = false;
+          this.steps[1].isSelected = true;
+          this.steps[2].isSelected = false;
+          this.checks[0].isSelected = true;
+          this.checks[1].isSelected = true;
+          this.checks[2].isSelected = false;
+          
+        }else{
+          if(confirm("This is go back to product page, you cannot change new product creation")) {
+            this.productService.deleteProduct(this.newProductId).then((res)=>{
+              this.gotoProductsPage();
+            })
+          } 
+        }
+        
+      }
    // Back to previous screen
    dismiss() {
      this.modalController.dismiss({

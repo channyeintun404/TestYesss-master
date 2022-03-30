@@ -408,6 +408,12 @@ saveChangesProductImage(){
     })
    }
 
+   deleteOption(option_id){
+     this.optionsService.deleteOption(option_id).then((resp:any)=>{
+       this.getProductOptions();
+     })
+   }
+
    
   updateVariant(option_name,option_id,variant_id,name,position,stauts,isdelete){
     console.log(option_name)    
