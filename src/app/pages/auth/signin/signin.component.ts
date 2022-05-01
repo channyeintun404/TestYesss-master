@@ -43,25 +43,27 @@ export class SigninComponent implements OnInit {
       console.log(res);
       this.user_info = res['user_info'];
       if(this.user_info!=null){
-        // this.vendorName = this.user_info.firstname      
-        // this.cookieService.set('vendorName',this.vendorName);
-        this.userId = this.user_info.user_id;
-        this.cookieService.set('userId',this.userId);
-        this.companyId = this.user_info.company_id;        
-        this.company = this.user_info.company;
-        this.cookieService.set('companyId',this.companyId);
-        this.cookieService.set('company',this.company);
-        this.cookieService.set('password',this.password);
-        this.cookieService.set('email',this.email);           
-        this.cookieService.set('vendorName',this.vendorName);
-        this.router.navigate([`${"/tabs/tab1"}`]);
-        console.log(this.user_info);
-        if(this.rem_password){
-          this.nativeStorage.setItem('rememberAccount', {property: this.email, anotherProperty: this.password})
-          .then(
-            () => console.log('Stored item!'),
-            error => console.error('Error storing item', error)
-          );
+        if(this.user_info.profile.status=="A"){          
+          this.userId = this.user_info.user_id;
+          this.cookieService.set('userId',this.userId);
+          this.companyId = this.user_info.company_id;        
+          this.company = this.user_info.company;
+          this.cookieService.set('companyId',this.companyId);
+          this.cookieService.set('company',this.company);
+          this.cookieService.set('password',this.password);
+          this.cookieService.set('email',this.email);           
+          this.cookieService.set('vendorName',this.vendorName);
+          this.router.navigate([`${"/tabs/tab1"}`]);
+          console.log(this.user_info);
+          if(this.rem_password){
+            this.nativeStorage.setItem('rememberAccount', {property: this.email, anotherProperty: this.password})
+            .then(
+              () => console.log('Stored item!'),
+              error => console.error('Error storing item', error)
+            );
+          }
+        }else{
+          this.error = "This User Account is need to Approve"
         }
 
       }else if(email == null || password == null){
@@ -75,6 +77,17 @@ export class SigninComponent implements OnInit {
         this.password = null;
       }
     })
+
+    // this.userId = 14;
+    // this.cookieService.set('userId',this.userId);
+    // this.companyId = 1;        
+    // this.company = "Test CNT";
+    // this.cookieService.set('companyId',this.companyId);
+    // this.cookieService.set('company',this.company);
+    // this.cookieService.set('password',this.password);
+    // this.cookieService.set('email',"channyeintun404_v@gmail.com");           
+    // this.cookieService.set('vendorName',"CCCC");
+    // this.router.navigate([`${"/tabs/tab1"}`]);
 
   }
 

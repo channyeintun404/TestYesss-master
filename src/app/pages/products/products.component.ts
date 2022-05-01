@@ -57,15 +57,15 @@ export class ProductsComponent implements OnInit {
       
      }
 
-  ngOnInit() {     
-    this.companyId =  this.cookieService.get('companyId'); 
+  async ngOnInit() {     
+   this.companyId =  this.cookieService.get('companyId'); 
         this.route.params.subscribe(params => {
           this.cid = params['cid'];
           this.priceRange_lower = params['lower'];
           this.priceRange_upper = params['upper']
           });
-    this.getProductList();
-    this.getCategories();
+    await this.getProductList();
+    await this.getCategories();
   }
 
   // Get List of Products

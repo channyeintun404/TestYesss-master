@@ -75,7 +75,7 @@ export class ProductEditComponent implements OnInit {
   brand_array: any[];
   features_array: any[];
   select_brand_id: any
-  selectImage: string="Please Select File!!";
+  selectImage: string="Please Select File";
   variant: any;
   brand: any;
 
@@ -87,7 +87,7 @@ export class ProductEditComponent implements OnInit {
     , private router: Router, private featuresService: FeaturesService) { }
     
 
-  ngOnInit() {
+   ngOnInit() {
 
     this.getFeatures();
     this.getProductById();
@@ -182,15 +182,16 @@ getProductById(){
 
   this.productsService.getProductById(this.id).then( res=>{
     console.log(res);
+    this.product_code = res['product_code']
+    this.list_price = res['list_price']    
+    this.product_amount = res['amount']
+    this.list_price = res['list_price']
     this.select_brand_id =  res['product_features']['18']['variant_id']
-    console.log( this.select_brand_id);
     this.name = res['product']
     this.price = res['price']
     this.price = parseInt(this.price.toFixed())
-    this.product_code = res['product_code']    
-    this.product_amount = res['amount']
-    this.list_price = res['list_price']
-    this.list_price = parseInt(this.list_price.toFixed())
+   
+    // this.list_price = parseInt(this.list_price.toFixed())
     this.full_description = res['full_description']
     this.status = res['status']
     for (const image of Object.values(res['image_pairs'])){

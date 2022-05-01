@@ -12,13 +12,15 @@ import { Observable } from 'rxjs';
 export class AppService {
 
   providedIn : 'root'
-  protected baseURL: string = 'http://13.250.124.7/api.php';
+  protected baseURL: string = 'http://13.250.124.7/new/api.php';
   protected model: string;
   private apiURL: string;
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
-      'Authorization': 'Basic ' + 'aGFud2luc3RlckBnbWFpbC5jb206M2UxNjUyRDcwbTg2ODk5MDcwaTBOYWo0NXU5MmNjVUs='
+      // 'Authorization': 'Basic ' + 'aGFud2luc3RlckBnbWFpbC5jb206M2UxNjUyRDcwbTg2ODk5MDcwaTBOYWo0NXU5MmNjVUs='
+      'Authorization': 'Basic ' + 'YWRtaW5AeWVzc3MuY29tLm1tOmYxM202d2pGMjE3MDMwMmM3TzBrNjY5ajQxNEo2bDRZ'
+
     })
   };
 
@@ -49,11 +51,11 @@ export class AppService {
   }
 
   public getOptionByQueryString(queryString: string) {
-    return this.http.get("http://13.250.124.7/api.php?_d=" + queryString, this.httpOptions);
+    return this.http.get("http://13.250.124.7/new/api.php?_d=" + queryString, this.httpOptions);
   }
 
   public createOptions(data: any): Observable<any> {
-    return this.http.post("http://13.250.124.7/api.php?_d=options", data, this.httpOptions);
+    return this.http.post("http://13.250.124.7/new/api.php?_d=options", data, this.httpOptions);
   }
 
   public getByQueryString(queryString: string) {
@@ -72,7 +74,7 @@ export class AppService {
     const deleteHttpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'raw',
-        'Authorization': 'Basic ' + 'aGFud2luc3RlckBnbWFpbC5jb206M2UxNjUyRDcwbTg2ODk5MDcwaTBOYWo0NXU5MmNjVUs='
+        'Authorization': 'Basic ' + 'YWRtaW5AeWVzc3MuY29tLm1tOmYxM202d2pGMjE3MDMwMmM3TzBrNjY5ajQxNEo2bDRZ'
       })
     };
     return this.http.delete(this.apiURL + '/' + id, deleteHttpOptions);

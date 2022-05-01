@@ -70,7 +70,7 @@ export class ShippingsComponent implements OnInit {
       if(value=="P"){
       //  this.clickTab;
       // this.router.navigate([`http://yesss.com.mm/admin.php?dispatch=shipments.packing_slip&shipment_ids[]=27`]);
-      window.open('http://yesss.com.mm/admin.php?dispatch=shipments.packing_slip&shipment_ids[]=' + shipment_id, "_blank");
+      window.open('http://yesss.com.mm/new/vendor.php?dispatch=shipments.packing_slip&shipment_ids[]=' + shipment_id, "_blank");
       }
       this.getAllShipment();
     }

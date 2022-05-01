@@ -88,9 +88,10 @@ export class SignupComponent implements OnInit {
       "city":this.city_code,
       "country":"Myanmar",
       "state" : this.state_code,
-      "zipcode": this.township
+      "zipcode": this.township,
+      "status":"N"
     }).then((resp: any) => {
-      this.new_company_id = resp["store_id"];
+      this.new_company_id = resp["company_id"];
       this.createVendorAccount(this.new_company_id);     
     })
   }
@@ -100,7 +101,7 @@ export class SignupComponent implements OnInit {
       "email": this.email,        
       "user_type": "V",
       "company_id": company_id,
-      "status": "A",
+      "status": "H",
       "firstname":this.firstname,      
       "phone":this.phone,
       "password":this.password,

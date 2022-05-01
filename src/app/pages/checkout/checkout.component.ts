@@ -36,6 +36,7 @@ import { image } from '@cloudinary/base/qualifiers/source';
 import { Option } from 'src/app/models/option.model';
 import { OptionsService } from 'src/app/services/options.service';
 import { CookieService } from 'ngx-cookie-service';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 const MEDIA_FOLDER_NAME = 'my_media';
 
@@ -152,7 +153,8 @@ const MEDIA_FOLDER_NAME = 'my_media';
     private photoViewer: PhotoViewer,
     private actionSheetController: ActionSheetController,
     private platfrom: Platform, 
-    private cookieService: CookieService) { }
+    private cookieService: CookieService,
+    private nativeStorage: NativeStorage) { }
  
    ngOnInit() {
     this.companyId =  this.cookieService.get('companyId'); 
@@ -260,7 +262,8 @@ const MEDIA_FOLDER_NAME = 'my_media';
     }
     if(this.Level2Child.length==0){
       this.isHaveLevel2Child = false
-      this.isHaveLevel3Child = false       
+      this.isHaveLevel3Child = false
+      this.category_ids =  categoriesByLevel1_id;      
     }
     else
       this.isHaveLevel2Child = true
@@ -408,14 +411,14 @@ console.log(Object.values(resp))
  
    // Go to product page
    gotoProductsPage() {
-     console.log(this.category_ids)
      this.dismiss();
      this.router.navigate(['/tabs/products']);
    }
  
    //Create Product
    createProduct(){
-    //  console.log("image url is "+ this.mainImagesURl)
+      console.log("category id "+ this.category_ids)
+    
     this.productService.createProduct(
       {        
         "product": this.productName,        
@@ -434,7 +437,17 @@ console.log(Object.values(resp))
         "quantity": 1,
         "isWishlist": true
        }).then((resp: any) => {
-       
+          // this.nativeStorage.setItem('product-product_code', {productName: this.productName, product_code: this.password})
+          // .then(
+          //   () => console.log('Stored product-product_code'),
+          //   error => console.error('Error storing item', error)
+          // );
+          // this.nativeStorage.setItem('amount-category_ids', {productName: this.productName, product_code: this.password})
+          // .then(
+          //   () => console.log('Stored product-product_code'),
+          //   error => console.error('Error storing item', error)
+          // );
+        
         this.newProductId= resp
         // // if(this.productName==null){
         // //   this.error = "Please Enter Name of Product!!"
@@ -510,14 +523,6 @@ console.log(Object.values(resp))
          })       
         
         }
-        
-
-     
-
-      
-
-
-
       //image
       loadFiles() {
         this.file.listDir(this.file.dataDirectory, MEDIA_FOLDER_NAME).then(
@@ -737,15 +742,35 @@ console.log(Object.values(resp))
           this.checks[1].isSelected = true;
           this.checks[2].isSelected = false;
           
-        }else{
-          if(confirm("This is go back to product page, you cannot change new product creation")) {
-            this.productService.deleteProduct(this.newProductId).then((res)=>{
-              this.gotoProductsPage();
-            })
-          } 
+        }
+        else if(this.steps[1].isSelected){
+          this.steps[0].isSelected = true;
+          this.steps[1].isSelected = false;
+          this.steps[2].isSelected = false;
+          this.checks[0].isSelected = true;
+          this.checks[1].isSelected = false;
+          this.checks[2].isSelected = false;
+          if(this.newProductId!=null){
+            this.productService.deleteProduct(this.newProductId)
+          }
+          // if(confirm("This is go back to product page, you cannot change new product creation")) {
+          //   this.productService.deleteProduct(this.newProductId).then((res)=>{
+          //     this.gotoProductsPage();
+          //   })
+          // } 
+        }
+        else{
+          this.dismiss();
         }
         
       }
+
+      deleteOption(option_id){
+        this.optionsService.deleteOption(option_id).then((resp:any)=>{
+          this.getProductOptions();
+        })
+      }
+
    // Back to previous screen
    dismiss() {
      this.modalController.dismiss({

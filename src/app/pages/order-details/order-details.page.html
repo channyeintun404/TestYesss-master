@@ -299,7 +299,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row class="ion-align-items-start" *ngIf="currentShipment != null">
+      <ion-row class="ion-align-items-start">
         <ion-col>
           <ion-item>
             <ion-label>Shippings</ion-label>
@@ -309,7 +309,7 @@
       </ion-row>
 
       <ion-row class="ion-align-items-start" *ngIf="currentShipment == null">
-        <ion-col *ngIf="currentStatus=='K'||currentStatus=='J'||currentStatus=='A'">
+        <ion-col *ngIf="currentStatus=='H'||currentStatus=='G'||currentStatus=='E'">
           <ion-item>
             <ion-label>Shippings</ion-label>
             <ion-select [(ngModel)]="currentShipping_id" [ngModelOptions]="{standalone: true}" (cancel)="onCancel()"
@@ -321,7 +321,7 @@
         </ion-col>
       </ion-row>
       <div *ngIf="currentShipment == null">
-        <ion-row *ngIf="currentStatus=='K'||currentStatus=='J'||currentStatus=='A'">
+        <ion-row *ngIf="currentStatus=='H'||currentStatus=='G'||currentStatus=='E'">
             <ion-col size="6">
               <ion-item>
                 <ion-label>Tracking Number</ion-label>
