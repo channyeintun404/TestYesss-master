@@ -58,6 +58,7 @@ import { Option } from '../models/option.model';
   deleteOption(id) {
     return new Promise((resolve) => {
       this.delete(id).subscribe(res => {
+        resolve(res);
        });
     });
   }

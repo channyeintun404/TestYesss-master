@@ -19,6 +19,7 @@ import { throwError } from 'rxjs';
 import { CategoryService } from '../../services/category.service';
 // import { name } from '@cloudinary/base/actions/namedTransformation';
 import { Category } from 'src/app/models/category.model';
+import { Events } from '@ionic/angular';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -53,8 +54,12 @@ export class ProductsComponent implements OnInit {
     private productsService: ProductsService,
     public modalController: ModalController,
     private categoryService: CategoryService, 
-    private cookieService: CookieService) {
-      
+    private cookieService: CookieService,
+    public events: Events) {
+      events.subscribe('refresh_products', () => {
+        console.log('refresh products');
+        this.getProductList();
+      });
      }
 
   async ngOnInit() {     
@@ -69,8 +74,7 @@ export class ProductsComponent implements OnInit {
   }
 
   // Get List of Products
-  getProductList() {    
-    // this.products = this.productsService.productList();
+  getProductList() {  
     this.productsService.getProducts(this.cid,this.companyId).then((resp: any) => {
       console.log(resp);
       this.products = resp

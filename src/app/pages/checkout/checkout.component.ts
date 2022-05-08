@@ -37,6 +37,8 @@ import { Option } from 'src/app/models/option.model';
 import { OptionsService } from 'src/app/services/options.service';
 import { CookieService } from 'ngx-cookie-service';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Events } from '@ionic/angular';
+import { async } from '@angular/core/testing';
 
 const MEDIA_FOLDER_NAME = 'my_media';
 
@@ -137,6 +139,7 @@ const MEDIA_FOLDER_NAME = 'my_media';
   variantName: string;
   variantPostion: string;
   variantStatus: string;
+  active_create: boolean=true;
    
    constructor(public modalController: ModalController,
     private categoryService: CategoryService,
@@ -154,7 +157,8 @@ const MEDIA_FOLDER_NAME = 'my_media';
     private actionSheetController: ActionSheetController,
     private platfrom: Platform, 
     private cookieService: CookieService,
-    private nativeStorage: NativeStorage) { }
+    private nativeStorage: NativeStorage,
+    public events: Events) { }
  
    ngOnInit() {
     this.companyId =  this.cookieService.get('companyId'); 
@@ -168,18 +172,6 @@ const MEDIA_FOLDER_NAME = 'my_media';
     },(err)=>{
       this.imagePicker.requestReadPermission();
     })
-
-    // this.platfrom.ready().then(() => {
-    //   let path = this.file.dataDirectory;
-    //   this.file.checkDir(path, MEDIA_FOLDER_NAME).then(
-    //     () => {
-    //       this.loadFiles();
-    //     },
-    //     err => {
-    //       this.file.createDir(path, MEDIA_FOLDER_NAME, false);
-    //     }
-    //   );
-    // });
 
 
      // Checkout steps   
@@ -313,6 +305,7 @@ console.log(Object.values(resp))
 
   // Create Option
   createOption(){
+    this.active_create=false;
     this.optionsService.createProductOptions({
       "product_id": this.newProductId,
       "option_name": this.option_name,
@@ -324,7 +317,8 @@ console.log(Object.values(resp))
    this.addOption=false;
     this.option_name="";
     this.option_position="";
-    this.getProductOptions();
+    this.getProductOptions();    
+    this.active_create = true;  
     })
    }
 
@@ -386,9 +380,6 @@ console.log(Object.values(resp))
       }
       this.getProductOptions();
     })
-    // this.variantName="";
-    // this.variantPostion="";
-    // this.variantStatus="";
     this.show_option_name="";   
   }
 
@@ -412,6 +403,7 @@ console.log(Object.values(resp))
    // Go to product page
    gotoProductsPage() {
      this.dismiss();
+     this.events.publish('refresh_products');
      this.router.navigate(['/tabs/products']);
    }
  
@@ -436,24 +428,8 @@ console.log(Object.values(resp))
         "min_qty":0,
         "quantity": 1,
         "isWishlist": true
-       }).then((resp: any) => {
-          // this.nativeStorage.setItem('product-product_code', {productName: this.productName, product_code: this.password})
-          // .then(
-          //   () => console.log('Stored product-product_code'),
-          //   error => console.error('Error storing item', error)
-          // );
-          // this.nativeStorage.setItem('amount-category_ids', {productName: this.productName, product_code: this.password})
-          // .then(
-          //   () => console.log('Stored product-product_code'),
-          //   error => console.error('Error storing item', error)
-          // );
-        
+       }).then((resp: any) => {        
         this.newProductId= resp
-        // // if(this.productName==null){
-        // //   this.error = "Please Enter Name of Product!!"
-        // // }
-        // this.createProductSizeOptions();
-        // this.createProductColorOptions();
       })
       this.imagesArrayforView.push('1.jpg')
       this.isOption=true;
@@ -472,11 +448,6 @@ console.log(Object.values(resp))
             "http_image_path":this.imagesUrlArray[i],
             "https_image_path":this.imagesUrlArray[i]
           })
-
-          console.log("image array",imageurlarray)
-
-          // const result = imageurlarray.reduce((obj, cur) => ({...obj, [cur.sid]: cur}), {})
-          // console.log("result"+JSON.stringify(result))
           this.imagepairdetailed.push({
             "id":i,
             "detailed":{
@@ -487,8 +458,6 @@ console.log(Object.values(resp))
             
           })
         }
-
-      
         console.log("******"+JSON.stringify(this.imagepairdetailed))
         const convertArrayToObject = (array, key) => {
           const initialValue = {};
@@ -559,15 +528,6 @@ console.log(Object.values(resp))
       }
      
       pickImages() {
-        //this code are fine for ios but not android
-        // this.imagePicker.getPictures({}).then(
-        //   results => {
-        //     for (var i = 0; i < results.length; i++) {
-        //       this.copyFileToLocalDir(results[i]);
-        //     }
-        //   }
-        // );
-
         let options: ImagePickerOptions={
           maximumImagesCount:10,
           outputType:1
@@ -753,11 +713,6 @@ console.log(Object.values(resp))
           if(this.newProductId!=null){
             this.productService.deleteProduct(this.newProductId)
           }
-          // if(confirm("This is go back to product page, you cannot change new product creation")) {
-          //   this.productService.deleteProduct(this.newProductId).then((res)=>{
-          //     this.gotoProductsPage();
-          //   })
-          // } 
         }
         else{
           this.dismiss();
@@ -765,10 +720,12 @@ console.log(Object.values(resp))
         
       }
 
-      deleteOption(option_id){
-        this.optionsService.deleteOption(option_id).then((resp:any)=>{
-          this.getProductOptions();
+      async deleteOption(option_id){
+        console.log(option_id);
+        await this.optionsService.deleteOption(option_id).then((resp:any)=>{
+          console.log("*****")
         })
+        this.getProductOptions();
       }
 
    // Back to previous screen

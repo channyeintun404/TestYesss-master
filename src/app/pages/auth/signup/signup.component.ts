@@ -108,16 +108,16 @@ export class SignupComponent implements OnInit {
       "company" : this.company,
       "company_name" : this.company
      }).then((resp: any) => {
-     
-      this.newUserId= resp["user_id"];
-      console.log(this.newUserId);
-      this.cookieService.set('userId',this.newUserId);
-      this.cookieService.set('companyId',company_id);
-      this.cookieService.set('company',this.company);
-      this.cookieService.set('password',this.password);
-      this.cookieService.set('email',this.email);           
-      this.cookieService.set('vendorName',this.company);
-      this.router.navigate([`${"/tabs/tab1"}`]);
+      this.router.navigate([`${'./user-create-successful'}`]);
+      // this.newUserId= resp["user_id"];
+      // console.log(this.newUserId);
+      // this.cookieService.set('userId',this.newUserId);
+      // this.cookieService.set('companyId',company_id);
+      // this.cookieService.set('company',this.company);
+      // this.cookieService.set('password',this.password);
+      // this.cookieService.set('email',this.email);           
+      // this.cookieService.set('vendorName',this.company);
+      // this.router.navigate([`${"/tabs/tab1"}`]);
     })
   }
 

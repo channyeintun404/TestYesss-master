@@ -90,6 +90,10 @@ const routes: Routes = [
     path: 'message',
     loadChildren: () => import('./pages/message/message.module').then( m => m.MessagePageModule)
   },
+  {
+    path: 'user-create-successful',
+    loadChildren: () => import('./pages/user-create-successful/user-create-successful.module').then( m => m.UserCreateSuccessfulPageModule)
+  },
 
 
 

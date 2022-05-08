@@ -281,7 +281,8 @@
                 <ion-input type="text" placeholder="Position" [(ngModel)]="option_position"></ion-input>
               </td>
               <td>
-                <ion-text (click)="createOption()" class="txt-done">Create</ion-text>
+                <ion-text *ngIf="active_create" (click)="createOption()" class="txt-done">Create</ion-text>
+                <ion-text *ngIf="!active_create" class="txt-done-deviate">Create</ion-text>
                 <ion-text (click)="closeAddOption()" class="txt-close">Cancel</ion-text>
               </td>
             </tr>
@@ -352,6 +353,7 @@
                   </td>
                   <td>
                     <ion-text (click)="updateVariant(option.option_name,option.option_id,'','','','','')" class="txt-done">Create</ion-text>
+                    <!-- <ion-text *ngIf="!active_create" class="txt-done-deviate">Create</ion-text> -->
                     <ion-text (click)="closeVariant()" class="txt-close">Cancel</ion-text>
                   </td>
                 </tr>

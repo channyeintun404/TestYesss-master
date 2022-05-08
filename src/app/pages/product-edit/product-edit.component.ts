@@ -78,6 +78,7 @@ export class ProductEditComponent implements OnInit {
   selectImage: string="Please Select File";
   variant: any;
   brand: any;
+  active_create: boolean=true;
 
   // editorForm: FormGroup
   constructor(public modalController: ModalController,    
@@ -393,6 +394,7 @@ saveChangesProductImage(){
   }
 
   createOption(){
+    this.active_create=false;
     this.optionsService.createProductOptions({
       "product_id": this.id,
       "option_name": this.option_name,
@@ -400,12 +402,13 @@ saveChangesProductImage(){
       "option_type": "S",
       "company_id":"16",
       "variants": { }
-    }).then((resp: any) => {       
+    }).then((resp: any) => { 
    console.log("complete add option")
    this.addOption=false;
     this.option_name="";
     this.option_position="";
-    this.getProductOptions();
+    this.getProductOptions();    
+    this.active_create = true;   
     })
    }
 
