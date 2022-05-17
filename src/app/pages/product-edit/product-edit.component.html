@@ -196,14 +196,25 @@
       </ion-item-sliding>
     </ion-list>
     <br/>
+
     <ion-grid>
       <ion-row>
-        <ion-col *ngFor="let of images" size ="4">
-          <img [src]="img"/>
-        </ion-col>
-        <ion-col size ="4"></ion-col>
-        <ion-col size ="4"></ion-col>
+        <table style="margin-top: 15px;">
+          <thead>
+            <tr>
+              <th>Main Image</th>
+              <th>Image Pairs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><img [src]="main_image" style="width: 100px;"/></td>
+              <td *ngFor="let item of image_pairs"> <img [src]="item" style="width: 100px;"/></td>
+            </tr>
+          </tbody>
+        </table>
       </ion-row>
+
     </ion-grid>
 
     <ion-grid>
@@ -211,10 +222,45 @@
         <ion-col size="9">
           <a onclick="document.getElementById('file').click();" style="border: 1px solid gainsboro; background-color: gainsboro; padding: 10px; border-radius: 3px;  margin-left: 10px;" color="primary">
             <ion-icon name="add" color="primary" style="top: 15px;"></ion-icon>
-            <ion-text style="margin-left: 8px;">Add Image</ion-text>
+            <ion-text style="margin-left: 8px;">Add Main Image</ion-text>
+          </a>
+          <ion-label class="img">{{selectMainImage}}</ion-label>
+          <input type="file" style="display:none;" id="file" (change)= "onFileSelected($event,1)" accept="image/*" name="file"/>
+        </ion-col >       
+        <ion-col size="3">
+          <ion-text (click)="onUploadMainImage()" class="txt-upload">Upload</ion-text>
+        </ion-col>
+     </ion-row>
+     <ion-row  *ngIf="mainImageUrl!=null">
+      <ion-col  size="12">
+       <table  style="margin-top: 15px;">
+         <thead>
+           <tr>
+             <th>Main Image</th>
+             <th>Action</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr>
+             <td><img [src]="mainImageUrl"/></td>
+             <td><ion-text (click)="deleteMainImage()" class="txt-delete">Delete</ion-text></td>
+           </tr>
+         </tbody>
+       </table>
+      </ion-col>
+    </ion-row>
+    </ion-grid>
+    <br>
+
+    <ion-grid>
+      <ion-row style="margin-bottom: 20px;">
+        <ion-col size="9">
+          <a onclick="document.getElementById('file2').click();" style="border: 1px solid gainsboro; background-color: gainsboro; padding: 10px; border-radius: 3px;  margin-left: 10px;" color="primary">
+            <ion-icon name="add" color="primary" style="top: 15px;"></ion-icon>
+            <ion-text style="margin-left: 8px;">Add Image Pairs</ion-text>
           </a>
           <ion-label class="img">{{selectImage}}</ion-label>
-          <input type="file" style="display:none;" id="file" (change)= "onFileSelected($event)" accept="image/*" name="file"/>
+          <input type="file" style="display:none;" id="file2" (change)= "onFileSelected($event,2)" accept="image/*" name="file"/>
         </ion-col >       
         <ion-col size="3">
           <ion-text (click)="onUpload()" class="txt-upload">Upload</ion-text>
@@ -225,7 +271,7 @@
         <table  style="margin-top: 15px;">
           <thead>
             <tr>
-              <th>Image</th>
+              <th>Image Pairs</th>
               <th>Action</th>
             </tr>
           </thead>

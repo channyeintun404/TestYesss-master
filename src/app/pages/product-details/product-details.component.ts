@@ -28,6 +28,7 @@
    description: String;
    price: number;
    discountPrice: number;
+   main_image: String;
    images: Array<String>;
    size: Array<String>;
    color: Array<String>;
@@ -91,6 +92,7 @@
        description: this.description,
        price: this.price,
        discountPrice: this.discountPrice,
+       main_image: this.main_image,
        images: this.images,
        size: this.size,
        color: this.color,

@@ -35,6 +35,7 @@ export class ProductEditComponent implements OnInit {
   base_price : number;
   discountPrice: number;
   status : String;
+  main_image: String;
   images: Array<String>;
   size: Array<String>;
   color: Array<String>;
@@ -61,6 +62,7 @@ export class ProductEditComponent implements OnInit {
    imagesArrayforView: any[]=[];   
   imagepairdetailed: any[]=[];
   selectedFile: any;
+  selectedFileMainImage: any;
   full_description: any;
   option_position: any;
   option_name: any;
@@ -76,9 +78,12 @@ export class ProductEditComponent implements OnInit {
   features_array: any[];
   select_brand_id: any
   selectImage: string="Please Select File";
+  selectMainImage: string="Please Select File";
   variant: any;
   brand: any;
   active_create: boolean=true;
+  image_pairs: any[]=[];
+  mainImageUrl: string;
 
   // editorForm: FormGroup
   constructor(public modalController: ModalController,    
@@ -89,7 +94,7 @@ export class ProductEditComponent implements OnInit {
     
 
    ngOnInit() {
-
+    console.log(this.images)
     this.getFeatures();
     this.getProductById();
     this.getProductOptions();
@@ -172,7 +177,7 @@ this.backs = [
     this.backs[0].isSelected = false;    
     this.backs[1].isSelected = false;
     this.backs[2].isSelected = true;
-    this.saveChangesProductImage();
+    this.updateProductImage();
   }
 }
 
@@ -183,6 +188,13 @@ getProductById(){
 
   this.productsService.getProductById(this.id).then( res=>{
     console.log(res);
+    // this.image_pairs = res['image_pairs'];
+    for (const image of Object.values(res['image_pairs'])){
+      // console.log(image['detailed']['http_image_path'])
+      this.image_pairs.push(image['detailed']['http_image_path'])
+    }
+    console.log(this.image_pairs)
+    this.main_image = res['main_pair']['detailed']['image_path'];
     this.product_code = res['product_code']
     this.list_price = res['list_price']    
     this.product_amount = res['amount']
@@ -190,16 +202,12 @@ getProductById(){
     this.select_brand_id =  res['product_features']['18']['variant_id']
     this.name = res['product']
     this.price = res['price']
+    
     this.price = parseInt(this.price.toFixed())
    
     // this.list_price = parseInt(this.list_price.toFixed())
     this.full_description = res['full_description']
     this.status = res['status']
-    for (const image of Object.values(res['image_pairs'])){
-      // console.log(image['detailed']['http_image_path'])
-      this.imagesUrlArray.push(image['detailed']['http_image_path'])
-    }
-    console.log(this.imagesUrlArray)
   })
  
 }
@@ -208,12 +216,10 @@ getProductById(){
 getFeatures(){
   this.featuresService.getAllFeatures().then((res: any) => {
 console.log(res)
-    // this.option_array = Object.values(resp)
     this.brand_array = [];
     for (const feature of Object.values(res['variants'])) {
       this.brand_array.push(feature)
     }
-    console.log(this.brand_array)
   })
   
 }
@@ -231,16 +237,16 @@ console.log(Object.values(resp))
   })
   
 }
-
-
-
-onFileSelected(event){
-
-  this.selectedFile = <File> event.target.files[0];  
-  console.log(this.selectedFile)
-  this.selectImage = this.selectedFile.name
+onFileSelected(event,isMain){
+  console.log(isMain)
+  if(isMain==1){
+    this.selectedFileMainImage = <File> event.target.files[0]; 
+    this.selectMainImage = this.selectedFileMainImage.name 
+  }if(isMain==2){    
+    this.selectedFile = <File> event.target.files[0]; 
+    this.selectImage = this.selectedFile.name
+  }
 }
-
 //upload images
 onUpload(){
   const fd = new FormData();
@@ -264,6 +270,26 @@ onUpload(){
         });   
 this.addImage=true         
 }    
+
+//upload main images
+onUploadMainImage(){
+  const fd = new FormData();
+  fd.append('file',this.selectedFileMainImage)
+  fd.append("upload_preset", "my-preset"); 
+
+  axios({
+    url:'https://api.cloudinary.com/v1_1/u1textile/image/upload',
+    method: 'POST',
+    headers:{
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },data:fd
+  }).then((res: any) => {
+      console.log(res)
+      this.mainImageUrl=res.data.url;
+    }).catch(function(err){
+          console.error(err)
+        });     
+}  
 
 // create option
 showAddOption(){
@@ -334,6 +360,7 @@ addproduct() {
     description: this.description,
     price: this.price,
     discountPrice: this.discountPrice,
+    main_image: this.main_image,
     images: this.images,
     size: this.size,
     color: this.color,
@@ -342,6 +369,34 @@ addproduct() {
   }
 }
 
+updateProductImage(){
+  if(this.imagesUrlArray.length!=0){
+    this.saveChangesProductImage();
+  }
+  if(this.mainImageUrl!=null){
+    this.saveChangesProductMainImage();
+  }
+}
+saveChangesProductMainImage(){
+  console.log("main image function is work.")
+  this.productService.updateProduct(this.id,
+    {
+      "main_pair": {
+        "image_id": "0",
+        "position": "0",
+        "detailed": {
+            "object_type": "product",
+            "type": "M",
+            "image_path": this.mainImageUrl,
+            "alt": "",
+            "image_x": "711",
+            "image_y": "950",
+            "http_image_path": this.mainImageUrl,
+            "https_image_path": this.mainImageUrl
+        }
+      }
+    })
+}
 saveChangesProductImage(){
   for(var i =0; i<this.imagesUrlArray.length; i++){
     if(i==this.imagesUrlArray.length-1){
@@ -374,20 +429,20 @@ saveChangesProductImage(){
   this.productService.updateProduct(this.id,
   {        
 
-    "main_pair": {
-      "image_id": "0",
-      "position": "0",
-      "detailed": {
-          "object_type": "product",
-          "type": "M",
-          "image_path": this.mainImagesURl,
-          "alt": "",
-          "image_x": "711",
-          "image_y": "950",
-          "http_image_path": this.mainImagesURl,
-          "https_image_path": this.mainImagesURl
-      }
-    },
+    // "main_pair": {
+    //   "image_id": "0",
+    //   "position": "0",
+    //   "detailed": {
+    //       "object_type": "product",
+    //       "type": "M",
+    //       "image_path": this.mainImagesURl,
+    //       "alt": "",
+    //       "image_x": "711",
+    //       "image_y": "950",
+    //       "http_image_path": this.mainImagesURl,
+    //       "https_image_path": this.mainImagesURl
+    //   }
+    // },
     "image_pairs":this.imagepairdetailed
    })       
    

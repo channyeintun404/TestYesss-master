@@ -25,13 +25,13 @@ export class WishlistComponent implements OnInit {
     public modalController: ModalController) { }
 
   ngOnInit() {
-    this.getProductList();
+  //  this.getProductList();
   }
 
   // Get Products
-  getProductList() {
-    this.products = this.productsService.productList();
-  }
+  // getProductList() {
+  //   this.products = this.productsService.productList();
+  // }
 
   // Go to product details page
   async goToProductDetails(product) {
