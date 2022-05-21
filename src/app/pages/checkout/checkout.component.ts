@@ -64,7 +64,6 @@ const MEDIA_FOLDER_NAME = 'my_media';
    images:any[];
 
    //uploadimage
-   mainImagesURl : any
    urls : any [];
    addImage : boolean;
    addImageRow:boolean;
@@ -139,7 +138,11 @@ const MEDIA_FOLDER_NAME = 'my_media';
   variantName: string;
   variantPostion: string;
   variantStatus: string;
-  active_create: boolean=true;
+  active_create: boolean=true;  
+  selectImage: string="Please Select File";
+  selectedFileMainImage: any;
+  selectMainImage: string="Please Select File";
+  mainImageUrl: string;
    
    constructor(public modalController: ModalController,
     private categoryService: CategoryService,
@@ -438,10 +441,6 @@ console.log(Object.values(resp))
 
       saveChangesProduct(){
         for(var i =0; i<this.imagesUrlArray.length; i++){
-          if(i==0){
-            this.mainImagesURl=this.imagesUrlArray[0];
-          
-          }
           const imageurlarray=[]
           imageurlarray.push({
             "image_path":this.imagesUrlArray[i],
@@ -470,7 +469,6 @@ console.log(Object.values(resp))
         };
         console.log(convertArrayToObject( this.imagepairdetailed,'id'))
         console.log("obj of image_pair "+JSON.stringify(this.imagepairdetailed))
-        // console.log("update image url"+this.mainImagesURl)
         this.productService.updateProduct(this.newProductId,
         {        
 
@@ -480,145 +478,59 @@ console.log(Object.values(resp))
             "detailed": {
                 "object_type": "product",
                 "type": "M",
-                "image_path": this.mainImagesURl,
+                "image_path": this.mainImageUrl,
                 "alt": "",
                 "image_x": "711",
                 "image_y": "950",
-                "http_image_path": this.mainImagesURl,
-                "https_image_path": this.mainImagesURl
+                "http_image_path": this.mainImageUrl,
+                "https_image_path": this.mainImageUrl
             }
           },
           "image_pairs":this.imagepairdetailed
          })       
         
         }
-      //image
-      loadFiles() {
-        this.file.listDir(this.file.dataDirectory, MEDIA_FOLDER_NAME).then(
-          res => {
-            this.files = res;
-          },
-          err => console.log('error loading files: ', err)
-        );
-      }
-    
-      async selectMedia() {
-        const actionSheet = await this.actionSheetController.create({
-          header: 'What would you like to add?',
-          buttons: [
-            {
-              text: 'Capture Image',
-              handler: () => {
-                this.captureImage();
-              }
-            },            
-            {
-              text: 'Load multiple',
-              handler: () => {
-                this.pickImages();
-              }
-            },
-            {
-              text: 'Cancel',
-              role: 'cancel'
-            }
-          ]
-        });
-        await actionSheet.present();
-      }
-     
-      pickImages() {
-        let options: ImagePickerOptions={
-          maximumImagesCount:10,
-          outputType:1
-          
-        }
-  
-        this.imagePicker.getPictures(options).then((res)=>{
-          for(var i =0; i<res.length;i++){
-            this.copyFileToLocalDir(res[i]);
-            let base64OfImage= "data:image/png;base64"+res[i]
-            this.images.push(base64OfImage)
-          }
-        },(err)=>{
-          alert(JSON.stringify(err))
-        })
-     
-    
-      }
-     
-      captureImage() {
-        this.mediaCapture.captureImage().then(
-          (data: MediaFile[]) => {
-            if (data.length > 0) {
-              this.copyFileToLocalDir(data[0].fullPath);
-            }
-          },
-          (err: CaptureError) => console.error(err)
-        );
-      }     
 
 
-      copyFileToLocalDir(fullPath) {
-        let myPath = fullPath;
-        // Make sure we copy from the right location
-        if (fullPath.indexOf('file://') < 0) {
-          myPath = 'file://' + fullPath;
-        }
-     
-        const ext = myPath.split('.').pop();
-        const d = Date.now();
-        const newName = `${d}.${ext}`;
-     
-        const name = myPath.substr(myPath.lastIndexOf('/') + 1);
-        const copyFrom = myPath.substr(0, myPath.lastIndexOf('/') + 1);
-        const copyTo = this.file.dataDirectory + MEDIA_FOLDER_NAME;
-     
-        this.file.copyFile(copyFrom, name, copyTo, newName).then(
-          success => {
-            this.loadFiles();
-          },
-          error => {
-            console.log('error: ', error);
-          }
-        );
-      }
-     
-      openFile(f: FileEntry) {
-        if (f.name.indexOf('.wav') > -1) {
-          // We need to remove file:/// from the path for the audio plugin to work
-          const path =  f.nativeURL.replace(/^file:\/\//, '');
-          const audioFile: MediaObject = this.media.create(path);
-          audioFile.play();
-        } else if (f.name.indexOf('.MOV') > -1 || f.name.indexOf('.mp4') > -1) {
-          // E.g: Use the Streaming Media plugin to play a video
-          this.streamingMedia.playVideo(f.nativeURL);
-        } else if (f.name.indexOf('.jpg') > -1) {
-          // E.g: Use the Photoviewer to present an Image
-          this.photoViewer.show(f.nativeURL, 'MY awesome image');
+      onFileSelected(event,isMain){
+        console.log(isMain)
+        if(isMain==1){
+          this.selectedFileMainImage = <File> event.target.files[0]; 
+          this.selectMainImage = this.selectedFileMainImage.name 
+        }if(isMain==2){    
+          this.selectedFile = <File> event.target.files[0]; 
+          this.selectImage = this.selectedFile.name
         }
       }
-     
-      deleteFile(f: FileEntry) {
-        const path = f.nativeURL.substr(0, f.nativeURL.lastIndexOf('/') + 1);
-        this.file.removeFile(path, f.name).then(() => {
-          this.loadFiles();
-        }, err => console.log('error remove: ', err));
-      }
-
-      onFileSelected(event){
-
-        this.selectedFile = <File> event.target.files[0];
-        
-        console.log(this.selectedFile)
-      }
-
       //upload images
       onUpload(){
         const fd = new FormData();
         fd.append('file',this.selectedFile)
         fd.append("upload_preset", "my-preset"); 
-
+      
+        axios({
+          url:'https://api.cloudinary.com/v1_1/u1textile/image/upload',
+          method: 'POST',
+          headers:{
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },data:fd
+        }).then((res: any) => {
+            console.log(res)            
+            this.imagesUrlArray.push(res.data.url) 
+            this.selectedFile=null;
+            this.selectImage="Please Select File!!";     
+          }).catch(function(err){
+                console.error(err)
+              });   
+      this.addImage=true         
+      }    
+      
+      //upload main images
+      onUploadMainImage(){
+        const fd = new FormData();
+        fd.append('file',this.selectedFileMainImage)
+        fd.append("upload_preset", "my-preset"); 
+      
         axios({
           url:'https://api.cloudinary.com/v1_1/u1textile/image/upload',
           method: 'POST',
@@ -627,14 +539,11 @@ console.log(Object.values(resp))
           },data:fd
         }).then((res: any) => {
             console.log(res)
-            // this.mainImagesURl= res.data.url
-            this.imagesUrlArray.push(res.data.url)        
+            this.mainImageUrl=res.data.url;
           }).catch(function(err){
                 console.error(err)
-              });   
-      this.addImage=true         
-      }    
-
+              });     
+      }  
 
       openAddImageRow(){
         // this.addImageRow=true;

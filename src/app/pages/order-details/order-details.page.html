@@ -81,11 +81,14 @@
 <ion-content>
   <ion-toolbar>
     <ion-buttons class="text-center">
-      <ion-button [routerLink]="['/order-details',previd]" #prev>
+      <ion-button [routerLink]="['/tabs/tab3/orders-tab1']">
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/order-details',nextid]" #next>
-        <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
+      <ion-button [routerLink]="['/order-details',previd]">
+        prev
+      </ion-button>
+      <ion-button [routerLink]="['/order-details',nextid]">
+        next
       </ion-button>
       <!-- <ion-button   ion-button block (click)="openSetting()">
           <ion-icon slot="icon-only" name="settings"></ion-icon>
