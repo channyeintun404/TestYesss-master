@@ -18,6 +18,7 @@ import { Shipment } from 'src/app/models/shipment.model';
 import { CookieService } from 'ngx-cookie-service';
 import { UsersService } from 'src/app/services/users.service';
 import { MessageDetailsComponent } from '../message-details/message-details.component';
+import { async } from '@angular/core/testing';
 @Component({
   selector: 'app-order-details',
   templateUrl: './order-details.page.html',
@@ -120,6 +121,11 @@ export class OrderDetailsPage implements OnInit {
   msg_hidden: boolean =false;
   total_hidden: boolean =false;
   tracking_number: any;
+  vendorId: number;
+  orderIdList: any[];
+  isLastOrderId: boolean = false;
+  isFirstOrderId: boolean = false;
+  currentStautDescription: any;
  
    
 
@@ -137,8 +143,14 @@ export class OrderDetailsPage implements OnInit {
       private usersService: UsersService) {
     this.route.params.subscribe( params => {
       this.orderid = params.id;
-      this.previd = (parseInt(params.id) + 1).toString();
-      this.nextid = (parseInt(params.id) - 1).toString();
+      // for (let i = 0; i < this.orderIdList.length; i++) {
+      //   if(this.orderIdList[i]==this.orderid){
+      //     this.previd = this.orderIdList[i + 1].toString();
+      //     this.nextid = this.orderIdList[i - 1].toString();
+      //   }
+      // }
+      // this.previd = (parseInt(params.id) + 1).toString();
+      // this.nextid = (parseInt(params.id) - 1).toString();
     });
    }
 
@@ -147,13 +159,22 @@ export class OrderDetailsPage implements OnInit {
   }
   ngOnInit() {
     this.user_id = this.cookieService.get('userId');
+    this.orderIdList = JSON.parse(this.cookieService.get('orderIdList'));
+    if(this.orderid==this.orderIdList[0]){
+      this.isFirstOrderId = true;
+    }
+    if(this.orderid==this.orderIdList[this.orderIdList.length-1]){
+      this.isLastOrderId = true;
+    }
+    console.log(this.isLastOrderId);
+
     this.getShippings();
-    this.getOrderById(this.orderid);
-    this.getStatuses();
+    this.getOrderById(this.orderid); 
     this.checkShipment();
     this.checkAdjecentOrders();
     this.getManagers();
     this.getMessageById();
+    this.getStatuses();
     // this.store.select('currentOrder').subscribe(result=>{
     //   console.log('count - ',Object.keys(result).length)
     //   if(Object.keys(result).length == 0){
@@ -164,6 +185,24 @@ export class OrderDetailsPage implements OnInit {
      
       
     // }
+  }
+
+  goPreOrder(order_id){
+    for (let i = 0; i < this.orderIdList.length; i++) {
+      if(this.orderIdList[i]==order_id){
+        this.previd = this.orderIdList[i + 1].toString();
+      }
+    }
+    this.router.navigate(['/order-details/'+this.previd]);
+  }
+
+  goNextOrder(order_id){
+    for (let i = 0; i < this.orderIdList.length; i++) {
+      if(this.orderIdList[i]==order_id){
+        this.nextid = this.orderIdList[i - 1].toString();
+      }
+    }
+    this.router.navigate(['/order-details/'+this.nextid]);
   }
   
   // get Shipping
@@ -217,7 +256,6 @@ export class OrderDetailsPage implements OnInit {
       }
     });
     this.ordersService.updateOrderDetail(this.orderid,{
-      "status": this.currentStatus,
       "notes": this.order.notes,
       "details":this.order.details,      
       "product_groups": 
@@ -237,6 +275,15 @@ export class OrderDetailsPage implements OnInit {
           }));
   }
 
+  async updateOrderStatus(orderid){
+    await this.ordersService.updateOrderDetail(orderid,{
+      "status": "E",
+     }).then(res=>{
+     });
+     await this.getOrderById(orderid);
+    //  this.getStatuses();
+  }
+
   getOrderById(id){
       this.ordersService.getOrderDetailById(id).then( res=>{
         console.log(res);
@@ -250,6 +297,7 @@ export class OrderDetailsPage implements OnInit {
           }));
           this.isLoaded= true;
       });
+     this.getStatuses(); 
   }
 
   changeSetting(value){
@@ -285,14 +333,16 @@ export class OrderDetailsPage implements OnInit {
   getStatuses(){
     this.statusesService.getStatuses().then(res=>{
       this.statuses = res;
-      console.log(this.statuses)
+      this.statuses.forEach(element => {        
+        if(element.status==this.currentStatus){
+          this.currentStautDescription= element.description;
+        }        
+      });
+      console.log(this.currentStautDescription)
     })
   }
 
   public getImage(image_pair,main_pair) {
-    // console.log(this.products);
-    console.log(image_pair);
-    console.log(main_pair);
     const image_array=[];
     if(Object.values(main_pair)[0] != null)
       image_array.push(main_pair["detailed"]["image_path"])
@@ -341,41 +391,20 @@ export class OrderDetailsPage implements OnInit {
     })
   }
 
-  //get all shipment
-  // getShipmentByOrderId(){
-  //   this.shipmentsService.getByQueryString("order_id=").then(res=>{
-  //     this.shipments=[];
-  //     Object.values(res).forEach(element => {
-  //       this.shipments.push(element)
-  //     });
-  //   })
-  //   console.log(this.shipments);
-  // }
 
   checkShipment(){
     this.shipmentsService.getShipmentByOrderId(this.orderid).then(res=>{
-      console.log(res[0]["shipment_id"]);
       this.currentShipment = res[0]["shipping"];
       this.currentShipmentId =  res[0]["shipment_id"];
     })
-    console.log(this.shipments)
-    // this.shipments.forEach(element => {
-    //   if(element.order_id==parseInt(this.orderid)){
-    //     console.log(element.shipping_id)
-    //   }
-    //   console.log(element)
-    // });
   }
   
   getMessageById(){
     this.ordersService.getMessageById(this.orderid).then(res=>{
-      console.log(res)
       this.discussions = [];
       for (const discussion of Object.values(res['discussions'])){
         console.log(discussion)
         this.discussions.push(discussion)
-        // this.discussionNameArray.push(discussion['name'])
-        
       }
     })
   }

@@ -25,6 +25,7 @@ export class OrdersComponent implements OnInit {
   statuses : any;
   selectedStatus  = "all";
   loadOrderPagesCount = 1;
+  orderIdList: number [];
 
   // Slider Options
   slideOpts = {
@@ -55,27 +56,6 @@ export class OrdersComponent implements OnInit {
   }, ];
 orders: Order[];
   vendorId: any;
-
-  // Orders Sample Data
-  // orders: any = [{
-  //   orderId: '#NPOK8T',
-  //   date: '15/11/2020',
-  //   trackingNumber: 'AQWNQWEIC',
-  //   quantity: 2,
-  //   totalPrice: 100
-  // }, {
-  //   orderId: '#NPORK8T',
-  //   date: '20/11/2020',
-  //   trackingNumber: 'WNQWEIC',
-  //   quantity: 2,
-  //   totalPrice: 500
-  // }, {
-  //   orderId: '#NPOKYY8T',
-  //   date: '05/11/2020',
-  //   trackingNumber: 'MWNQWEIC',
-  //   quantity: 4,
-  //   totalPrice: 300
-  // }];
   constructor(private ordersService: OrdersService,private statusesService: StatusesService,private store:Store<{orderList: Order[]}>,
     public modalController: ModalController,
     private cookieService: CookieService) { 
@@ -86,16 +66,15 @@ orders: Order[];
       this.orders = result;
   })
     this.getOrderList("");
+    this.getAllOrders("");
     this.getStatuses();
   }
   getOrderList(queryString,callback?:() => void ) {
 
     this.vendorId=this.cookieService.get('companyId');  // get the cookie value
-    console.log(this.vendorId);
-
+    
   //get data from service
     this.ordersService.getOrders(queryString, this.vendorId).then((res :Order[])  =>{  
-      console.log(res);
       this.store.dispatch(UpdateOrderList({
         Type: "Update",
         OrderList: JSON.parse(JSON.stringify(res))
@@ -106,6 +85,17 @@ orders: Order[];
         console.log('callback');
         callback();
       }
+    })
+  }
+
+  //get all orders not inclucde pagenation
+  getAllOrders(queryString){
+    this.ordersService.getAllOrders(queryString, this.vendorId).then((res: any) => {
+      this.orderIdList=[];
+      for (const order of Object.values(res['orders'])) {
+        this.orderIdList.push(order["order_id"])
+      }      
+      this.cookieService.set('orderIdList',JSON.stringify(this.orderIdList));
     })
   }
 

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-import { VendorsService } from 'src/app/services/vendors.services';
 import { UsersService }  from 'src/app/services/users.service';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
@@ -28,7 +27,6 @@ export class SigninComponent implements OnInit {
 
   constructor(private cookieService: CookieService,
     private router: Router,
-    private vendorsService: VendorsService,
     private usersService: UsersService,
     private nativeStorage: NativeStorage) { }
 
@@ -68,8 +66,6 @@ export class SigninComponent implements OnInit {
 
       }else if(email == null || password == null){
         this.error = "Please Enter Email and Password!!"
-        // this.email = null;
-        // this.password = null;
       }
       else{
         this.error = "Email or Password is Invalid!!"
@@ -77,17 +73,6 @@ export class SigninComponent implements OnInit {
         this.password = null;
       }
     })
-
-    // this.userId = 14;
-    // this.cookieService.set('userId',this.userId);
-    // this.companyId = 1;        
-    // this.company = "Test CNT";
-    // this.cookieService.set('companyId',this.companyId);
-    // this.cookieService.set('company',this.company);
-    // this.cookieService.set('password',this.password);
-    // this.cookieService.set('email',"channyeintun404_v@gmail.com");           
-    // this.cookieService.set('vendorName',"CCCC");
-    // this.router.navigate([`${"/tabs/tab1"}`]);
 
   }
 
@@ -103,7 +88,6 @@ export class SigninComponent implements OnInit {
   getRember(){
     this.nativeStorage.getItem('rememberAccount')
   .then(
-    // data => console.log(data['property'],data['anotherProperty'],),
     data => (this.login_username = data['property'],
             this.login_password = data['anotherProperty']),
     error => console.error(error)
@@ -117,15 +101,13 @@ export class SigninComponent implements OnInit {
 
   setCookie(){
     this.cookieService.set('vendorId',"13");
-    // console.log("cookie");
   }
 
   clickTab(event: Event, tabPath: string) {
     event.stopImmediatePropagation();
     console.log( event, tabPath );
     this.router.navigate([`${tabPath}`]);
-  }
-  
+  } 
 
   showPassword(){
     if(this.password_type=="password"){

@@ -84,12 +84,19 @@
       <ion-button [routerLink]="['/tabs/tab3/orders-tab1']">
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/order-details',previd]">
+      <!-- <ion-button [routerLink]="['/order-details',previd]">
         prev
       </ion-button>
       <ion-button [routerLink]="['/order-details',nextid]">
         next
+      </ion-button> -->
+      <ion-button (click)="goPreOrder(orderid)" [class.button-disabled]="isLastOrderId === true ? true : false">
+        prev
       </ion-button>
+      <ion-button (click)="goNextOrder(orderid)" [class.button-disabled]="isFirstOrderId === true ? true : false">
+        next
+      </ion-button>
+
       <!-- <ion-button   ion-button block (click)="openSetting()">
           <ion-icon slot="icon-only" name="settings"></ion-icon>
         </ion-button> -->
@@ -294,14 +301,21 @@
         <ion-col>
           <ion-item>
             <ion-label>Status</ion-label>
-            <ion-select [(ngModel)]="currentStatus" placeholder="Select One" value="{{order.status}}">
+            <ion-label style="color:rgb(86, 119, 180);">{{currentStautDescription}}</ion-label>
+            <!-- <ion-select [(ngModel)]="currentStatus" placeholder="Select One" value="{{order.status}}" disabled=true>
               <ion-select-option *ngFor="let status of statuses" value="{{status.status}}">{{status.description}}
               </ion-select-option>
-            </ion-select>
+            </ion-select> -->
           </ion-item>
         </ion-col>
       </ion-row>
-
+      <ion-row >
+        <ion-col size="3"></ion-col>
+        <ion-col size="3"></ion-col>
+        <ion-col size="6">
+          <ion-button  *ngIf="currentStatus != 'E'" class="createShipment" (click)="updateOrderStatus(orderid)">Reday to Shipping</ion-button>
+        </ion-col>
+      </ion-row>
       <ion-row class="ion-align-items-start">
         <ion-col>
           <ion-item>
@@ -314,7 +328,7 @@
       <ion-row class="ion-align-items-start" *ngIf="currentShipment == null">
         <ion-col *ngIf="currentStatus=='H'||currentStatus=='G'||currentStatus=='E'">
           <ion-item>
-            <ion-label>Shippings</ion-label>
+            <ion-label>Shipments</ion-label>
             <ion-select [(ngModel)]="currentShipping_id" [ngModelOptions]="{standalone: true}" (cancel)="onCancel()"
               (ionChange)="createButton()" data-live-search="true" placeholder="Select One">
               <ion-select-option *ngFor="let shipping of active_shipping" value="{{shipping.shipping_id}}">

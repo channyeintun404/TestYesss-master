@@ -44,20 +44,19 @@
       <div *ngIf="show_login">
       <!-- Email -->
       <ion-item>
+        <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="email"></ion-input>
         <ion-label>
           <ion-icon name="md-mail" color="color2"></ion-icon>
         </ion-label>
-        <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="email"></ion-input>
       </ion-item>
 
       <!-- Password -->
       <ion-item class="ion-padding-top">
+        <!-- <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="password"></ion-input> -->
+        <ion-input [type]="password_type == 'password' ? 'password' : 'text'" placeholder="Password" name="password"  [(ngModel)]="password"></ion-input>
         <ion-text (click)="showPassword()">
           <ion-icon name="md-eye" color="color2"></ion-icon>         
         </ion-text>
-        <!-- <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="password"></ion-input> -->
-        <ion-input [type]="password_type == 'password' ? 'password' : 'text'" placeholder="Password" name="password"  [(ngModel)]="password"></ion-input>
-
       </ion-item>
 
       <ion-item>

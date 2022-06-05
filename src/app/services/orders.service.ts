@@ -13,6 +13,7 @@ import { Store, select } from '@ngrx/store';
 import { UpdateProduct} from "../pages/order-details/order-details.actions";
 import { query } from '@angular/animations';
 import { UpdateOrderList } from '../pages/orders/orders.actions';
+import { resolve } from 'url';
 @Injectable({
   providedIn: 'root'
 })
@@ -24,9 +25,19 @@ export class OrdersService extends AppService {
     this.setModel('orders');
   }
 
+  getAllOrders(queryString, vendorId){
+    return new Promise((resolve)=>{
+      this.getByQueryString(queryString+"items_per_page=10&company_id="+vendorId+"$sortBy=order_id&sort_order=desc").subscribe(res=> {
+        console.log(res['orders'])        
+        resolve(res);
+      })
+    })
+  }
+
   getOrders(queryString, vendorId) {
     return new Promise((resolve) => {
-        this.getByQueryString(queryString+"items_per_page=10&company_id="+vendorId+"$sortBy=timestamp&sort_order=desc").subscribe(res=> {
+        this.getByQueryString(queryString+"items_per_page=10&company_id="+vendorId+"$sortBy=order_id&sort_order=desc").subscribe(res=> {
+          console.log(res)
           let orderLength = res['orders'].length;
           let completedOrderLength = 0;
           let completedOrderLength$ =new BehaviorSubject<number>(0);
@@ -84,6 +95,7 @@ export class OrdersService extends AppService {
           }
           completedOrderLength$.asObservable().subscribe(count=>{
             if (count == orderLength){
+              this.orders.sort((a,b)=>b.id-a.id);
               resolve(this.orders);
             }
           })
@@ -92,8 +104,11 @@ export class OrdersService extends AppService {
     })
   }
 
+
+
   getOrderDetailById(id) {
     return new Promise((resolve)=> {
+      if(id!=null){
         this.get(id).subscribe(orderDetail=>{
           resolve(orderDetail);
         },
@@ -102,14 +117,17 @@ export class OrdersService extends AppService {
         },()=>{
 
         })
+      }
     })
   }
   getMessageById(order_id) {
     return new Promise((resolve) => {
-      this.getOptionByQueryString('discussions&object_type=o&object_id=' + order_id).subscribe(res => {
-        console.log(res);
-        resolve(res);
-       });
+      if(order_id!=null){
+        this.getOptionByQueryString('discussions&object_type=o&object_id=' + order_id).subscribe(res => {
+          console.log(res);
+          resolve(res);
+         });
+      }
     });
   }
   updateOrderDetail(id,data){
