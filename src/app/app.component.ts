@@ -67,7 +67,6 @@ export class AppComponent {
            }
            
       });
-    console.log("noti count form app"+this.noti_count)
     this.cookieService.set('noti_count',this.noti_count);
     })
   }

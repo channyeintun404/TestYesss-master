@@ -7,7 +7,11 @@
 
 <!-- Contents -->
 <ion-content id="orders" [scrollX]="true" [scrollEvents]="true" fullscreen>
-
+  <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event)">
+    <ion-refresher-content pullingIcon = "arrow-dropdown"
+            refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+</ion-refresher>
   <!-- Orders Options -->
   <!-- Options are - Delivered, Processing, Cancelled  -->
   <div  scrollX="true"  class="ion-padding ion-text-center" style="width:100vw;">

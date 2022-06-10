@@ -20,7 +20,7 @@
 <!-- Contents -->
 <ion-content id="signup" fullscreen>
   <div class="section_one">
-    <h2>SIGN UP</h2>
+    <h2>Apply for a vendor account</h2>
     <p>Fill the details & create seller account</p>
   </div>
 
@@ -114,10 +114,30 @@
           <ion-icon name="md-eye" ></ion-icon>
         </ion-text>
         <ion-input [type]="password_type == 'password' ? 'password' : 'text'" placeholder="Password" name="password"  [(ngModel)]="password"></ion-input>
-
       </ion-item>
       <ion-text *ngIf="error.includes('Password')"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-text>
 
+            <!-- Status -->
+
+      <ion-item class="item-background-color">
+        <ion-label>Choose Supplier Plan</ion-label>
+          <ion-select [(ngModel)]="vendor_plan" [ngModelOptions]="{standalone: true}">
+            <ion-select-option [value]="Platinum">Platinum</ion-select-option>
+            <ion-select-option [value]="Diamond">Diamond</ion-select-option>
+            <ion-select-option [value]="Ruby">Ruby</ion-select-option>
+            <ion-select-option [value]="Exclusive">Exclusive Services</ion-select-option>
+            <ion-select-option [value]="Premium">Premium Services</ion-select-option>
+        </ion-select>
+      </ion-item>
+      
+
+      <ion-item>        
+        <ion-checkbox [(ngModel)]="accept_condition" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+        <ion-label style="color: red; margin-left: 5px;">Accept Terms & Conditions</ion-label>
+      </ion-item>
+      <ion-text *ngIf="error.includes('accept')"  style="color: red;margin-top: 20px; text-align: center;">{{error}}</ion-text>
+
+      
       <!-- SignUp Button -->
       <div>
         <ion-button expand="block" color="color1" (click)="register()">

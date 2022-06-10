@@ -166,25 +166,13 @@ export class OrderDetailsPage implements OnInit {
     if(this.orderid==this.orderIdList[this.orderIdList.length-1]){
       this.isLastOrderId = true;
     }
-    console.log(this.isLastOrderId);
-
-    this.getShippings();
     this.getOrderById(this.orderid); 
+    this.getShippings();
     this.checkShipment();
     this.checkAdjecentOrders();
     this.getManagers();
     this.getMessageById();
     this.getStatuses();
-    // this.store.select('currentOrder').subscribe(result=>{
-    //   console.log('count - ',Object.keys(result).length)
-    //   if(Object.keys(result).length == 0){
-    //     console.log('reload done');
-    //   }
-    // });
-    // if(this.needReload) {
-     
-      
-    // }
   }
 
   goPreOrder(order_id){
@@ -275,13 +263,12 @@ export class OrderDetailsPage implements OnInit {
           }));
   }
 
-  async updateOrderStatus(orderid){
-    await this.ordersService.updateOrderDetail(orderid,{
+   updateOrderStatus(orderid){
+     this.ordersService.updateOrderDetail(orderid,{
       "status": "E",
      }).then(res=>{
      });
-     await this.getOrderById(orderid);
-    //  this.getStatuses();
+      window.location.reload();
   }
 
   getOrderById(id){
@@ -428,10 +415,11 @@ export class OrderDetailsPage implements OnInit {
       return await modal.present();
     }
     //refresh page
-    refreshPage(){      
-    this.getOrderById(this.orderid);
-    this.checkShipment();
-    this.getMessageById();
+    refreshPage(){    
+      window.location.reload();
+    // this.getOrderById(this.orderid);
+    // this.checkShipment();
+    // this.getMessageById();
     }
     TotalCheckHidden(){
       if(this.total_hidden){

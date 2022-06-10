@@ -27,8 +27,7 @@ export class OrdersService extends AppService {
 
   getAllOrders(queryString, vendorId){
     return new Promise((resolve)=>{
-      this.getByQueryString(queryString+"items_per_page=10&company_id="+vendorId+"$sortBy=order_id&sort_order=desc").subscribe(res=> {
-        console.log(res['orders'])        
+      this.getByQueryString(queryString+"company_id="+vendorId+"$sortBy=order_id&sort_order=desc").subscribe(res=> {
         resolve(res);
       })
     })
@@ -55,41 +54,49 @@ export class OrdersService extends AppService {
                 );
 
                 //tracking number can only be expected from Shipment API So We need to change modal to Shipment
-                this.setModel("shipments")
-                if (subRes["shipment_ids"] === undefined || subRes["shipment_ids"].length == 0) {
-                    this.orders.push({
-                    id:order["order_id"],
-                    trackingNumber: "None",
-                    quantity: quantity,
-                    totalPrice: order["total"],
-                    date: order["timestamp"]
-                 });   
-                 completedOrderLength$.next(++completedOrderLength);
-              }
-              else {
-                  for(let shipment_id in subRes["shipment_ids"]) {
-                    let tracking_number = "";
-                    this.get(shipment_id).subscribe(shipmentRes =>{         
-                            Object.keys(shipmentRes.shipments).forEach(
-                              key =>{
-                                tracking_number = `${tracking_number},${shipmentRes.shipments[key].tracking_number}`;
-                              }
-                            ); 
-                            tracking_number = tracking_number.substring(1);
-                    },
-                    err => console.log("erorr occured"),
-                    () =>{
-                          this.orders.push({
-                              id:order["order_id"],
-                              trackingNumber:tracking_number,
-                              quantity: quantity,
-                              totalPrice: order["total"],
-                              date: order["timestamp"]
-                          });    
-                          completedOrderLength$.next(++completedOrderLength);                  
-                    });
-                  }
-                }
+              //  this.setModel("shipments")
+              //   if (subRes["shipment_ids"] === undefined || subRes["shipment_ids"].length == 0) {
+              //       this.orders.push({
+              //       id:order["order_id"],
+              //       trackingNumber: "None",
+              //       quantity: quantity,
+              //       totalPrice: order["total"],
+              //       date: order["timestamp"]
+              //    });   
+              //    completedOrderLength$.next(++completedOrderLength);
+              // }
+              // else {
+              //     for(let shipment_id in subRes["shipment_ids"]) {
+              //       let tracking_number = "";
+              //       this.get(shipment_id).subscribe(shipmentRes =>{         
+              //               Object.keys(shipmentRes.shipments).forEach(
+              //                 key =>{
+              //                   tracking_number = `${tracking_number},${shipmentRes.shipments[key].tracking_number}`;
+              //                 }
+              //               ); 
+              //               tracking_number = tracking_number.substring(1);
+              //       },
+              //       err => console.log("erorr occured"),
+              //       () =>{
+              //             this.orders.push({
+              //                 id:order["order_id"],
+              //                 trackingNumber:tracking_number,
+              //                 quantity: quantity,
+              //                 totalPrice: order["total"],
+              //                 date: order["timestamp"]
+              //             });    
+              //             completedOrderLength$.next(++completedOrderLength);                  
+              //       });
+              //     }
+              //   }
+              this.orders.push({
+                id:order["order_id"],
+                trackingNumber:"None",
+                quantity: quantity,
+                totalPrice: order["total"],
+                date: order["timestamp"]
+            });    
+            completedOrderLength$.next(++completedOrderLength);               
                 this.setModel('orders');  
               })
           }
@@ -103,9 +110,6 @@ export class OrdersService extends AppService {
         })
     })
   }
-
-
-
   getOrderDetailById(id) {
     return new Promise((resolve)=> {
       if(id!=null){

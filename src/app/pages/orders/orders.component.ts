@@ -14,6 +14,7 @@ import { Status } from 'src/app/models/status.modal';
 import { Store } from '@ngrx/store';
 import { UpdateOrderList } from './orders.actions';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-orders',
@@ -58,7 +59,8 @@ orders: Order[];
   vendorId: any;
   constructor(private ordersService: OrdersService,private statusesService: StatusesService,private store:Store<{orderList: Order[]}>,
     public modalController: ModalController,
-    private cookieService: CookieService) { 
+    private cookieService: CookieService,
+    private router: Router,) { 
     }
 
   ngOnInit() {
@@ -138,5 +140,15 @@ orders: Order[];
         description: "All"
       },...res];
     })
+  }
+
+  refreshPage(event){
+    // this.getOrderList("");
+    // this.getAllOrders("");
+    window.location.reload();
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
   }
 }

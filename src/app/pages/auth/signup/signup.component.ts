@@ -30,6 +30,7 @@ export class SignupComponent implements OnInit {
   townships_Lists: any[];
   showcity: boolean = false;
   showtownship: boolean = false;
+  accept_condition: boolean =false;
   password_type :string ="password";
   
   constructor(
@@ -73,6 +74,9 @@ export class SignupComponent implements OnInit {
     else if(this.password==null || this.password==""){
       this.error = "Please Enter Password!!"
     }
+    else if(!this.accept_condition){
+      this.error = "You need accept terms and conditions"
+    }
     else{ 
         this.createVendor();
     }   
@@ -109,15 +113,6 @@ export class SignupComponent implements OnInit {
       "company_name" : this.company
      }).then((resp: any) => {
       this.router.navigate([`${'./user-create-successful'}`]);
-      // this.newUserId= resp["user_id"];
-      // console.log(this.newUserId);
-      // this.cookieService.set('userId',this.newUserId);
-      // this.cookieService.set('companyId',company_id);
-      // this.cookieService.set('company',this.company);
-      // this.cookieService.set('password',this.password);
-      // this.cookieService.set('email',this.email);           
-      // this.cookieService.set('vendorName',this.company);
-      // this.router.navigate([`${"/tabs/tab1"}`]);
     })
   }
 

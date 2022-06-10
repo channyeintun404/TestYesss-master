@@ -262,7 +262,6 @@ const MEDIA_FOLDER_NAME = 'my_media';
     }
     else
       this.isHaveLevel2Child = true
-      // console.log("categord_id  "+this.category_ids)
 }
 
 level2ClickOption(categoriesByLevel2_id){
@@ -298,8 +297,6 @@ console.log(Object.values(resp))
     this.option_array = Object.values(resp)
     this.variants_array = [];
     for (const variants of Object.values(resp)) {
-      // console.log(variants['option_id']) 
-      // this.optionIdArray.push(variants['option_id'])
       this.variants_array.push(Object.values(variants['variants']))
     }
     console.log(this.optionIdArray)
@@ -396,7 +393,6 @@ console.log(Object.values(resp))
   }
 
   getLevel2Categories() {
-    // this.categories = this.categoryService.categoryList();
     this.categoryService.getLevel2Categories().then((resp: any) => {
       console.log(resp);
       this.categoriesByLevel3 = resp;
