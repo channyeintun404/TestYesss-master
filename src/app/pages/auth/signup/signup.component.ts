@@ -32,6 +32,7 @@ export class SignupComponent implements OnInit {
   showtownship: boolean = false;
   accept_condition: boolean =false;
   password_type :string ="password";
+  vendor_plan: string;
   
   constructor(
     private usersService: UsersService,
@@ -93,7 +94,8 @@ export class SignupComponent implements OnInit {
       "country":"Myanmar",
       "state" : this.state_code,
       "zipcode": this.township,
-      "status":"N"
+      "status":"N",
+      "plan": this.vendor_plan
     }).then((resp: any) => {
       this.new_company_id = resp["company_id"];
       this.createVendorAccount(this.new_company_id);     

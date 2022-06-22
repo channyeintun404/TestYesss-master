@@ -36,11 +36,66 @@
 <ion-content id="product-details" fullscreen>
 
   <!-- Slider of Product Images -->
-  <ion-slides pager="true" [options]="slideOpts">
+  <!-- <ion-slides pager="true" [options]="slideOpts">
     <ion-slide *ngFor="let item of images">
       <img [src]="item" />
     </ion-slide>
-  </ion-slides>
+  </ion-slides> -->
+      <table>
+        <thead>
+          <tr>
+            <th>Main Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><img [src]="main_image" style="width: 100px; height: 100px;"/></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- <table>
+        <thead>
+          <tr>
+            <th *ngFor="let item of images; let first = first;"><span *ngIf="first">Image Pairs</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td *ngFor="let item of images"> <img [src]="item" style="width: 100px; height: 100px;"/></td>
+          </tr>
+        </tbody>
+      </table> -->
+
+      <table>
+        <thead>
+          <tr>
+            <th><span>Image Pairs</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6" size-xs="4" size-sm="3" size-md="2" size-lg="1" *ngFor="let item of images">
+                  <img [src]="item" style="width:120px; height: 100px;" />
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- <ion-grid>
+        <ion-row>
+          <ion-col size="3" size-xs="3" size-sm="1" size-md="1" size-lg="1" *ngFor="let item of images" style="margin: 3%;">
+            <img [src]="item" style="width:120px; height: 120px;" />
+          </ion-col>
+        </ion-row>
+      </ion-grid> -->
+
+
+
 
   <!-- Product Price -->
   <ion-row class="ion-padding">
@@ -61,7 +116,8 @@
   <ion-row style="margin-top: 10px; margin-bottom: 10px; margin-left: 15px;">
     <ion-col size="12">
       <ion-item class="item-background-color" style=" margin-right: 15px;">
-        <ion-text style="text-align: center;">{{full_description}}</ion-text>
+        <ion-text *ngIf="full_description!=''" style="text-align: center;">{{full_description}}</ion-text>
+        <ion-text *ngIf="full_description==''" style="text-align: center;">No Description</ion-text>
       </ion-item>
     </ion-col>
     <!-- <ion-col size="7">
@@ -123,7 +179,12 @@
     </ion-col>
     <ion-col>
       <ng-template #other_content>
-        <ion-text color="warning">{{discussionLength}}Review</ion-text>
+        <!-- <ion-text color="warning">{{discussionLength}}Review</ion-text> -->
+        <ion-col size="12">
+          <ion-item class="item-background-color">
+            <ion-text  color="warning">0 Review</ion-text>
+          </ion-item>
+        </ion-col>
       </ng-template>
     </ion-col>
   </ion-row>

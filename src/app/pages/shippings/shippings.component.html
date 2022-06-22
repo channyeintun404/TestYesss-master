@@ -61,6 +61,11 @@
 
 
     <!-- List of orders -->
+    <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event)">
+      <ion-refresher-content pullingIcon = "arrow-dropdown"
+              refreshingSpinner="circles" refreshingText="Refreshing...">
+      </ion-refresher-content>
+  </ion-refresher>
     <ion-card *ngFor="let shipment of shipments">
       <ion-card-header>
         <ion-row>

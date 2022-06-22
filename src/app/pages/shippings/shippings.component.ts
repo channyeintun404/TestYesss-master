@@ -7,6 +7,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ShipmentDetailsComponent } from '../shipment-details/shipment-details.component';
 import { OrderDetailsPage } from '../order-details/order-details.page';
 import { ShippingsService } from 'src/app/services/shippings.servicre';
+import { Events } from '@ionic/angular';
+
 @Component({
   selector: 'app-shippings',
   templateUrl: './shippings.component.html',
@@ -21,7 +23,14 @@ export class ShippingsComponent implements OnInit {
   constructor(
     private shipmentsService: ShipmentsService,
     public modalController: ModalController,private router: Router,protected http: HttpClient,
-    private shippingsService: ShippingsService) { }
+    private shippingsService: ShippingsService,
+    public events: Events) {
+      
+      events.subscribe('refresh_shipments', () => {
+        console.log('refresh shipments');
+        this.getAllShipment();
+      });
+     }
 
   ngOnInit() {
     this.getAllShipment();
@@ -80,6 +89,16 @@ export class ShippingsComponent implements OnInit {
       this.shipmentsService.updateShipmentDetail(shipmentId,{
         "status": status
       });
+    }
+
+    refreshPage(event){
+      // this.getOrderList("");
+      // this.getAllOrders("");
+      window.location.reload();
+      setTimeout(() => {
+        console.log('Async operation has ended');
+        event.target.complete();
+      }, 2000);
     }
     
     

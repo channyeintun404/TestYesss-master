@@ -67,7 +67,7 @@
    };
    discussions: any[];
    discussionLength: number;
-   full_description: any;
+   full_description: string;
    option_array: unknown[];
    variants_array: any[];
    constructor(public modalController: ModalController,
@@ -124,9 +124,6 @@
    async goToProductMessage(){
     const modal = await this.modalController.create({
       component: ProductMessagesComponent,
-      // componentProps:  { 
-      //   order_id: this.orderid
-      // }
     });
     return await modal.present();
   }
@@ -169,13 +166,11 @@
    this.variants_array = [];
        for (const variants of Object.values(resp)) {
          this.optionIdArray.push(variants['option_id'])
-         this.variants_array.push(Object.values(variants['variants']))              
+         if(variants['variants']!=null){
+          this.variants_array.push(Object.values(variants['variants']))  
+         }            
        }
        console.log(this.optionIdArray)
-       this.optionSizeId = this.optionIdArray[0]
-       this.optionColorId = this.optionIdArray[1]
-         this.getOptionsSizeById(this.optionSizeId);
-         this.getOptionsColorById(this.optionColorId);
      })
      
    }
@@ -191,91 +186,21 @@
        console.log('Async operation has ended');
        event.target.complete();
      }, 2000);
-   }
-     
-   //getOptionSizeById
-   getOptionsSizeById(option_id){
-     this.optionsService.getOptionsById(option_id).then((res: any) => {
-       this.options=[];
-       
-       this.variants_size=[]
-       this.variantSizeIdArray=[]
-       this.variantSizeNameArray=[]
-       this.variantSizePositionArray=[]
-       this.variantSizeStatusArray=[]
-       for (const variant of Object.values(res['variants'])) {
-           this.variantSizeNameArray.push(variant['variant_name'])
-           this.variantSizePositionArray.push(variant['position'])
-           this.variantSizeStatusArray.push(variant['status'])
-           this.variantSizeIdArray.push(variant['variant_id'])
-           console.log("variant are "+this.variantSizeNameArray)
-         }  
-   
-       this.options.push({
-           option_id : parseInt( res['option_id']),
-           option_name:  res['option_name'],
-           product_id:parseInt( res['product_id']),
-           variant_id:this.variantSizeIdArray,
-           position: this.variantSizePositionArray,
-           status:this.variantSizeStatusArray,
-           variant_name:this.variantSizeNameArray
-       })
-   
-       for(var i =0; i<this.variantSizeNameArray.length; i++){
-         this.variants_size.push({
-           "id":this.variantSizeIdArray[i],
-           "variant_name":this.variantSizeNameArray[i],
-           "position":this.variantSizePositionArray[i],
-           "status": this.variantSizeStatusArray[i]
-         })  
-       }  
-       console.log(this.variants_size)
-     })
-   }  
-
-   //getOtionsColorById
-   getOptionsColorById(option_id){
-     this.optionsService.getOptionsById(option_id).then((res: any) => {
-       this.variants_color=[]
-       this.variantColorIdArray=[]
-       this.variantColorNameArray=[]
-       this.variantColorPositionArray=[]
-       this.variantColorStatusArray=[]
-       for (const variant of Object.values(res['variants'])) {
-           this.variantColorNameArray.push(variant['variant_name'])
-           this.variantColorPositionArray.push(variant['position'])
-           this.variantColorStatusArray.push(variant['status'])
-           this.variantColorIdArray.push(variant['variant_id'])
-           console.log("variant are "+this.variantColorNameArray)
-         }  
-   
-       for(var i =0; i<this.variantColorNameArray.length; i++){
-         this.variants_color.push({
-           "id":this.variantColorIdArray[i],
-           "variant_name":this.variantColorNameArray[i],
-           "position":this.variantColorPositionArray[i],
-           "status": this.variantColorStatusArray[i]
-         })  
-       }  
-       console.log(this.variants_color)
-     })
-   }
+   }    
 
     // get product by id
    getDiscussionById(){
      this.rate=0;
      console.log("id is ="+this.id);
-     this.productsService.getDiscussionById(256).then( res=>{
+     this.productsService.getDiscussionById(this.id).then( res=>{
        console.log(res);
        this.discussions = [];
        for (const discussion of Object.values(res['discussions'])){
-        console.log(discussion)
         this.discussions.push(discussion)
       }
       this.discussionLength = this.discussions.length
      })
-   }
-   
+   }  
    
 
    // Back to previous page function

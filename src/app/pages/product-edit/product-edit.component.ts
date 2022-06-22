@@ -232,7 +232,9 @@ console.log(Object.values(resp))
     for (const variants of Object.values(resp)) {
       console.log(variants['option_id']) 
       this.optionIdArray.push(variants['option_id'])
-      this.variants_array.push(Object.values(variants['variants']))
+      if(variants['variants']!=null){
+        this.variants_array.push(Object.values(variants['variants']))
+      }
     }
   })
   

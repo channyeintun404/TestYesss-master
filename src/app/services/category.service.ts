@@ -104,10 +104,12 @@ export class CategoryService extends AppService {
 
   getCategoryById(cid) {
     return new Promise((resolve) => {
-      this.getOptionByQueryString('categories/' + cid).subscribe(res => {
-        console.log(res);
-        resolve(res);
-       });
+      if(cid!=null){
+        this.getOptionByQueryString('categories/' + cid).subscribe(res => {
+          console.log(res);
+          resolve(res);
+         });
+      }
     });
   }
 
