@@ -8,3 +8,8 @@ ion-item {
     border-radius: 5px;
     padding: -5px;
 }
+.readonly{
+    input:read-only {
+        background-color: yellow;
+      }
+}

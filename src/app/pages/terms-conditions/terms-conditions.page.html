@@ -1,9 +1,14 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>terms-conditions</ion-title>
-  </ion-toolbar>
+<ion-header no-border>
+  <ion-toolbar color="color1">
+<ion-buttons slot="start">
+  <ion-icon icon="arrow-round-back" (click)="back()"  class="icon"></ion-icon>
+</ion-buttons>
+<ion-title>Terms & Conditions</ion-title>
+</ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-item class="item-background-color">
+    <ion-textarea rows="50" cols="30" [readonly]="setting == 'Y' ? 'false' : 'true'" placeholder="terms & conditions" name="des" [(ngModel)]="terms"></ion-textarea>
+  </ion-item>  
 </ion-content>

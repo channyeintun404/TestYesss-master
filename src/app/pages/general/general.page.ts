@@ -25,6 +25,7 @@ export class GeneralPage implements OnInit {
   State: any;
   Phone: any;
   Url: any;
+  setting: string;
 
   constructor(private menuController: MenuController,private modalController: ModalController,private router: Router,
     private location: Location, private vendorsServices: VendorsService, private cookieService: CookieService) { 
@@ -33,8 +34,8 @@ export class GeneralPage implements OnInit {
 
   ngOnInit() {
     this.companyId =  this.cookieService.get('companyId');
+    this.setting = this.cookieService.get('setting');
     this.getVendorsById(this.companyId);
-    console.log(this.companyId);
   }
   getVendorsById(id){
     this.vendorsServices.getVendorById(id).then(res=>{

@@ -14,6 +14,7 @@ export class DescriptionPage implements OnInit {
   companyId: string;
   company_info: any;
   company_description: any;
+  setting: string;
 
   constructor(private menuController: MenuController,private modalController: ModalController,private router: Router,
     private location: Location, private vendorsServices: VendorsService, private cookieService: CookieService) { 
@@ -21,7 +22,8 @@ export class DescriptionPage implements OnInit {
   }
 
   ngOnInit() {
-    this.companyId =  this.cookieService.get('companyId');
+    this.companyId =  this.cookieService.get('companyId');    
+    this.setting = this.cookieService.get('setting');
     this.getVendorsById(this.companyId);
   }
   getVendorsById(id){

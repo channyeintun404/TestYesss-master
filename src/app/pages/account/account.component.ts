@@ -15,6 +15,7 @@ export class AccountComponent implements OnInit {
   company_info: any;
   company_logo1: any;
   companyId: string;
+  setting: string="N";
 
   constructor(private menuController: MenuController,
     private modalController: ModalController,
@@ -39,6 +40,10 @@ export class AccountComponent implements OnInit {
  }
 
   clickTab(event: Event, tabPath: string) {
+    if(tabPath=="vendor"){
+      this.cookieService.delete('setting');
+      this.cookieService.set('setting',this.setting);
+    }
     event.stopImmediatePropagation();
     console.log( event, tabPath );
     this.router.navigate([`${tabPath}`]);

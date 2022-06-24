@@ -4,7 +4,7 @@
   <ion-icon icon="arrow-round-back" (click)="back()"  class="icon"></ion-icon>
 </ion-buttons>
 <ion-buttons slot="end">
-  <ion-button color="primary"  (click)="saveActivity()">Save</ion-button>
+  <ion-button *ngIf="setting=='Y'" color="primary"  (click)="saveActivity()">Save</ion-button>
 </ion-buttons>
 <ion-title>Description</ion-title>
 </ion-toolbar>
@@ -19,7 +19,7 @@
     <ion-col size="9">
 
       <ion-item class="item-background-color">
-        <ion-textarea rows={6} placeholder="Description" name="des" [(ngModel)]="company_description"></ion-textarea>
+        <ion-textarea [readonly]="setting == 'Y' ? 'false' : 'true'" rows={6} placeholder="Description" name="des" [(ngModel)]="company_description"></ion-textarea>
       </ion-item>
      
     </ion-col>

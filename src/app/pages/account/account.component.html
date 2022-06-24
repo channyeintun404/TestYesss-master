@@ -93,6 +93,10 @@
         <ion-label>Payment Methods</ion-label>
         <ion-icon name="arrow-forward" size="small" slot="end" (click)="clickTab($event, 'payment-methods')" [routerLink]="['payment-methods']" tab="orders-tab3"></ion-icon>
       </ion-item>
+      <ion-item lines="none">
+        <ion-label>Terms & Conditions</ion-label>
+        <ion-icon name="arrow-forward" size="small" slot="end" (click)="clickTab($event, 'terms-conditions')" [routerLink]="['terms-conditions']" tab="orders-tab3"></ion-icon>
+      </ion-item>
       <ion-item lines="none" (click)="Logout()">
         <ion-label>Logout</ion-label>
         <ion-icon name="arrow-forward" size="small" slot="end" ></ion-icon>
