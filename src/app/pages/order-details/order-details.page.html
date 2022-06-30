@@ -133,13 +133,12 @@
             <!-- Slider of Product Images -->
             <ion-slides pager="true" [options]="slideOpts">
               <ion-slide *ngFor="let item of getImage(product.image_pairs,product.main_pair)">
-                <img [src]="item" style="width: 50%; height: 70%;" />
+                <img [src]="item" style="width: 150px; height: 150px;" />
 
               </ion-slide>
             </ion-slides>
-
             <ion-text>
-              <a href="#">{{product.product}}</a>
+              <a>{{product.product}}</a>
             </ion-text>
             <ion-text>
               <p>{{product.product_code}}</p>
@@ -313,7 +312,7 @@
         <ion-col size="3"></ion-col>
         <ion-col size="3"></ion-col>
         <ion-col size="6">
-          <ion-button  *ngIf="currentStatus != 'E'" class="createShipment" (click)="updateOrderStatus(orderid)">Reday to Shipping</ion-button>
+          <ion-button  *ngIf="currentStatus != 'E'" class="createShipment" (click)="updateOrderStatus(orderid)">Reday to Pickup</ion-button>
         </ion-col>
       </ion-row>
       <ion-row class="ion-align-items-start">

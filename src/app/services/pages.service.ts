@@ -55,9 +55,14 @@ export class PagesService {
         icon: 'alert'
       },
       {
+        title: 'Invite Friends',
+        url: '/',
+        icon: 'git-branch'
+      },
+      {
         title: 'Version',
         url: '/tabs/tab8',
-        icon: 'git-branch'
+        icon: 'logo-vimeo'
       }
       
     ];

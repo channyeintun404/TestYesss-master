@@ -65,10 +65,12 @@ import { Option } from '../models/option.model';
   
     getProductsOptions(pid) {
       return new Promise((resolve) => {
-        this.getOptionByQueryString('options&product_id=' + pid).subscribe(res => {
-          // console.log(Object.values(res['option_name']));
-          resolve(Object.values(res));
-         });
+        if(pid!=null){
+          this.getOptionByQueryString('options&product_id=' + pid).subscribe(res => {
+            // console.log(Object.values(res['option_name']));
+            resolve(Object.values(res));
+           });
+        }
       });
     }
 

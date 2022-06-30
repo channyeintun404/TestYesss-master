@@ -112,7 +112,13 @@ export class SignupComponent implements OnInit {
       "phone":this.phone,
       "password":this.password,
       "company" : this.company,
-      "company_name" : this.company
+      "company_name" : this.company,
+      "b_firstname": this.firstname,
+      "b_phone":this.phone,
+      "b_address": this.address,
+      "b_city": this.city_code,
+      "b_state": this.state_code
+
      }).then((resp: any) => {
       this.router.navigate([`${'./user-create-successful'}`]);
     })

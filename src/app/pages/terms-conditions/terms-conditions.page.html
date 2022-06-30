@@ -9,6 +9,9 @@
 
 <ion-content>
   <ion-item class="item-background-color">
-    <ion-textarea rows="50" cols="30" [readonly]="setting == 'Y' ? 'false' : 'true'" placeholder="terms & conditions" name="des" [(ngModel)]="terms"></ion-textarea>
+    <!-- <ion-textarea rows="50" cols="30" [readonly]="setting == 'Y' ? 'false' : 'true'" placeholder="terms & conditions" name="des" [(ngModel)]="terms"></ion-textarea> -->
+  
+    <div [innerHTML]="terms"></div>
+
   </ion-item>  
 </ion-content>
