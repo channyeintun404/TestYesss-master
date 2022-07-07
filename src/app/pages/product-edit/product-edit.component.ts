@@ -199,15 +199,16 @@ getProductById(){
     this.list_price = res['list_price']    
     this.product_amount = res['amount']
     this.list_price = res['list_price']
-    this.select_brand_id =  res['product_features']['18']['variant_id']
+    // this.select_brand_id =  res['product_features']['18']['variant_id']
     this.name = res['product']
     this.price = res['price']
     
-    this.price = parseInt(this.price.toFixed())
+    // this.price = parseInt(this.price.toFixed())
    
     // this.list_price = parseInt(this.list_price.toFixed())
     this.full_description = res['full_description']
     this.status = res['status']
+    console.log(this.status)
   })
  
 }
@@ -367,7 +368,8 @@ addproduct() {
     size: this.size,
     color: this.color,
     quantity: 1,
-    isWishlist: this.isWishlist
+    isWishlist: this.isWishlist,
+    status: this.status
   }
 }
 

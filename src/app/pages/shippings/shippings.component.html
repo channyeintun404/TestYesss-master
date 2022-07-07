@@ -114,22 +114,29 @@
             <ion-text style="font-weight: bold;">Status: </ion-text>
           </ion-col>
           <ion-col size="4" >            
-            <ion-select style="float: left;" [(ngModel)]="shipment.status"[ngModelOptions]="{standalone: true}" (cancel)="onCancel()" (ionChange)="updateshipemnt(shipment.status, shipment.shipment_id)"data-live-search="true" value="shipment.status">
+            <ion-select class="dropdown-status" [(ngModel)]="shipment.status"[ngModelOptions]="{standalone: true}" (cancel)="onCancel()" (ionChange)="updateshipemnt(shipment.status, shipment.shipment_id)"data-live-search="true" value="shipment.status">
               <ion-select-option value="A">Picked</ion-select-option>
               <ion-select-option value="P">Pick up</ion-select-option>
               <ion-select-option value="S">Shiped</ion-select-option>
             </ion-select>
+          </ion-col> 
+          <ion-col size="3" style="margin-top: 10px;">
+            <ion-text style="font-weight: bold;">Setting⚙️: </ion-text>
           </ion-col>
-          <!-- <ion-col size="3" style="margin-top: 10px;">
-            <ion-text style="font-weight: bold;">Setting ⚙️: </ion-text>
-          </ion-col> -->
-          <ion-col size="6">
-            <ion-select style="float: left;" interface="popover" placeholder="⚙️" #settingList (ionChange)='changeSetting($event.target.value, shipment.shipment_id)' class="select-placeholder">
-              <ion-select-option value="V" class="settinglist">View</ion-select-option>
+          <ion-col size="3" >            
+            <ion-select class="dropdown-status" (ionChange)="changeSetting($event.target.value, shipment.shipment_id)"data-live-search="true" >
+              <ion-select-option value="V">View</ion-select-option>
+              <ion-select-option value="P">Print Slip</ion-select-option>
+              <ion-select-option value="D">Delete</ion-select-option>
+            </ion-select>
+          </ion-col>
+          <!-- <ion-col size="3" class="dropdown-setting">
+            <ion-select style="float: left;"  #settingList (ionChange)='changeSetting($event.target.value, shipment.shipment_id)'>
+              <ion-select-option  value="V" class="settinglist">View</ion-select-option>
               <ion-select-option value="P" class="settinglist">Print Slip</ion-select-option>
               <ion-select-option value="D" class="settinglist">Delete</ion-select-option>
             </ion-select>
-          </ion-col>
+          </ion-col> -->
         </ion-row>
         
       </ion-card-header>

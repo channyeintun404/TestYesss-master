@@ -85,30 +85,33 @@
                       </ion-grid> -->
                     
                     <ion-col sizeLg="4" sizeMd="4" sizeXs="6" *ngFor="let item of products">
-                        <ion-card class="ion-no-margin">
-                            <!-- Product Image -->
-                            <div class="card-img" [style.background-image]="'url(' + item.main_image + ')'"
-                                (click)="goToProductDetails(item)"></div>
+                        <div (click)="goToProductDetails(item)">
+                            <ion-card [disabled]="item.status != 'A' ? 'true' : 'false'" class="ion-no-margin">
+                                <!-- Product Image -->
+                                <div class="card-img" [style.background-image]="'url(' + item.main_image + ')'"
+                                    ></div>
+    
+                                <!-- Wish Button or Product Like/Dislike Button Option -->
+                                <!-- <ion-fab vertical="top" horizontal="end">
+                                    <ion-fab-button>
+                                        <ion-icon color="color1" name="heart-empty" *ngIf="!item.isWishlist"></ion-icon>
+                                        <ion-icon color="color1" name="heart" *ngIf="item.isWishlist"></ion-icon>
+                                    </ion-fab-button>
+                                </ion-fab> -->
+    
+                                <!-- Product Contents -->
+                                <ion-card-content (click)="goToProductDetails(item)">
+                                    <ion-row>
+                                        <ion-text color="color1">${{item.discountPrice}} &nbsp;</ion-text>
+                                        <span class="previous-price"> ${{item.price}}</span>
+                                    </ion-row>
+                                    <ion-row>
+                                        <h4 class="product-name">{{item.name | slice:0:20}}</h4>
+                                    </ion-row>
+                                </ion-card-content>
+                            </ion-card>
+                        </div>
 
-                            <!-- Wish Button or Product Like/Dislike Button Option -->
-                            <!-- <ion-fab vertical="top" horizontal="end">
-                                <ion-fab-button>
-                                    <ion-icon color="color1" name="heart-empty" *ngIf="!item.isWishlist"></ion-icon>
-                                    <ion-icon color="color1" name="heart" *ngIf="item.isWishlist"></ion-icon>
-                                </ion-fab-button>
-                            </ion-fab> -->
-
-                            <!-- Product Contents -->
-                            <ion-card-content (click)="goToProductDetails(item)">
-                                <ion-row>
-                                    <ion-text color="color1">${{item.discountPrice}} &nbsp;</ion-text>
-                                    <span class="previous-price"> ${{item.price}}</span>
-                                </ion-row>
-                                <ion-row>
-                                    <h4 class="product-name">{{item.name | slice:0:20}}</h4>
-                                </ion-row>
-                            </ion-card-content>
-                        </ion-card>
                     </ion-col>
                 </ion-row>
             </ion-grid>

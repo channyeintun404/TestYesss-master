@@ -122,8 +122,9 @@ export class ProductsService extends AppService {
                 images: imagesArr,
                 color: ["#CECE45", "#F951E2", "#CF0114"],
                 size: ["S", "M", "L"],
-                quantity: 1,
-                isWishlist: false
+                quantity: prod['amount'],
+                isWishlist: false,
+                status: prod['status']
               });  
   
         }

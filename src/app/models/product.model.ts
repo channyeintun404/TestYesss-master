@@ -10,5 +10,5 @@ export class Product {
     color: Array<String>;
     quantity: number;
     isWishlist: boolean;
-    
+    status:String;
 }

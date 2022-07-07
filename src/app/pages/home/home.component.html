@@ -32,7 +32,7 @@
 
 <!-- Contents -->
 <ion-content id="home" fullscreen class="ion-padding">
-  <ion-row>
+  <!-- <ion-row>
     <ion-col size="4">
       <ion-text class="ion-text-heading">0</ion-text>
       <ion-icon md="md-arrow-dropup"></ion-icon>
@@ -40,10 +40,22 @@
     </ion-col>
     <ion-col size="4"></ion-col>
     <ion-col size="4"></ion-col>
-  </ion-row>
-  
+  </ion-row> -->
 
-  <ion-grid>
+  <!-- filter -->
+  <!-- <ion-row>
+    <ion-col size="4" style="margin-top: 10px;">
+        <ion-label color="000">Filter Range:</ion-label>
+    </ion-col>
+    <ion-col size="4">
+      <ion-datetime displayFormat="MM/DD/YYYY"  name="start_date"  [(ngModel)]="start_date" placeholder="Start Date"></ion-datetime>
+    </ion-col>
+    <ion-col size="4">
+      <ion-datetime displayFormat="MM/DD/YYYY"  name="end_date"  [(ngModel)]="end_date" placeholder="End Date"></ion-datetime>
+    </ion-col>
+  </ion-row> -->
+
+  <!-- <ion-grid>
     <ion-row>
       <ion-col  class="grid-date">
         08/06
@@ -83,7 +95,7 @@
       <ion-col  class="grid-date" style="border-left: 1px solid lightgray;">
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
   <ion-grid class="grid-home">
     <ion-row>
       <ion-col size="4"></ion-col>
@@ -92,28 +104,31 @@
     </ion-row>
     <ion-row style="border: 2px solid lightpink; border-bottom: none;">
       <ion-col size="4" class="child-home">
-        <ion-text class="ion-padding-center" >Orders</ion-text>
-        <ion-row>
-          <ion-col size="4" style="padding-left: 50px; border: none;" class="child-home">
-            <ion-text>0</ion-text>
-          </ion-col>
-        </ion-row>
+        <div class="ion-text-center">
+          <ion-text>Active Products</ion-text><br>
+          <a *ngIf="active_product != 0" href="/tabs/products">{{active_product}}</a>     
+          <ion-text *ngIf="active_product == 0">{{active_product}}</ion-text>     
+          <!-- <ion-text>Orders</ion-text><br>
+          <a *ngIf="order_count != 0" href="/tabs/orders">{{order_count}}</a>     
+          <ion-text *ngIf="order_count == 0">{{order_count}}</ion-text>        -->
+        </div>
       </ion-col>
       <ion-col size="3" class="child-home">
-        <ion-text>Sales</ion-text>
-        <ion-row>
-          <ion-col size="3" style="padding-left: 40px; border: none;" class="child-home">
-            <ion-text>0</ion-text>
-          </ion-col>
-        </ion-row>
+        <div class="ion-text-center">
+          <!-- <ion-text>Sales</ion-text><br>
+         0Ks -->
+         <ion-text>Orders</ion-text><br>
+          <a *ngIf="order_count != 0" href="/tabs/orders">{{order_count}}</a>     
+          <ion-text *ngIf="order_count == 0">{{order_count}}</ion-text>  
+        </div>
       </ion-col>
       <ion-col size="5" class="child-home">
-        <ion-text>Taxes</ion-text>
-        <ion-row>
-          <ion-col size="5" style="padding-left: 50px; border: none;" class="child-home">
-            <ion-text>0</ion-text>
-          </ion-col>
-        </ion-row>
+        <div class="ion-text-center">
+          <ion-text>Current Balance</ion-text><br>
+          0Ks
+          <!-- <ion-text>Inactive Products</ion-text><br>
+         {{inactive_product}} -->
+        </div>
       </ion-col>
     </ion-row>
     <ion-row style="border: 2px solid lightpink; border-bottom: none; border-top: none;">
@@ -122,35 +137,33 @@
       <ion-col size="5" class="child-home"></ion-col>
     </ion-row>
     <!-- <br> -->
+    
     <ion-row style="border: 2px solid lightpink; border-top: none;">
-      <ion-col size="4" class="child-home"> 
-          <ion-text>Active Products</ion-text>
-          <ion-row>
-            <ion-col size="4" style="padding-left: 50px; border: none;" class="child-home">
-              <ion-text>0</ion-text>
-            </ion-col>
-          </ion-row>
+      <ion-col size="4" class="child-home">
+        <div class="ion-text-center" >
+          <ion-text>Inactive Products</ion-text><br>
+          <a *ngIf="inactive_product != 0" href="/tabs/products">{{inactive_product}}</a>     
+          <ion-text *ngIf="inactive_product == 0">{{inactive_product}}</ion-text>  
+          <!-- <ion-text>Active Products</ion-text><br>
+          <a *ngIf="active_product != 0" href="/tabs/products">{{active_product}}</a>     
+          <ion-text *ngIf="active_product == 0">{{active_product}}</ion-text>            -->
+        </div>
       </ion-col>
-      <ion-col  size="3" class="child-home">
-        <ion-text>Out of Stock</ion-text>
-        <ion-row>
-          <ion-col size="3" style="padding-left: 40px; border: none;" class="child-home">
-            <ion-text>0</ion-text>
-          </ion-col>
-        </ion-row>
+      <ion-col size="3" class="child-home">
+        <div class="ion-text-center">
+          <ion-text>Out of Stock</ion-text><br>
+          <a *ngIf="out_of_stock != 0" href="/tabs/products">{{out_of_stock}}</a>     
+          <ion-text *ngIf="out_of_stock == 0">{{out_of_stock}}</ion-text>
+        </div>
       </ion-col>
       <ion-col size="5" class="child-home">
-        <ion-text>Abandoned/Live Carts</ion-text>
-        <ion-row>
-          <ion-col size="5" style="padding-left: 50px; border: none;" class="child-home">
-            <ion-text>0</ion-text>
-          </ion-col>
-        </ion-row>
+        <div class="ion-text-center">
+          <ion-text>Abandoned/Live Carts</ion-text><br>
+          0
+        </div>
       </ion-col>
     </ion-row>
     <ion-row>
-      <!-- <ion-col size="4" ></ion-col>
-      <ion-col size="3" ></ion-col> -->
       <ion-col size="12" class="day-result">
         <ion-text>*Data as shown is compared with the previous day result.</ion-text>
       </ion-col>
