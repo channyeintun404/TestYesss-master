@@ -37,6 +37,7 @@ export class VendorAdminPage implements OnInit {
   s_country: any;
   s_state: any;
   s_zipcode: any;
+  setting: string;
 
   constructor(private menuController: MenuController,
     private modalController: ModalController,
@@ -47,7 +48,8 @@ export class VendorAdminPage implements OnInit {
     this.menuController.enable(true);
   }
 
-  ngOnInit() {
+  ngOnInit() {    
+    this.setting = this.cookieService.get('setting');
     this.user_id = this.cookieService.get('userId');     
     this.email = this.cookieService.get('email'); 
     this.password = this.cookieService.get('password');  
@@ -129,7 +131,7 @@ export class VendorAdminPage implements OnInit {
     this.router.navigate([`${tabPath}`]);
   }
   back() {
-    this.router.navigate([`${"tabs/tab5"}`]);
+    this.location.back();
   }
 
 

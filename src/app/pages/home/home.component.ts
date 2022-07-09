@@ -29,6 +29,8 @@ export class HomeComponent implements OnInit {
   orders: Order[];
   order_count: number =0;
   inactive_product: number =0;
+  order_count_item=["O","F"]
+  current_balance: number=0;
   
   constructor(private modalController: ModalController,
     private productsService: ProductsService,
@@ -64,7 +66,10 @@ export class HomeComponent implements OnInit {
       this.ordersService.getAllOrders(queryString, this.companyId).then((res: any) => {
         console.log(res)
         for (const order of Object.values(res['orders'])) {
-          this.order_count +=1;
+          if(this.order_count_item.includes(order['status'])){
+            this.order_count +=1;
+          } 
+          this.current_balance += Number(order['total']);        
         }  
       })
     }

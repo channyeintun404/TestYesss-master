@@ -70,6 +70,7 @@
    full_description: string;
    option_array: unknown[];
    variants_array: any[];
+   status: String;
    constructor(public modalController: ModalController,
      public storageService: StorageService,
      private optionsService : OptionsService,
@@ -97,7 +98,8 @@
        size: this.size,
        color: this.color,
        quantity: 1,
-       isWishlist: this.isWishlist
+       isWishlist: this.isWishlist,
+       status:this.status
      }
  
      // Save cart product in storage

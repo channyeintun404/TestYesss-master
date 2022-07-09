@@ -40,9 +40,16 @@ export class AccountComponent implements OnInit {
  }
 
   clickTab(event: Event, tabPath: string) {
-    if(tabPath=="vendor"){
-      this.cookieService.delete('setting');
-      this.cookieService.set('setting',this.setting);
+    // if(tabPath=="vendor"){
+    //   this.cookieService.delete('setting');
+    //   this.cookieService.set('setting',this.setting);
+    // }
+    this.cookieService.delete('setting');
+    if(tabPath =="setting"){        
+        this.cookieService.set('setting',"Y");
+    }
+    else{
+      this.cookieService.set('setting',"N");
     }
     event.stopImmediatePropagation();
     console.log( event, tabPath );

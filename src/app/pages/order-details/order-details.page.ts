@@ -263,13 +263,24 @@ export class OrderDetailsPage implements OnInit {
           }));
   }
 
-   updateOrderStatus(orderid){
-     this.ordersService.updateOrderDetail(orderid,{
+  async updateOrderStatus(orderid){
+    this.ordersService.updateOrderDetail(orderid,{
       "status": "E",
      }).then(res=>{
      });
+    this.resolveAfter2Seconds(20).then(value => {
+      console.log(`promise result: ${value}`);
       window.location.reload();
+    });       
   }
+  
+resolveAfter2Seconds(x) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(x);
+    }, 2000);
+  });
+}
 
   getOrderById(id){
       this.ordersService.getOrderDetailById(id).then( res=>{
