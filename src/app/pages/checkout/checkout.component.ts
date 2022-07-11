@@ -505,7 +505,8 @@ console.log(Object.values(resp))
         fd.append("upload_preset", "my-preset"); 
       
         axios({
-          url:'https://api.cloudinary.com/v1_1/u1textile/image/upload',
+          // url:'https://api.cloudinary.com/v1_1/u1textile/image/upload',
+          url:'https://api.cloudinary.com/v1_1/dvulec2jy/image/upload',
           method: 'POST',
           headers:{
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -528,7 +529,8 @@ console.log(Object.values(resp))
         fd.append("upload_preset", "my-preset"); 
       
         axios({
-          url:'https://api.cloudinary.com/v1_1/u1textile/image/upload',
+          // url:'https://api.cloudinary.com/v1_1/u1textile/image/upload',
+          url:'https://api.cloudinary.com/v1_1/dvulec2jy/image/upload',
           method: 'POST',
           headers:{
             'Content-Type': 'application/x-www-form-urlencoded'
